@@ -9,5 +9,30 @@
         android:id="@+id/adminDashboardFragment"
         android:name="ir.arinateam.shopadmin.AdminDashboardFragment"
         android:label="admin_dashboard_fragment"
-        tools:layout="@layout/admin_dashboard_fragment" />
+        tools:layout="@layout/admin_dashboard_fragment">
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_shopsFragment"
+            app:destination="@id/shopsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+        <action
+            android:id="@+id/action_adminDashboardFragment_to_sellsFragment"
+            app:destination="@id/sellsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/shopsFragment"
+        android:name="ir.arinateam.shopadmin.ShopsFragment"
+        android:label="shops_fragment"
+        tools:layout="@layout/shops_fragment" />
+    <fragment
+        android:id="@+id/sellsFragment"
+        android:name="ir.arinateam.shopadmin.SellsFragment"
+        android:label="sells_fragment"
+        tools:layout="@layout/sells_fragment" />
 </navigation>

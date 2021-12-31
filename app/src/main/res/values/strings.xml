@@ -2,4 +2,9 @@
     <string name="app_name">ShopAdmin</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shops">فروشگاه ها</string>
+    <string name="users">کاربران</string>
+    <string name="sells">فروش ها</string>
+    <string name="books">کتاب ها</string>
+    <string name="dashboard">داشبورد</string>
 </resources>
