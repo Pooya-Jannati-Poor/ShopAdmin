@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.kyleduo.switchbutton.SwitchButton
@@ -36,7 +37,7 @@ class AdapterRecShop(private val context: Context, private val lsModelRecShop: L
     inner class ItemAdapter(binding: LayoutRecShopBinding) : RecyclerView.ViewHolder(binding.root) {
 
         val tvShopName: TextView = binding.tvShopName
-        val sbShopAvailable: SwitchButton = binding.sbShopAvailable
+        val sbShopAvailable: SwitchCompat = binding.sbShopAvailable
 
     }
 

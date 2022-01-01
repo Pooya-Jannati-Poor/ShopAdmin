@@ -35,21 +35,17 @@
             android:layout_height="0dp"
             android:layout_weight="1" />
 
-        <com.kyleduo.switchbutton.SwitchButton
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/sbShopAvailable"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_gravity="center"
+            android:layout_height="45dp"
             android:checked="true"
-            android:textSize="@dimen/_12ssp"
-            app:kswBackDrawable="@drawable/flyme_back_drawable"
-            app:kswTextExtra="10dp"
-            app:kswTextOff="غیرفعال"
-            app:kswTextOn="فعال"
-            app:kswThumbDrawable="@drawable/flyme_thumb_drawable"
-            app:kswThumbHeight="16dp"
-            app:kswThumbRangeRatio="2.2"
-            app:kswThumbWidth="16dp" />
+            android:textOff="Taken"
+            android:textOn="Available"
+            android:textColor="@color/black"
+            android:thumb="@drawable/thumb_selector"
+            app:switchMinWidth="118dp"
+            app:track="@drawable/track_selector" />
 
     </LinearLayout>
 
