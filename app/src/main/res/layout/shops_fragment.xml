@@ -72,10 +72,12 @@
             android:background="@color/light_white" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recShops"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_22sdp"/>
-
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_22sdp"
+            tools:listitem="@layout/layout_rec_shop" />
 
 
     </LinearLayout>

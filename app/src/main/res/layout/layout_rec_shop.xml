@@ -1,52 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="@dimen/_8sdp"
-    android:background="@drawable/bg_rec_shop"
-    android:padding="@dimen/_12sdp"
-    android:layoutDirection="rtl"
-    android:orientation="horizontal"
-    android:textDirection="rtl">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:layout_width="@dimen/_25sdp"
-        android:layout_height="@dimen/_25sdp"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_shops"
-        tools:ignore="ContentDescription" />
-
-    <TextView
-        android:id="@+id/tvShopsCount"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="@dimen/_12sdp"
-        android:text="فروشگاه 1"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_12ssp" />
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:background="@drawable/bg_rec_shop"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal"
+        android:padding="@dimen/_12sdp"
+        android:textDirection="rtl">
 
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_shops"
+            tools:ignore="ContentDescription" />
 
-    <com.kyleduo.switchbutton.SwitchButton
-        android:id="@+id/sb_custom_flyme"
-        style="@style/SwitchButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:kswBackDrawable="@drawable/flyme_back_drawable"
-        app:kswThumbDrawable="@drawable/flyme_thumb_drawable"
-        app:kswTextExtra="10dp"
-        app:kswTextOff="غیرفعال"
-        app:kswTextOn="فعال"
-        app:kswThumbHeight="16dp"
-        app:kswThumbRangeRatio="2.2"
-        app:kswThumbWidth="16dp"
-        />
+        <TextView
+            android:id="@+id/tvShopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:text="فروشگاه 1"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
 
-</LinearLayout>
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.kyleduo.switchbutton.SwitchButton
+            android:id="@+id/sbShopAvailable"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_gravity="center"
+            android:checked="true"
+            android:textSize="@dimen/_12ssp"
+            app:kswBackDrawable="@drawable/flyme_back_drawable"
+            app:kswTextExtra="10dp"
+            app:kswTextOff="غیرفعال"
+            app:kswTextOn="فعال"
+            app:kswThumbDrawable="@drawable/flyme_thumb_drawable"
+            app:kswThumbHeight="16dp"
+            app:kswThumbRangeRatio="2.2"
+            app:kswThumbWidth="16dp" />
+
+    </LinearLayout>
+
+</layout>

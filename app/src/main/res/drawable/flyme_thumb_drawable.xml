@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_checked="true" android:state_enabled="false">
+    <item android:state_enabled="false" android:state_checked="true">
         <shape android:shape="oval">
-            <solid android:color="#B8E2F8"/>
+            <solid android:color="#8BC34A"/>
+            <stroke
+                android:width="1px"
+                android:color="#8BC34A"/>
         </shape>
     </item>
     <item android:state_enabled="false">
-        <layer-list>
-            <item android:bottom="6dp" android:left="4dp" android:right="4dp" android:top="6dp">
-                <shape>
-                    <solid android:color="#DEDEDE"/>
-                    <corners android:radius="1dp"/>
-                </shape>
-            </item>
-        </layer-list>
+        <shape android:shape="oval">
+            <solid android:color="#E1E1E1"/>
+            <stroke
+                android:width="1px"
+                android:color="#ECECEC"/>
+        </shape>
     </item>
     <item android:state_checked="true">
         <shape android:shape="oval">
-            <solid android:color="#28A4E9"/>
+            <solid android:color="#8BC34A"/>
+            <stroke
+                android:width="1px"
+                android:color="#8BC34A"/>
         </shape>
     </item>
     <item>
-        <layer-list>
-            <item android:bottom="6dp" android:left="4dp" android:right="4dp" android:top="6dp">
-                <shape>
-                    <solid android:color="#D0D0D0"/>
-                    <corners android:radius="1dp"/>
-                </shape>
-            </item>
-        </layer-list>
+        <shape android:shape="oval">
+            <solid android:color="#E0E0E0"/>
+            <stroke
+                android:width="1px"
+                android:color="#D0D0D0"/>
+        </shape>
     </item>
 </selector>
