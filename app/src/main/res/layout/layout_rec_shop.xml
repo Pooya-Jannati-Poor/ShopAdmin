@@ -37,13 +37,16 @@
             android:layout_weight="1" />
 
         <com.github.angads25.toggle.widget.LabeledSwitch
-            android:id="@+id/switch"
-            android:layout_width="wrap_content"
+            android:id="@+id/sbShopAvailable"
+            android:layout_width="@dimen/_65sdp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:textSize="14sp"
-            app:on="true"
-            app:colorBorder="@color/colorAccent"/>
+            app:on="false"
+            app:textOn="فعال"
+            app:textOff="غیرفعال"
+            app:colorOn="#8BC34A"
+            app:colorBorder="#0000C4A6"/>
 
     </LinearLayout>
 
