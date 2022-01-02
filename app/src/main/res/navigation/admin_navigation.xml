@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/adminDashboardFragment"
-        android:name="ir.arinateam.shopadmin.AdminDashboardFragment"
+        android:name="ir.arinateam.shopadmin.admin.AdminDashboardFragment"
         android:label="admin_dashboard_fragment"
         tools:layout="@layout/admin_dashboard_fragment">
         <action
@@ -27,12 +27,12 @@
     </fragment>
     <fragment
         android:id="@+id/shopsFragment"
-        android:name="ir.arinateam.shopadmin.ShopsFragment"
+        android:name="ir.arinateam.shopadmin.admin.ShopsFragment"
         android:label="shops_fragment"
         tools:layout="@layout/shops_fragment" />
     <fragment
         android:id="@+id/sellsFragment"
-        android:name="ir.arinateam.shopadmin.SellsFragment"
+        android:name="ir.arinateam.shopadmin.admin.SellsFragment"
         android:label="sells_fragment"
         tools:layout="@layout/sells_fragment" />
 </navigation>

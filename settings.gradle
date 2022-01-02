@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "ShopAdmin"
 include ':app'
+include ':customSwitch'

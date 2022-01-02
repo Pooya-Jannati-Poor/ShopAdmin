@@ -1,4 +1,4 @@
-package ir.arinateam.shopadmin.model
+package ir.arinateam.shopadmin.admin.model
 
 data class ModelRecShop(
     val id: Int,

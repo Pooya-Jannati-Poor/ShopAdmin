@@ -1,4 +1,4 @@
-package ir.arinateam.shopadmin
+package ir.arinateam.shopadmin.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,12 +9,14 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ir.arinateam.shopadmin.adapter.AdapterRecShop
+import ir.arinateam.shopadmin.R
+import ir.arinateam.shopadmin.admin.adapter.AdapterRecShop
+import ir.arinateam.shopadmin.admin.interfaces.ChangeShopState
 import ir.arinateam.shopadmin.databinding.ShopsFragmentBinding
-import ir.arinateam.shopadmin.model.ModelRecShop
+import ir.arinateam.shopadmin.admin.model.ModelRecShop
 
 
-class ShopsFragment : Fragment() {
+class ShopsFragment : Fragment(), ChangeShopState {
 
     private lateinit var bindingFragment: ShopsFragmentBinding
 
@@ -48,11 +50,13 @@ class ShopsFragment : Fragment() {
 
     }
 
+    private lateinit var modelRecShop: ArrayList<ModelRecShop>
     private lateinit var adapter: AdapterRecShop
+    private var enabledCounts = 0
 
     private fun setRecShop() {
 
-        val modelRecShop = ArrayList<ModelRecShop>()
+        modelRecShop = ArrayList()
 
         modelRecShop.add(ModelRecShop(1, "فروشگاه 1", true))
         modelRecShop.add(ModelRecShop(2, "فروشگاه 2", true))
@@ -62,13 +66,45 @@ class ShopsFragment : Fragment() {
         modelRecShop.add(ModelRecShop(6, "فروشگاه 6", true))
         modelRecShop.add(ModelRecShop(7, "فروشگاه 7", false))
         modelRecShop.add(ModelRecShop(8, "فروشگاه 8", true))
+        modelRecShop.add(ModelRecShop(8, "فروشگاه 9", true))
+        modelRecShop.add(ModelRecShop(8, "فروشگاه 10", true))
+        modelRecShop.add(ModelRecShop(8, "فروشگاه 11", true))
+        modelRecShop.add(ModelRecShop(8, "فروشگاه 12", true))
+        modelRecShop.add(ModelRecShop(8, "فروشگاه 13", true))
 
-        adapter = AdapterRecShop(requireActivity(), modelRecShop)
+        adapter = AdapterRecShop(requireActivity(), modelRecShop, this)
 
         val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
         recShops.layoutManager = linearLayoutManager
         recShops.adapter = adapter
+
+
+
+        modelRecShop.forEach {
+
+            if (it.isActivated) {
+                enabledCounts++
+            }
+
+        }
+
+        tvShopsCount.text = "$enabledCounts".plus(" فروشگاه فعال")
+
+
+    }
+
+    override fun enabled() {
+
+        enabledCounts++
+        tvShopsCount.text = "$enabledCounts".plus(" فروشگاه فعال")
+
+    }
+
+    override fun disabled() {
+
+        enabledCounts--
+        tvShopsCount.text = "$enabledCounts".plus(" فروشگاه فعال")
 
     }
 

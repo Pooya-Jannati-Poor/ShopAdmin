@@ -1,4 +1,4 @@
-package ir.arinateam.shopadmin
+package ir.arinateam.shopadmin.admin
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.databinding.AdminDashboardFragmentBinding
 
 

@@ -10,7 +10,7 @@
         android:layoutDirection="rtl"
         android:orientation="vertical"
         android:textDirection="rtl"
-        tools:context=".AdminDashboardFragment">
+        tools:context=".admin.AdminDashboardFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
