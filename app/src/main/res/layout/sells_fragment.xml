@@ -71,14 +71,10 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/light_white" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recShops"
+        <ir.arinateam.mpchart.charts.BarChart
+            android:id="@+id/barChartWeek"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_22sdp"
-            tools:listitem="@layout/layout_rec_shop" />
-
+            android:layout_height="@dimen/_100sdp"/>
 
     </LinearLayout>
 

@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/app_theme">
         <activity
+            android:name=".ShopActivity"
+            android:exported="true">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity
             android:name=".admin.AdminActivity"
             android:exported="true">
             <intent-filter>
