@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:text="سفارش های هفته"
+                    android:text="سفارش های هفت روز گذشته"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_12ssp" />
 
