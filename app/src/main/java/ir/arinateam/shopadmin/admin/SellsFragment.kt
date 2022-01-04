@@ -22,7 +22,6 @@ class SellsFragment : Fragment() {
 
     private lateinit var barChartWeek: BarChart
     private lateinit var barMonthYear: BarChart
-    private lateinit var barChartYear: BarChart
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,15 +44,12 @@ class SellsFragment : Fragment() {
 
         setMonthBarChart()
 
-        setYearBarChart()
-
     }
 
     private fun initView() {
 
         barChartWeek = bindingFragment.barChartWeek
         barMonthYear = bindingFragment.barMonthYear
-        barChartYear = bindingFragment.barChartYear
 
     }
 
@@ -69,7 +65,6 @@ class SellsFragment : Fragment() {
         COLORFUL_COLORS.add(ColorTemplate.rgb("#7F8665"))
         COLORFUL_COLORS.add(ColorTemplate.rgb("#DCC6EC"))
     }
-
 
     private fun setWeekBarChart() {
 
@@ -170,64 +165,5 @@ class SellsFragment : Fragment() {
 
 
     }
-
-    private fun setYearBarChart() {
-
-        val yearSell = ArrayList<BarEntry>()
-
-        yearSell.add(BarEntry(0f, 70f))
-        yearSell.add(BarEntry(1f, 50f))
-        yearSell.add(BarEntry(2f, 120f))
-        yearSell.add(BarEntry(3f, 10f))
-        yearSell.add(BarEntry(4f, 40f))
-        yearSell.add(BarEntry(5f, 80f))
-        yearSell.add(BarEntry(6f, 20f))
-        yearSell.add(BarEntry(7f, 42f))
-        yearSell.add(BarEntry(8f, 40f))
-        yearSell.add(BarEntry(9f, 56f))
-        yearSell.add(BarEntry(10f, 23f))
-        yearSell.add(BarEntry(11f, 10f))
-        yearSell.add(BarEntry(12f, 15f))
-
-        val barDataSet = BarDataSet(yearSell, "")
-
-        barDataSet.colors = COLORFUL_COLORS
-        barDataSet.valueTextColor = Color.BLACK
-        barDataSet.valueTextSize = 16f
-        barDataSet.valueTextSize = 16f
-
-        val barData = BarData(barDataSet)
-        barChartYear.setFitBars(true)
-        barChartYear.description.text = ""
-        barChartYear.animateY(1000)
-        barChartYear.data = barData
-        barChartYear.xAxis.position = XAxis.XAxisPosition.BOTTOM
-
-        barChartYear.setTouchEnabled(false)
-        barChartYear.isClickable = false
-        barChartYear.isDoubleTapToZoomEnabled = false
-        barChartYear.isDoubleTapToZoomEnabled = false
-
-        barChartYear.setDrawGridBackground(false)
-
-        barChartYear.description.isEnabled = false
-        barChartYear.legend.isEnabled = false
-
-        barChartYear.axisLeft.setDrawAxisLine(false)
-        barChartYear.axisLeft.enableGridDashedLine(10f, 8f, 0f)
-        barChartYear.axisLeft.enableAxisLineDashedLine(10f, 8f, 0f)
-
-        barChartYear.xAxis.enableGridDashedLine(10f, 8f, 0f)
-        barChartYear.xAxis.enableAxisLineDashedLine(10f, 8f, 0f)
-        barChartYear.xAxis.labelCount = 12
-
-        barChartYear.axisRight.setDrawLabels(false)
-        barChartYear.axisRight.setDrawAxisLine(false)
-        barChartYear.axisRight.enableGridDashedLine(10f, 8f, 0f)
-        barChartYear.axisRight.enableAxisLineDashedLine(10f, 8f, 0f)
-
-
-    }
-
 
 }
