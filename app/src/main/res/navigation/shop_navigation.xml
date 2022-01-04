@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shop_navigation"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="ir.arinateam.shopadmin.shop.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="ir.arinateam.shopadmin.shop.DashboardFragment"
+        android:label="dashboard_fragment"
+        tools:layout="@layout/dashboard_fragment" />
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="ir.arinateam.shopadmin.shop.ProductsFragment"
+        android:label="products_fragment"
+        tools:layout="@layout/products_fragment" />
+    <fragment
+        android:id="@+id/ordersFragment"
+        android:name="ir.arinateam.shopadmin.shop.OrdersFragment"
+        android:label="orders_fragment"
+        tools:layout="@layout/orders_fragment" />
+</navigation>

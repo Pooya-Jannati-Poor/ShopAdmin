@@ -7,4 +7,8 @@
     <string name="sells">فروش ها</string>
     <string name="books">کتاب ها</string>
     <string name="dashboard">داشبورد</string>
+    <string name="profile">پروفایل</string>
+    <string name="orders">سفارشات</string>
+    <string name="products">محصولات</string>
+    <string name="home">خانه</string>
 </resources>

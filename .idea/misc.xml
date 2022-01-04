@@ -10,13 +10,18 @@
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/flyme_back_drawable.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/flyme_thumb_drawable.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/ic_home.xml" value="0.1" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/navigation_view_colored.xml" value="0.13703703703703704" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/thumb_selector.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/track_selector.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/activity_main.xml" value="0.21944444444444444" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/activity_shop.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/admin_activity.xml" value="0.32760416666666664" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/admin_dashboard_fragment.xml" value="0.3307291666666667" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/dashboard_fragment.xml" value="0.3177083333333333" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/layout_rec_shop.xml" value="0.31666666666666665" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/orders_fragment.xml" value="0.3307291666666667" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/products_fragment.xml" value="0.31666666666666665" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/profile_fragment.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/sells_fragment.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/shops_fragment.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/menu/menu_bottom_navigation.xml" value="2.267857142857143" />

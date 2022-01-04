@@ -13,5 +13,6 @@
     <color name="light_white">#EEEEEE</color>
     <color name="light_green">#F1F8E9</color>
     <color name="light_black">#212121</color>
+    <color name="green_500">#4E9F3D</color>
 
 </resources>
