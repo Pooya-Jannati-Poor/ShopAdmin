@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import ir.arinateam.mpchart.charts.BarChart
+import ir.arinateam.mpchart.components.XAxis
 import ir.arinateam.mpchart.data.BarData
 import ir.arinateam.mpchart.data.BarDataSet
 import ir.arinateam.mpchart.data.BarEntry
@@ -20,6 +21,8 @@ class SellsFragment : Fragment() {
     private lateinit var bindingFragment: SellsFragmentBinding
 
     private lateinit var barChartWeek: BarChart
+    private lateinit var barMonthYear: BarChart
+    private lateinit var barChartYear: BarChart
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,14 +39,35 @@ class SellsFragment : Fragment() {
 
         initView()
 
+        setColorList()
+
         setWeekBarChart()
+
+        setMonthBarChart()
+
+        setYearBarChart()
 
     }
 
     private fun initView() {
 
         barChartWeek = bindingFragment.barChartWeek
+        barMonthYear = bindingFragment.barMonthYear
+        barChartYear = bindingFragment.barChartYear
 
+    }
+
+    private val COLORFUL_COLORS = ArrayList<Int>()
+
+    private fun setColorList() {
+
+        COLORFUL_COLORS.add(ColorTemplate.rgb("#0263FF"))
+        COLORFUL_COLORS.add(ColorTemplate.rgb("#FF7723"))
+        COLORFUL_COLORS.add(ColorTemplate.rgb("#8E30FF"))
+        COLORFUL_COLORS.add(ColorTemplate.rgb("#3AF54E"))
+        COLORFUL_COLORS.add(ColorTemplate.rgb("#98977F"))
+        COLORFUL_COLORS.add(ColorTemplate.rgb("#7F8665"))
+        COLORFUL_COLORS.add(ColorTemplate.rgb("#DCC6EC"))
     }
 
 
@@ -59,14 +83,149 @@ class SellsFragment : Fragment() {
         weekSell.add(BarEntry(5f, 8f))
         weekSell.add(BarEntry(6f, 2f))
 
-        val barDataSet = BarDataSet(weekSell, "فروش هفته")
+        val barDataSet = BarDataSet(weekSell, "")
 
-//        barDataSet.setColors(ColorTemplate.VORDIPLOM_COLORS)
+        barDataSet.colors = COLORFUL_COLORS
         barDataSet.valueTextColor = Color.BLACK
+        barDataSet.valueTextSize = 16f
         barDataSet.valueTextSize = 16f
 
         val barData = BarData(barDataSet)
+        barChartWeek.setFitBars(true)
+        barChartWeek.description.text = ""
+        barChartWeek.animateY(1000)
         barChartWeek.data = barData
+        barChartWeek.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        barChartWeek.setTouchEnabled(false)
+        barChartWeek.isClickable = false
+        barChartWeek.isDoubleTapToZoomEnabled = false
+        barChartWeek.isDoubleTapToZoomEnabled = false
+
+        barChartWeek.setDrawGridBackground(false)
+
+        barChartWeek.description.isEnabled = false
+        barChartWeek.legend.isEnabled = false
+
+        barChartWeek.axisLeft.setDrawAxisLine(false)
+        barChartWeek.axisLeft.enableGridDashedLine(10f, 8f, 0f)
+        barChartWeek.axisLeft.enableAxisLineDashedLine(10f, 8f, 0f)
+
+        barChartWeek.xAxis.enableGridDashedLine(10f, 8f, 0f)
+        barChartWeek.xAxis.enableAxisLineDashedLine(10f, 8f, 0f)
+
+        barChartWeek.axisRight.setDrawLabels(false)
+        barChartWeek.axisRight.setDrawAxisLine(false)
+        barChartWeek.axisRight.enableGridDashedLine(10f, 8f, 0f)
+        barChartWeek.axisRight.enableAxisLineDashedLine(10f, 8f, 0f)
+
+    }
+
+    private fun setMonthBarChart() {
+
+        val monthSell = ArrayList<BarEntry>()
+
+        monthSell.add(BarEntry(0f, 70f))
+        monthSell.add(BarEntry(1f, 50f))
+        monthSell.add(BarEntry(2f, 120f))
+        monthSell.add(BarEntry(3f, 10f))
+        monthSell.add(BarEntry(4f, 40f))
+
+        val barDataSet = BarDataSet(monthSell, "")
+
+        barDataSet.colors = COLORFUL_COLORS
+        barDataSet.valueTextColor = Color.BLACK
+        barDataSet.valueTextSize = 16f
+        barDataSet.valueTextSize = 16f
+
+        val barData = BarData(barDataSet)
+        barMonthYear.setFitBars(true)
+        barMonthYear.description.text = ""
+        barMonthYear.animateY(1000)
+        barMonthYear.data = barData
+        barMonthYear.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        barMonthYear.setTouchEnabled(false)
+        barMonthYear.isClickable = false
+        barMonthYear.isDoubleTapToZoomEnabled = false
+        barMonthYear.isDoubleTapToZoomEnabled = false
+
+        barMonthYear.setDrawGridBackground(false)
+
+        barMonthYear.description.isEnabled = false
+        barMonthYear.legend.isEnabled = false
+
+        barMonthYear.axisLeft.setDrawAxisLine(false)
+        barMonthYear.axisLeft.enableGridDashedLine(10f, 8f, 0f)
+        barMonthYear.axisLeft.enableAxisLineDashedLine(10f, 8f, 0f)
+
+        barMonthYear.xAxis.enableGridDashedLine(10f, 8f, 0f)
+        barMonthYear.xAxis.enableAxisLineDashedLine(10f, 8f, 0f)
+        barMonthYear.xAxis.labelCount = 4
+
+        barMonthYear.axisRight.setDrawLabels(false)
+        barMonthYear.axisRight.setDrawAxisLine(false)
+        barMonthYear.axisRight.enableGridDashedLine(10f, 8f, 0f)
+        barMonthYear.axisRight.enableAxisLineDashedLine(10f, 8f, 0f)
+
+
+    }
+
+    private fun setYearBarChart() {
+
+        val yearSell = ArrayList<BarEntry>()
+
+        yearSell.add(BarEntry(0f, 70f))
+        yearSell.add(BarEntry(1f, 50f))
+        yearSell.add(BarEntry(2f, 120f))
+        yearSell.add(BarEntry(3f, 10f))
+        yearSell.add(BarEntry(4f, 40f))
+        yearSell.add(BarEntry(5f, 80f))
+        yearSell.add(BarEntry(6f, 20f))
+        yearSell.add(BarEntry(7f, 42f))
+        yearSell.add(BarEntry(8f, 40f))
+        yearSell.add(BarEntry(9f, 56f))
+        yearSell.add(BarEntry(10f, 23f))
+        yearSell.add(BarEntry(11f, 10f))
+        yearSell.add(BarEntry(12f, 15f))
+
+        val barDataSet = BarDataSet(yearSell, "")
+
+        barDataSet.colors = COLORFUL_COLORS
+        barDataSet.valueTextColor = Color.BLACK
+        barDataSet.valueTextSize = 16f
+        barDataSet.valueTextSize = 16f
+
+        val barData = BarData(barDataSet)
+        barChartYear.setFitBars(true)
+        barChartYear.description.text = ""
+        barChartYear.animateY(1000)
+        barChartYear.data = barData
+        barChartYear.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        barChartYear.setTouchEnabled(false)
+        barChartYear.isClickable = false
+        barChartYear.isDoubleTapToZoomEnabled = false
+        barChartYear.isDoubleTapToZoomEnabled = false
+
+        barChartYear.setDrawGridBackground(false)
+
+        barChartYear.description.isEnabled = false
+        barChartYear.legend.isEnabled = false
+
+        barChartYear.axisLeft.setDrawAxisLine(false)
+        barChartYear.axisLeft.enableGridDashedLine(10f, 8f, 0f)
+        barChartYear.axisLeft.enableAxisLineDashedLine(10f, 8f, 0f)
+
+        barChartYear.xAxis.enableGridDashedLine(10f, 8f, 0f)
+        barChartYear.xAxis.enableAxisLineDashedLine(10f, 8f, 0f)
+        barChartYear.xAxis.labelCount = 12
+
+        barChartYear.axisRight.setDrawLabels(false)
+        barChartYear.axisRight.setDrawAxisLine(false)
+        barChartYear.axisRight.enableGridDashedLine(10f, 8f, 0f)
+        barChartYear.axisRight.enableAxisLineDashedLine(10f, 8f, 0f)
+
 
     }
 
