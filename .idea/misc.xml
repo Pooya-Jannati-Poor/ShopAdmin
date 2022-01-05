@@ -7,6 +7,7 @@
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_circle_image_profiel.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_ed_profile.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_edit.xml" value="0.346875" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_fl_add_product.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_header_green.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_rec_shop.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_white_curve.xml" value="0.346875" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/admin_activity.xml" value="0.32760416666666664" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/admin_dashboard_fragment.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/dashboard_fragment.xml" value="0.3177083333333333" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/layout_rec_product.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/layout_rec_shop.xml" value="0.31666666666666665" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/orders_fragment.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/products_fragment.xml" value="0.31666666666666665" />

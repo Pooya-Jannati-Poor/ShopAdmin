@@ -14,6 +14,11 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="img_admin_curve">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_12sdp</item>
+    </style>
+
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="android:layout_gravity">bottom</item>
         <item name="android:textSize">@dimen/_10ssp</item>
