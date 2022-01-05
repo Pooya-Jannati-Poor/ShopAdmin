@@ -11,4 +11,10 @@
     <string name="orders">سفارشات</string>
     <string name="products">محصولات</string>
     <string name="home">خانه</string>
+    <string name="profile_info">اطلاعات حساب کاربری</string>
+    <string name="profile_name_family">نام و نام خانوداگی</string>
+    <string name="profile_phone_number">شماره تماس</string>
+    <string name="profile_address">آدرس</string>
+    <string name="profile_logout">خروج از حساب کاربری</string>
+    <string name="profile_save">ذخیره</string>
 </resources>

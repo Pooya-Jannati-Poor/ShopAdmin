@@ -21,13 +21,14 @@
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNav"
+            style="@style/BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="58dp"
-            app:itemIconTint="@drawable/navigation_view_colored"
-            style="@style/BottomNavigationView"
+            android:background="@color/white"
             android:foreground="?attr/selectableItemBackground"
             android:theme="@style/BottomNavigationView"
             app:itemBackground="@color/white"
+            app:itemIconTint="@drawable/navigation_view_colored"
             app:itemTextColor="@color/black"
             app:labelVisibilityMode="auto"
             app:menu="@menu/menu_bottom_navigation" />
