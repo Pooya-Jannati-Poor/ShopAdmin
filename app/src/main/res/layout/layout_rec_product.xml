@@ -5,8 +5,8 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layoutDirection="rtl"
         android:layout_marginBottom="@dimen/_8sdp"
+        android:layoutDirection="rtl"
         android:textDirection="rtl">
 
         <LinearLayout
@@ -14,12 +14,12 @@
             android:layout_height="@dimen/_120sdp"
             android:layout_marginStart="@dimen/_20sdp"
             android:background="@drawable/bg_white_curve"
-            android:padding="@dimen/_8sdp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
 
             <Space
                 android:layout_width="@dimen/_100sdp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -29,43 +29,84 @@
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/tvBookName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="دو برج"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_15ssp"
-                    android:text="دو برج"/>
+                    android:textSize="@dimen/_15ssp" />
 
                 <TextView
+                    android:id="@+id/tvBookWriter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_10ssp"
                     android:layout_marginTop="@dimen/_8sdp"
+                    android:text="جی ار ار تالکین"
                     android:textColor="#828282"
-                    android:text="جی ار ار تالکین"/>
+                    android:textSize="@dimen/_10ssp" />
 
                 <Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <TextView
+                    android:id="@+id/tvBookAvailable"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@string/book_available"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_10ssp"
-                    android:text="موجودی"/>
+                    android:textSize="@dimen/_10ssp" />
 
             </LinearLayout>
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/_12sdp"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/llhEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
+                    <ImageView
+                        android:layout_width="@dimen/_12sdp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:src="@drawable/ic_edit" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ویرایش"
+                        android:textColor="@color/green_500"
+                        android:textSize="@dimen/_10ssp" />
+
+                </LinearLayout>
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imgDelete"
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_delete" />
 
             </LinearLayout>
 
@@ -79,7 +120,9 @@
             android:scaleType="fitXY"
             android:src="@drawable/ic_admin_image_test"
             android:transitionName="coffeeShopImage"
-            app:shapeAppearanceOverlay="@style/img_admin_curve" />
+            app:shapeAppearanceOverlay="@style/img_admin_curve"
+            app:strokeColor="#9E9E9E"
+            app:strokeWidth="@dimen/_1sdp" />
 
 
     </FrameLayout>

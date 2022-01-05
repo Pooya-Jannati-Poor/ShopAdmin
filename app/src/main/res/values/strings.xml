@@ -17,4 +17,6 @@
     <string name="profile_address">آدرس</string>
     <string name="profile_logout">خروج از حساب کاربری</string>
     <string name="profile_save">ذخیره</string>
+    <string name="book_available">موجود</string>
+    <string name="book_unavailable">ناموجود</string>
 </resources>

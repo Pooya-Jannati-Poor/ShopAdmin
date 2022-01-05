@@ -16,7 +16,7 @@
 
     <style name="img_admin_curve">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/_12sdp</item>
+        <item name="cornerSize">@dimen/_14sdp</item>
     </style>
 
     <style name="BottomNavigationView" parent="Widget.Design.BottomNavigationView">
