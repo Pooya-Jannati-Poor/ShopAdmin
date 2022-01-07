@@ -38,6 +38,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/llhAddNewBook"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -64,10 +65,11 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginVertical="@dimen/_8sdp"
             tools:listitem="@layout/layout_rec_product"/>
 
     </LinearLayout>

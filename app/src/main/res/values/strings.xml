@@ -19,4 +19,16 @@
     <string name="profile_save">ذخیره</string>
     <string name="book_available">موجود</string>
     <string name="book_unavailable">ناموجود</string>
+    <string name="product_add_new_book">افزودن کتاب جدید</string>
+    <string name="product_book_name">نام کتاب:</string>
+    <string name="product_book_writer">نام نویسنده:</string>
+    <string name="add_book">افزودن</string>
+    <string name="product_publication">نشر:</string>
+    <string name="product_category">دسته بندی:</string>
+    <string name="product_price">قیمت(تومان):</string>
+    <string name="product_page_count">تعداد صفحات:</string>
+    <string name="product_publish_year">سال انتشار:</string>
+    <string name="product_isbn">شابک:</string>
+    <string name="product_available_count">موجودی:</string>
+    <string name="product_description">معرفی:</string>
 </resources>

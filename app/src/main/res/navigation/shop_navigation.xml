@@ -19,10 +19,23 @@
         android:id="@+id/productsFragment"
         android:name="ir.arinateam.shopadmin.shop.ProductsFragment"
         android:label="products_fragment"
-        tools:layout="@layout/products_fragment" />
+        tools:layout="@layout/products_fragment">
+        <action
+            android:id="@+id/action_productsFragment_to_addBookFragment"
+            app:destination="@id/addBookFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/ordersFragment"
         android:name="ir.arinateam.shopadmin.shop.OrdersFragment"
         android:label="orders_fragment"
         tools:layout="@layout/orders_fragment" />
+    <fragment
+        android:id="@+id/addBookFragment"
+        android:name="ir.arinateam.shopadmin.shop.AddBookFragment"
+        android:label="add_book_fragment"
+        tools:layout="@layout/add_book_fragment" />
 </navigation>
