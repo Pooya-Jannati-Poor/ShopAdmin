@@ -9,6 +9,7 @@
     <string name="dashboard">داشبورد</string>
     <string name="profile">پروفایل</string>
     <string name="orders">سفارشات</string>
+    <string name="orders_list">لیست سفارشات</string>
     <string name="products">محصولات</string>
     <string name="home">خانه</string>
     <string name="profile_info">اطلاعات حساب کاربری</string>

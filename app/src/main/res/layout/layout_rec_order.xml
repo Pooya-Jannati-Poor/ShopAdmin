@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layoutDirection="rtl"
+        android:textDirection="rtl">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_white_curve"
+            android:orientation="horizontal"
+            android:padding="@dimen/_8sdp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/imgBook"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_120sdp"
+                android:scaleType="fitXY"
+                app:shapeAppearanceOverlay="@style/img_admin_curve"
+                tools:src="@drawable/ic_admin_image_test" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="سعید رضایی نسب"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_11ssp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1400/12/24"
+                        android:textColor="@color/light_black"
+                        android:textSize="@dimen/_11ssp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</layout>
