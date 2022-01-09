@@ -32,10 +32,23 @@
         android:id="@+id/ordersFragment"
         android:name="ir.arinateam.shopadmin.shop.OrdersFragment"
         android:label="orders_fragment"
-        tools:layout="@layout/orders_fragment" />
+        tools:layout="@layout/orders_fragment">
+        <action
+            android:id="@+id/action_ordersFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
     <fragment
         android:id="@+id/addBookFragment"
         android:name="ir.arinateam.shopadmin.shop.AddBookFragment"
         android:label="add_book_fragment"
         tools:layout="@layout/add_book_fragment" />
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="ir.arinateam.shopadmin.OrderDetailFragment"
+        android:label="order_detail_fragment"
+        tools:layout="@layout/order_detail_fragment" />
 </navigation>

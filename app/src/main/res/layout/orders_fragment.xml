@@ -38,12 +38,12 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recProduct"
+            android:id="@+id/recOrder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_12sdp"
             android:layout_marginVertical="@dimen/_8sdp"
-            tools:listitem="@layout/layout_rec_product" />
+            tools:listitem="@layout/layout_rec_order" />
 
     </LinearLayout>
 
