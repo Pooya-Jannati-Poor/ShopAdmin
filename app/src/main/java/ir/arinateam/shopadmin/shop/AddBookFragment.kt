@@ -30,6 +30,7 @@ class AddBookFragment : Fragment() {
     private lateinit var edBookPublishYear: EditText
     private lateinit var edBookISBN: EditText
     private lateinit var edBookAvailableCount: EditText
+    private lateinit var edBookDiscount: EditText
     private lateinit var edBookDescription: EditText
 
     override fun onCreateView(
@@ -71,6 +72,7 @@ class AddBookFragment : Fragment() {
         edBookPublishYear = bindingFragment.edBookPublishYear
         edBookISBN = bindingFragment.edBookISBN
         edBookAvailableCount = bindingFragment.edBookAvailableCount
+        edBookDiscount = bindingFragment.edBookDiscount
         edBookDescription = bindingFragment.edBookDescription
 
     }
@@ -116,6 +118,7 @@ class AddBookFragment : Fragment() {
     private lateinit var bookPublishYear: String
     private lateinit var bookISBN: String
     private lateinit var bookAvailableCount: String
+    private lateinit var bookDiscount: String
     private lateinit var bookDescription: String
 
     private fun checkInputs() {
@@ -129,6 +132,7 @@ class AddBookFragment : Fragment() {
         bookPublishYear = edBookPublishYear.text.toString().plus("")
         bookISBN = edBookISBN.text.toString().plus("")
         bookAvailableCount = edBookAvailableCount.text.toString().plus("")
+        bookDiscount = edBookDiscount.text.toString().plus("")
         bookDescription = edBookDescription.text.toString().plus("")
 
 

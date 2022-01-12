@@ -31,5 +31,6 @@
     <string name="product_publish_year">سال انتشار:</string>
     <string name="product_isbn">شابک:</string>
     <string name="product_available_count">موجودی:</string>
+    <string name="product_discount">تخفیف روی این محصول(درصد):</string>
     <string name="product_description">معرفی:</string>
 </resources>
