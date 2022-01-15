@@ -6,26 +6,25 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.imageview.ShapeableImageView
 import ir.arinateam.shopadmin.R
-import ir.arinateam.shopadmin.databinding.LayoutRecOrderBinding
-import ir.arinateam.shopadmin.shop.model.ModelRecOrder
+import ir.arinateam.shopadmin.databinding.LayoutRecOrderDetailBinding
+import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetail
 import ir.arinateam.shopadmin.utils.NumbersSeparator
 
-class AdapterRecOrder(
+class AdapterRecOrderDetail(
     private val context: Context,
-    private val lsModelRecOrder: List<ModelRecOrder>
-) : RecyclerView.Adapter<AdapterRecOrder.ItemAdapter>() {
+    private val lsModelRecOrder: List<ModelRecOrderDetail>
+) : RecyclerView.Adapter<AdapterRecOrderDetail.ItemAdapter>() {
 
-    private lateinit var bindingAdapter: LayoutRecOrderBinding
+    private lateinit var bindingAdapter: LayoutRecOrderDetailBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapter {
         val inflater = LayoutInflater.from(context)
-        bindingAdapter = DataBindingUtil.inflate(inflater, R.layout.layout_rec_order, parent, false)
+        bindingAdapter = DataBindingUtil.inflate(inflater, R.layout.layout_rec_order_detail, parent, false)
         return ItemAdapter(bindingAdapter)
     }
 
@@ -38,17 +37,23 @@ class AdapterRecOrder(
             .fitCenter().placeholder(
                 R.drawable.ic_admin_image_test
             ).into(holder.imgBook)
-        holder.tvUsername.text = model.username
-        holder.tvBookCount.text = "${model.orderCount} سفارش"
-        holder.tvOrderDate.text = model.date
+        holder.tvBookName.text = model.bookName
+        holder.tvBookCount.text = model.bookCount.toString()
+        holder.tvBookSeller.text = model.bookSeller
 
         val numbersSeparator = NumbersSeparator()
 
-        holder.tvPrice.text = numbersSeparator.doubleToStringNoDecimal(model.price.toDouble())
+        holder.tvBookPrice.text =
+            numbersSeparator.doubleToStringNoDecimal(model.bookPrice.toDouble())
 
-        holder.itemView.setOnClickListener {
+        if (model.orderState) {
 
-            Navigation.findNavController(it).navigate(R.id.action_ordersFragment_to_orderDetailFragment)
+            holder.tvOrderState.text = context.getText(R.string.payment_successful)
+
+        } else {
+
+            holder.tvOrderState.text = context.getText(R.string.payment_failed)
+            holder.tvOrderState.setTextColor(context.resources.getColor(R.color.red))
 
         }
 
@@ -56,14 +61,15 @@ class AdapterRecOrder(
 
     override fun getItemCount(): Int = lsModelRecOrder.size
 
-    inner class ItemAdapter(binding: LayoutRecOrderBinding) :
+    inner class ItemAdapter(binding: LayoutRecOrderDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         val imgBook: ShapeableImageView = binding.imgBook
-        val tvUsername: TextView = binding.tvUsername
+        val tvBookName: TextView = binding.tvBookName
         val tvBookCount: TextView = binding.tvBookCount
-        val tvOrderDate: TextView = binding.tvOrderDate
-        val tvPrice: TextView = binding.tvPrice
+        val tvBookSeller: TextView = binding.tvBookSeller
+        val tvBookPrice: TextView = binding.tvBookPrice
+        val tvOrderState: TextView = binding.tvOrderState
 
     }
 

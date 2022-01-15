@@ -33,4 +33,6 @@
     <string name="product_available_count">موجودی:</string>
     <string name="product_discount">تخفیف روی این محصول(درصد):</string>
     <string name="product_description">معرفی:</string>
+    <string name="payment_successful">پرداخت شده</string>
+    <string name="payment_failed">ناموفق</string>
 </resources>

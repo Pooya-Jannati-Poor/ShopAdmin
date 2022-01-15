@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_navigation"
+    app:startDestination="@id/loginStep1Fragment">
+
+    <fragment
+        android:id="@+id/loginStep1Fragment"
+        android:name="ir.arinateam.shopadmin.LoginStep1Fragment"
+        android:label="login_step1_fragment"
+        tools:layout="@layout/login_step1_fragment" >
+        <action
+            android:id="@+id/action_loginStep1Fragment_to_loginStep2Fragment"
+            app:destination="@id/loginStep2Fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginStep2Fragment"
+        android:name="ir.arinateam.shopadmin.LoginStep2Fragment"
+        android:label="LoginStep2Fragment"
+        tools:layout="@layout/login_step2_fragment"/>
+</navigation>

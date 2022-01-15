@@ -5,16 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
-import ir.arinateam.shopadmin.databinding.OrderDetailFragmentBinding
+import ir.arinateam.shopadmin.databinding.LoginStep1FragmentBinding
 
-class OrderDetailFragment : Fragment() {
 
-    private lateinit var bindingFragment: OrderDetailFragmentBinding
+class LoginStep1Fragment : Fragment() {
 
-    private lateinit var imgBack: ImageView
+    private lateinit var bindingFragment: LoginStep1FragmentBinding
+
+    private lateinit var btnLogin: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,7 +23,7 @@ class OrderDetailFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         bindingFragment =
-            DataBindingUtil.inflate(inflater, R.layout.order_detail_fragment, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.login_step1_fragment, container, false)
         return bindingFragment.root
     }
 
@@ -31,25 +32,26 @@ class OrderDetailFragment : Fragment() {
 
         initView()
 
-        backToDashboard()
+        goToLoginFragment()
 
     }
 
     private fun initView() {
 
-        imgBack = bindingFragment.imgBack
+        btnLogin = bindingFragment.btnLogin
 
     }
 
+    private fun goToLoginFragment() {
 
-    private fun backToDashboard() {
+        btnLogin.setOnClickListener {
 
-        imgBack.setOnClickListener {
-
-            Navigation.findNavController(it).popBackStack()
+            Navigation.findNavController(it)
+                .navigate(R.id.action_loginStep1Fragment_to_loginStep2Fragment)
 
         }
 
     }
+
 
 }

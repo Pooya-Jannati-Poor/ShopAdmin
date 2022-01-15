@@ -48,7 +48,7 @@
         tools:layout="@layout/add_book_fragment" />
     <fragment
         android:id="@+id/orderDetailFragment"
-        android:name="ir.arinateam.shopadmin.OrderDetailFragment"
+        android:name="ir.arinateam.shopadmin.shop.OrderDetailFragment"
         android:label="order_detail_fragment"
         tools:layout="@layout/order_detail_fragment" />
 </navigation>

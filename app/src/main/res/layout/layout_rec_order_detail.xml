@@ -41,10 +41,10 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvUsername"
+                        android:id="@+id/tvBookName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="سعید رضایی نسب"
+                        android:text="دو برج"
                         android:textColor="@color/black"
                         android:textSize="@dimen/_11ssp" />
 
@@ -54,11 +54,36 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/tvOrderDate"
+                        android:id="@+id/tvBookSeller"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1400/12/24"
+                        android:text="کتابفروشی مسعودی"
                         android:textColor="@color/light_black"
+                        android:textSize="@dimen/_10ssp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvBookCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:textColor="#9E9E9E"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:text="عدد"
+                        android:textColor="#9E9E9E"
                         android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
@@ -71,10 +96,18 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tvBookCount"
+                        android:id="@+id/tvBookPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="3 سفارش"
+                        android:text="148،000"
+                        android:textColor="#9E9E9E"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:text="تومان"
                         android:textColor="#9E9E9E"
                         android:textSize="@dimen/_10ssp" />
 
@@ -84,19 +117,11 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/tvPrice"
+                        android:id="@+id/tvOrderState"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="148،000"
-                        android:layout_marginEnd="@dimen/_4sdp"
-                        android:textColor="@color/light_black"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="تومان"
-                        android:textColor="@color/light_black"
+                        android:text="@string/payment_successful"
+                        android:textColor="@color/green_500"
                         android:textSize="@dimen/_10ssp" />
 
 

@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable-v24/bg_btn_login.xml" value="0.346875" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_btn_login.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_btn_save_profile_info.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_circle_image_profiel.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/bg_ed_profile.xml" value="0.346875" />
@@ -20,6 +22,7 @@
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/navigation_view_colored.xml" value="0.13703703703703704" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/thumb_selector.xml" value="0.346875" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/drawable/track_selector.xml" value="0.346875" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/activity_login.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/activity_main.xml" value="0.21944444444444444" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/activity_shop.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/add_book_fragment.xml" value="0.2891566265060241" />
@@ -30,6 +33,8 @@
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/layout_rec_order_detail.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/layout_rec_product.xml" value="0.33" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/layout_rec_shop.xml" value="0.31666666666666665" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/login_step1_fragment.xml" value="0.3307291666666667" />
+        <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/login_step2_fragment.xml" value="0.3307291666666667" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/order_detail_fragment.xml" value="0.2898148148148148" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/orders_fragment.xml" value="0.3137254901960784" />
         <entry key="..\:/Projects/ShopAdmin/app/src/main/res/layout/products_fragment.xml" value="0.31666666666666665" />
