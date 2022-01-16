@@ -6,16 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.arinateam.shopadmin.R
+import ir.arinateam.shopadmin.api.ApiClient
+import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.OrderDetailFragmentBinding
 import ir.arinateam.shopadmin.shop.adapter.AdapterRecOrder
 import ir.arinateam.shopadmin.shop.adapter.AdapterRecOrderDetail
 import ir.arinateam.shopadmin.shop.model.ModelRecOrder
+import ir.arinateam.shopadmin.shop.model.ModelRecOrderBase
 import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetail
+import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetailBase
+import ir.arinateam.shopadmin.utils.Loading
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class OrderDetailFragment : Fragment() {
 
@@ -49,6 +58,63 @@ class OrderDetailFragment : Fragment() {
 
         imgBack = bindingFragment.imgBack
         recOrderDetail = bindingFragment.recOrderDetail
+
+    }
+
+    private lateinit var apiClient: ApiClient
+
+    private fun getOrderDetail() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.orderDetail("", 1, requireArguments().getInt("orderId"))
+
+        callLoading.enqueue(object : Callback<ModelRecOrderDetailBase> {
+
+            override fun onResponse(
+                call: Call<ModelRecOrderDetailBase>,
+                response: Response<ModelRecOrderDetailBase>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    lsModelRecOrder.addAll(data.orderDetails)
+
+                    setRecOrderDetail()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelRecOrderDetailBase>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
 
     }
 

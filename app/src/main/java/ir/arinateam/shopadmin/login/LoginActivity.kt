@@ -1,7 +1,8 @@
-package ir.arinateam.shopadmin
+package ir.arinateam.shopadmin.login
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import ir.arinateam.shopadmin.R
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

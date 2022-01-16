@@ -2,6 +2,7 @@ package ir.arinateam.shopadmin.shop.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -48,7 +49,10 @@ class AdapterRecOrder(
 
         holder.itemView.setOnClickListener {
 
-            Navigation.findNavController(it).navigate(R.id.action_ordersFragment_to_orderDetailFragment)
+            val bundle = Bundle()
+            bundle.putInt("orderId", model.id)
+            Navigation.findNavController(it)
+                .navigate(R.id.action_ordersFragment_to_orderDetailFragment, bundle)
 
         }
 

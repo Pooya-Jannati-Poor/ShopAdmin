@@ -261,7 +261,7 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
 
     /**
      * Sets the color for the web lines that come from the center. Don't forget
-     * to use getResources().getColor(...) when loading a color from the
+     * to use getResources().getColor(...) when loading_lottie a color from the
      * resources. Default: Color.rgb(122, 122, 122)
      *
      * @param color
@@ -276,7 +276,7 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
 
     /**
      * Sets the color for the web lines in between the lines that come from the
-     * center. Don't forget to use getResources().getColor(...) when loading a
+     * center. Don't forget to use getResources().getColor(...) when loading_lottie a
      * color from the resources. Default: Color.rgb(122, 122, 122)
      *
      * @param color

@@ -1,4 +1,4 @@
-package ir.arinateam.shopadmin
+package ir.arinateam.shopadmin.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
+import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.databinding.LoginStep1FragmentBinding
 
 

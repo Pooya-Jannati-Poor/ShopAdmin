@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * Class that holds predefined color integer arrays (e.g.
- * ColorTemplate.VORDIPLOM_COLORS) and convenience methods for loading colors
+ * ColorTemplate.VORDIPLOM_COLORS) and convenience methods for loading_lottie colors
  * from resources.
  *
  * @author Philipp Jahoda

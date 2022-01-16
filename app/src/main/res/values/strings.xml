@@ -34,5 +34,9 @@
     <string name="product_discount">تخفیف روی این محصول(درصد):</string>
     <string name="product_description">معرفی:</string>
     <string name="payment_successful">پرداخت شده</string>
-    <string name="payment_failed">ناموفق</string>
+    <string name="payment_failed">ناموفق</string>.
+
+    <string name="error_receive_data">خطا در دریافت اطلاعات! لطفا کمی دیرتر مجددا سعی نمایید</string>
+    <string name="error_send_data">خطا در ارسال اطلاعات! لطفا کمی دیرتر مجددا سعی نمایید</string>
+
 </resources>
