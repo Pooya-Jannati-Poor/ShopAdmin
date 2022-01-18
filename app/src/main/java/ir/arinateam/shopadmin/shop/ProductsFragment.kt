@@ -7,14 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.arinateam.shopadmin.R
+import ir.arinateam.shopadmin.api.ApiClient
+import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.ProductsFragmentBinding
 import ir.arinateam.shopadmin.shop.adapter.AdapterRecProduct
+import ir.arinateam.shopadmin.shop.model.ModelRecOrderBase
 import ir.arinateam.shopadmin.shop.model.ModelRecProduct
+import ir.arinateam.shopadmin.shop.model.ModelRecProductBase
+import ir.arinateam.shopadmin.utils.Loading
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ProductsFragment : Fragment() {
@@ -53,6 +62,63 @@ class ProductsFragment : Fragment() {
         imgBack = bindingFragment.imgBack
         llhAddNewBook = bindingFragment.llhAddNewBook
         recProduct = bindingFragment.recProduct
+
+    }
+
+    private lateinit var apiClient: ApiClient
+
+    private fun getProductList() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.productList("", 1)
+
+        callLoading.enqueue(object : Callback<ModelRecProductBase> {
+
+            override fun onResponse(
+                call: Call<ModelRecProductBase>,
+                response: Response<ModelRecProductBase>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    lsModelRecProduct.addAll(data.products)
+
+                    setRecProducts()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelRecProductBase>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
 
     }
 
