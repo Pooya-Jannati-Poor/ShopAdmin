@@ -18,8 +18,7 @@
     <string name="profile_address">آدرس</string>
     <string name="profile_logout">خروج از حساب کاربری</string>
     <string name="profile_save">ذخیره</string>
-    <string name="book_available">موجود</string>
-    <string name="book_unavailable">ناموجود</string>
+    <string name="book_available_count">موجودی</string>
     <string name="product_add_new_book">افزودن کتاب جدید</string>
     <string name="product_book_name">نام کتاب:</string>
     <string name="product_book_writer">نام نویسنده:</string>

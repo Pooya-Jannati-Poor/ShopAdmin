@@ -135,7 +135,15 @@ class ProductsFragment : Fragment() {
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
                 "ارباب حلقه ها",
                 "جی ار ار تاکین",
-                true
+                4,
+                "جنگل",
+                1,
+                25000,
+                152,
+                1998,
+                "9865-545644-56151-564",
+                0,
+                "کتاب بسیار خوب و جالبی است."
             )
         )
         lsModelRecProduct.add(
@@ -144,7 +152,15 @@ class ProductsFragment : Fragment() {
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
                 "دو برج",
                 "جی ار ار تاکین",
-                false
+                6,
+                "کویر",
+                2,
+                40000,
+                320,
+                2012,
+                "9865-545644-56151-564",
+                10,
+                "کتاب بسیار خوب و جالبی است."
             )
         )
         lsModelRecProduct.add(
@@ -153,7 +169,15 @@ class ProductsFragment : Fragment() {
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
                 "هری پاتر و سنگ جادو",
                 "اصغر فرهادی",
-                true
+                1,
+                "جنگل",
+                4,
+                25000,
+                152,
+                1998,
+                "9865-545644-56151-564",
+                0,
+                "کتاب بسیار خوب و جالبی است."
             )
         )
         lsModelRecProduct.add(
@@ -162,7 +186,15 @@ class ProductsFragment : Fragment() {
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
                 "بابا لنگ دراز",
                 "جی ار ار تاکین",
-                true
+                2,
+                "جنگل",
+                3,
+                25000,
+                152,
+                1998,
+                "9865-545644-56151-564",
+                0,
+                "کتاب بسیار خوب و جالبی است."
             )
         )
         lsModelRecProduct.add(
@@ -171,7 +203,15 @@ class ProductsFragment : Fragment() {
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
                 "قم بهتر است یا نیویورک؟:/",
                 "یه نویسنده",
-                false
+                0,
+                "جنگل",
+                1,
+                25000,
+                152,
+                1998,
+                "9865-545644-56151-564",
+                5,
+                "کتاب بسیار خوب و جالبی است."
             )
         )
         lsModelRecProduct.add(
@@ -180,7 +220,15 @@ class ProductsFragment : Fragment() {
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
                 "اثر مرکب",
                 "دان هاردی",
-                true
+                4,
+                "جنگل",
+                1,
+                25000,
+                152,
+                1998,
+                "9865-545644-56151-564",
+                0,
+                "کتاب بسیار خوب و جالبی است."
             )
         )
 

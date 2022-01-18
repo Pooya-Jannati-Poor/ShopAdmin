@@ -6,6 +6,14 @@ data class ModelRecProduct(
     val img: String,
     val bookName: String,
     val bookWriter: String,
-    val isAvailable: Boolean
+    val availableCount: Int,
+    val publisher: String,
+    val categoryId: Int,
+    val price: Int,
+    val pageCount: Int,
+    val publishYear: Int,
+    val isbn: String,
+    val discountPercent: Int,
+    val description: String
 
 )

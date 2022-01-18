@@ -42,20 +42,27 @@ class AdapterRecProduct(
             ).into(holder.imgBook)
         holder.tvBookName.text = model.bookName
         holder.tvBookWriter.text = model.bookWriter
-        if (model.isAvailable) {
 
-            holder.tvBookAvailable.text = context.resources.getString(R.string.book_available)
+        holder.tvBookAvailable.text =
+            context.resources.getString(R.string.book_available_count).plus(model.availableCount)
 
-        } else {
 
-            holder.tvBookAvailable.text = context.resources.getString(R.string.book_unavailable)
-
-        }
 
         holder.llhEdit.setOnClickListener {
 
             val bundle = Bundle()
             bundle.putInt("productId", model.id)
+            bundle.putString("productImage", model.img)
+            bundle.putString("productName", model.bookName)
+            bundle.putString("productWriter", model.bookWriter)
+            bundle.putString("productAvailableCount", model.availableCount.toString())
+            bundle.putString("productPublisher", model.publisher)
+            bundle.putString("productCategoryId", model.categoryId.toString())
+            bundle.putString("productPrice", model.price.toString())
+            bundle.putString("productPublishYear", model.publishYear.toString())
+            bundle.putString("productIsbn", model.isbn)
+            bundle.putString("productDiscountPercent", model.discountPercent.toString())
+            bundle.putString("productDescription", model.description)
 
             Navigation.findNavController(it)
                 .navigate(R.id.action_productsFragment_to_addBookFragment, bundle)
