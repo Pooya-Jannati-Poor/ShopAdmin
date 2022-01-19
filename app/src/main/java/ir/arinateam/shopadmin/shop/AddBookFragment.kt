@@ -2,6 +2,7 @@ package ir.arinateam.shopadmin.shop
 
 import android.app.Activity
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -239,8 +240,13 @@ class AddBookFragment : Fragment() {
                 //Image Uri will not be null for RESULT_OK
                 val fileUri = data?.data!!
 
-//                mProfileUri = fileUri
+                val bitmap = MediaStore.Images.Media.getBitmap(
+                    requireActivity().contentResolver,
+                    fileUri
+                )
+
                 imgBook.setImageURI(fileUri)
+
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
                     .show()
