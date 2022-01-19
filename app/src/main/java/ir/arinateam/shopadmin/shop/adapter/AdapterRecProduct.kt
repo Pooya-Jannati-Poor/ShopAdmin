@@ -44,7 +44,7 @@ class AdapterRecProduct(
         holder.tvBookWriter.text = model.bookWriter
 
         holder.tvBookAvailable.text =
-            context.resources.getString(R.string.book_available_count).plus(model.availableCount)
+            context.resources.getString(R.string.book_available_count).plus(" " + model.availableCount + " عدد")
 
 
 
@@ -57,6 +57,7 @@ class AdapterRecProduct(
             bundle.putString("productWriter", model.bookWriter)
             bundle.putString("productAvailableCount", model.availableCount.toString())
             bundle.putString("productPublisher", model.publisher)
+            bundle.putString("productPageCount", model.pageCount.toString())
             bundle.putString("productCategoryId", model.categoryId.toString())
             bundle.putString("productPrice", model.price.toString())
             bundle.putString("productPublishYear", model.publishYear.toString())
@@ -70,6 +71,8 @@ class AdapterRecProduct(
         }
 
         holder.imgDelete.setOnClickListener {
+
+            // Send delete api
 
             lsModelRecProduct.removeAt(holder.adapterPosition)
             notifyItemRemoved(holder.adapterPosition)

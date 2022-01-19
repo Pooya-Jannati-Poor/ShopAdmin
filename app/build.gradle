@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -16,6 +17,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -41,12 +43,15 @@ android {
 
 dependencies {
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(path: ':mpchart')
+    implementation project(path: ':imagepicker')
 
     // navigation
     def nav_version = "2.3.5"

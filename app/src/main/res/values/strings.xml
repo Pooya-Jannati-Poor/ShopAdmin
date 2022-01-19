@@ -29,7 +29,7 @@
     <string name="product_page_count">تعداد صفحات:</string>
     <string name="product_publish_year">سال انتشار:</string>
     <string name="product_isbn">شابک:</string>
-    <string name="product_available_count">موجودی:</string>
+    <string name="product_available_count">موجودی(عدد):</string>
     <string name="product_discount">تخفیف روی این محصول(درصد):</string>
     <string name="product_description">معرفی:</string>
     <string name="payment_successful">پرداخت شده</string>
@@ -37,5 +37,6 @@
 
     <string name="error_receive_data">خطا در دریافت اطلاعات! لطفا کمی دیرتر مجددا سعی نمایید</string>
     <string name="error_send_data">خطا در ارسال اطلاعات! لطفا کمی دیرتر مجددا سعی نمایید</string>
+    <string name="zero">0</string>
 
 </resources>
