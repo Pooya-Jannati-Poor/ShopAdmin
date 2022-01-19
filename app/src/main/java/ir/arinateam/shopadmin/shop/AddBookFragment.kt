@@ -17,7 +17,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.imageview.ShapeableImageView
 import ir.arinateam.imagepicker.ImagePicker
 import ir.arinateam.shopadmin.R
+import ir.arinateam.shopadmin.api.ApiClient
+import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.AddBookFragmentBinding
+import ir.arinateam.shopadmin.shop.model.ModelSpCategory
+import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
+import ir.arinateam.shopadmin.utils.Loading
+import ir.arinateam.shopadmin.utils.PrepareImageForUpload
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AddBookFragment : Fragment() {
 
@@ -99,6 +110,7 @@ class AddBookFragment : Fragment() {
 
             bookId = requireArguments().getInt("productId")
             bookImage = requireArguments().getString("productImage")!!
+            bookImageId = requireArguments().getString("productImageId")!!
             bookName = requireArguments().getString("productName")!!
             bookWriter = requireArguments().getString("productWriter")!!
             bookPublisher = requireArguments().getString("productPublisher")!!
@@ -131,7 +143,67 @@ class AddBookFragment : Fragment() {
 
     }
 
+    private lateinit var apiClient: ApiClient
+    private lateinit var lsModelSpCategory: ArrayList<ModelSpCategory>
+
     private fun getCategoryList() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.categoryList("", 1)
+
+        callLoading.enqueue(object : Callback<ModelSpCategoryBase> {
+
+            override fun onResponse(
+                call: Call<ModelSpCategoryBase>,
+                response: Response<ModelSpCategoryBase>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    lsModelSpCategory = ArrayList()
+
+                    lsModelSpCategory.addAll(data.categories)
+
+                    setSpCategory()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelSpCategoryBase>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
+
+    }
+
+    private fun setSpCategory() {
 
 
     }
@@ -158,6 +230,7 @@ class AddBookFragment : Fragment() {
 
     private var bookId: Int? = null
     private lateinit var bookImage: String
+    private lateinit var bookImageId: String
     private lateinit var bookName: String
     private lateinit var bookWriter: String
     private lateinit var bookPublisher: String
@@ -213,6 +286,218 @@ class AddBookFragment : Fragment() {
 
     }
 
+    private fun editProductWithImage() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.editProductWithImage(
+            "",
+            1,
+            imageMultiPartBody,
+            bookImageId.toInt(),
+            bookId!!,
+            bookName,
+            bookWriter,
+            bookPublisher,
+            0,
+            bookPrice,
+            bookPageCount.toInt(),
+            bookPublishYear.toInt(),
+            bookISBN,
+            bookAvailableCount.toInt(),
+            bookDiscount.toInt(),
+            bookDescription
+        )
+
+        callLoading.enqueue(object : Callback<ResponseBody> {
+
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        "محصول شما با موفقیت تغییر کرد",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
+
+    }
+
+    private fun editProductWithoutImage() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.editProductWithoutImage(
+            "",
+            1,
+            bookId!!,
+            bookName,
+            bookWriter,
+            bookPublisher,
+            0,
+            bookPrice,
+            bookPageCount.toInt(),
+            bookPublishYear.toInt(),
+            bookISBN,
+            bookAvailableCount.toInt(),
+            bookDiscount.toInt(),
+            bookDescription
+        )
+
+        callLoading.enqueue(object : Callback<ResponseBody> {
+
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        "محصول شما با موفقیت تغییر کرد",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
+
+    }
+
+    private fun addProduct() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.addProduct(
+            "",
+            1,
+            imageMultiPartBody,
+            bookName,
+            bookWriter,
+            bookPublisher,
+            0,
+            bookPrice,
+            bookPageCount.toInt(),
+            bookPublishYear.toInt(),
+            bookISBN,
+            bookAvailableCount.toInt(),
+            bookDiscount.toInt(),
+            bookDescription
+        )
+
+        callLoading.enqueue(object : Callback<ResponseBody> {
+
+            override fun onResponse(
+                call: Call<ResponseBody>,
+                response: Response<ResponseBody>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        "محصول شما با موفقیت اضافه شد",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
+
+    }
+
     private fun getImage() {
 
         imgBook.setOnClickListener {
@@ -231,6 +516,8 @@ class AddBookFragment : Fragment() {
 
     }
 
+    private lateinit var imageMultiPartBody: MultipartBody.Part
+
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val resultCode = result.resultCode
@@ -246,6 +533,9 @@ class AddBookFragment : Fragment() {
                 )
 
                 imgBook.setImageURI(fileUri)
+
+                val prepare = PrepareImageForUpload()
+                imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "book", bitmap)
 
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT)

@@ -4,6 +4,7 @@ data class ModelRecProduct(
 
     val id: Int,
     val img: String,
+    val imgId: Int,
     val bookName: String,
     val bookWriter: String,
     val availableCount: Int,
