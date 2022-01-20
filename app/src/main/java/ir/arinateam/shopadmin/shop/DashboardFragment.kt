@@ -6,7 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.imageview.ShapeableImageView
 import ir.arinateam.mpchart.charts.BarChart
 import ir.arinateam.mpchart.components.XAxis
 import ir.arinateam.mpchart.data.BarData
@@ -14,12 +19,21 @@ import ir.arinateam.mpchart.data.BarDataSet
 import ir.arinateam.mpchart.data.BarEntry
 import ir.arinateam.mpchart.utils.ColorTemplate
 import ir.arinateam.shopadmin.R
+import ir.arinateam.shopadmin.api.ApiClient
+import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.DashboardFragmentBinding
+import ir.arinateam.shopadmin.shop.model.ModelGetShopDashboard
+import ir.arinateam.shopadmin.utils.Loading
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DashboardFragment : Fragment() {
 
     private lateinit var bindingFragment: DashboardFragmentBinding
 
+    private lateinit var imgProfile: ShapeableImageView
+    private lateinit var tvShopName: TextView
     private lateinit var barChartWeek: BarChart
     private lateinit var barMonthYear: BarChart
 
@@ -40,6 +54,8 @@ class DashboardFragment : Fragment() {
 
         setColorList()
 
+//        getDashboardInfo()
+
         setWeekBarChart()
 
         setMonthBarChart()
@@ -48,8 +64,92 @@ class DashboardFragment : Fragment() {
 
     private fun initView() {
 
+        imgProfile = bindingFragment.imgProfile
+        tvShopName = bindingFragment.tvShopName
         barChartWeek = bindingFragment.barChartWeek
         barMonthYear = bindingFragment.barMonthYear
+
+    }
+
+
+    private lateinit var apiClient: ApiClient
+
+    private fun getDashboardInfo() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.shopDashboard("", 1)
+
+        callLoading.enqueue(object : Callback<ModelGetShopDashboard> {
+
+            override fun onResponse(
+                call: Call<ModelGetShopDashboard>,
+                response: Response<ModelGetShopDashboard>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    tvShopName.text = data.shopName
+
+                    Glide.with(requireActivity()).load(data.shopImage).diskCacheStrategy(
+                        DiskCacheStrategy.ALL
+                    )
+                        .fitCenter().placeholder(
+                            R.drawable.ic_admin_image_test
+                        ).into(imgProfile)
+
+                    weekSell = ArrayList()
+                    monthSell = ArrayList()
+
+                    data.lsLastWeekSale.forEach {
+
+                        weekSell.add(BarEntry(it.x, it.y))
+
+                    }
+
+                    data.lsLastMonthSale.forEach {
+
+                        monthSell.add(BarEntry(it.x, it.y))
+
+                    }
+
+
+                    setWeekBarChart()
+                    setMonthBarChart()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelGetShopDashboard>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
 
     }
 
@@ -67,9 +167,11 @@ class DashboardFragment : Fragment() {
         COLORFUL_COLORS.add(ColorTemplate.rgb("#DCC6EC"))
     }
 
+    private lateinit var weekSell: ArrayList<BarEntry>
+
     private fun setWeekBarChart() {
 
-        val weekSell = ArrayList<BarEntry>()
+        weekSell = ArrayList()
 
         weekSell.add(BarEntry(0f, 7f))
         weekSell.add(BarEntry(1f, 5f))
@@ -117,9 +219,11 @@ class DashboardFragment : Fragment() {
 
     }
 
+    private lateinit var monthSell: ArrayList<BarEntry>
+
     private fun setMonthBarChart() {
 
-        val monthSell = ArrayList<BarEntry>()
+        monthSell = ArrayList()
 
         monthSell.add(BarEntry(0f, 70f))
         monthSell.add(BarEntry(1f, 50f))

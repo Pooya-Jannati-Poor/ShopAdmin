@@ -115,4 +115,41 @@ interface ApiInterface {
         @Query("productDescription") productDescription: String
     ): Call<ResponseBody>
 
+
+    @GET("shopDashboard/")
+    fun shopDashboard(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int
+    ): Call<ModelGetShopDashboard>
+
+
+    @GET("shopInfo/")
+    fun shopInfo(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int
+    ): Call<ModelGetShopInfo>
+
+
+    @GET("editShopInfo/")
+    fun editShopInfoWithImage(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int,
+        @Part image: MultipartBody.Part,
+        @Query("shopName") shopName: String,
+        @Query("username") username: String,
+        @Query("phoneNumber") phoneNumber: String,
+        @Query("shopAddress") shopAddress: String
+    ): Call<ResponseBody>
+
+
+    @GET("editShopInfo/")
+    fun editShopInfoWithoutImage(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int,
+        @Query("shopName") shopName: String,
+        @Query("username") username: String,
+        @Query("phoneNumber") phoneNumber: String,
+        @Query("shopAddress") shopAddress: String
+    ): Call<ResponseBody>
+
 }
