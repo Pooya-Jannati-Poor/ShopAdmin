@@ -19,6 +19,7 @@ import ir.arinateam.shopadmin.databinding.ProfileFragmentBinding
 import ir.arinateam.shopadmin.shop.model.ModelGetShopInfo
 import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
 import ir.arinateam.shopadmin.utils.Loading
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -185,6 +186,53 @@ class ProfileFragment : Fragment() {
         address = edAddress.text.toString()
 
         if (username != "" && shopName != "" && phoneNumber != "" && phoneNumber.length == 11 && address != "") {
+
+            val loadingLottie = Loading(requireActivity())
+
+            apiClient = ApiClient()
+
+            val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+            val callLoading = apiInterface.editShopInfoWithImage("", 1)
+
+            callLoading.enqueue(object : Callback<ResponseBody> {
+
+                override fun onResponse(
+                    call: Call<ResponseBody>,
+                    response: Response<ResponseBody>
+                ) {
+
+                    loadingLottie.hideDialog()
+
+                    if (response.code() == 200) {
+
+                        val data = response.body()!!
+
+                    } else {
+
+                        Toast.makeText(
+                            requireActivity(),
+                            resources.getText(R.string.error_receive_data).toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                    loadingLottie.hideDialog()
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_send_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            })
 
             Toast.makeText(requireActivity(), "اطلاعات شما با موفقیت ذخیره شد", Toast.LENGTH_SHORT)
                 .show()
