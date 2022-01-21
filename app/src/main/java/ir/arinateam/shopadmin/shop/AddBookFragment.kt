@@ -110,7 +110,6 @@ class AddBookFragment : Fragment() {
 
             bookId = requireArguments().getInt("productId")
             bookImage = requireArguments().getString("productImage")!!
-            bookImageId = requireArguments().getString("productImageId")!!
             bookName = requireArguments().getString("productName")!!
             bookWriter = requireArguments().getString("productWriter")!!
             bookPublisher = requireArguments().getString("productPublisher")!!
@@ -230,7 +229,6 @@ class AddBookFragment : Fragment() {
 
     private var bookId: Int? = null
     private lateinit var bookImage: String
-    private lateinit var bookImageId: String
     private lateinit var bookName: String
     private lateinit var bookWriter: String
     private lateinit var bookPublisher: String
@@ -286,7 +284,9 @@ class AddBookFragment : Fragment() {
 
     }
 
-    private fun editProductWithImage() {
+    private lateinit var callLoading: Call<ResponseBody>
+
+    private fun editProduct() {
 
         val loadingLottie = Loading(requireActivity())
 
@@ -294,94 +294,48 @@ class AddBookFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.editProductWithImage(
-            "",
-            1,
-            imageMultiPartBody,
-            bookImageId.toInt(),
-            bookId!!,
-            bookName,
-            bookWriter,
-            bookPublisher,
-            0,
-            bookPrice,
-            bookPageCount.toInt(),
-            bookPublishYear.toInt(),
-            bookISBN,
-            bookAvailableCount.toInt(),
-            bookDiscount.toInt(),
-            bookDescription
-        )
+        if (imageMultiPartBody != null) {
 
-        callLoading.enqueue(object : Callback<ResponseBody> {
+            callLoading = apiInterface.editProductWithImage(
+                "",
+                1,
+                imageMultiPartBody,
+                bookId!!,
+                bookName,
+                bookWriter,
+                bookPublisher,
+                0,
+                bookPrice,
+                bookPageCount.toInt(),
+                bookPublishYear.toInt(),
+                bookISBN,
+                bookAvailableCount.toInt(),
+                bookDiscount.toInt(),
+                bookDescription
+            )
 
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: Response<ResponseBody>
-            ) {
+        } else {
 
-                loadingLottie.hideDialog()
+            callLoading = apiInterface.editProductWithoutImage(
+                "",
+                1,
+                bookId!!,
+                bookName,
+                bookWriter,
+                bookPublisher,
+                0,
+                bookPrice,
+                bookPageCount.toInt(),
+                bookPublishYear.toInt(),
+                bookISBN,
+                bookAvailableCount.toInt(),
+                bookDiscount.toInt(),
+                bookDescription
+            )
 
-                if (response.code() == 200) {
+        }
 
-                    Toast.makeText(
-                        requireActivity(),
-                        "محصول شما با موفقیت تغییر کرد",
-                        Toast.LENGTH_SHORT
-                    ).show()
 
-                } else {
-
-                    Toast.makeText(
-                        requireActivity(),
-                        resources.getText(R.string.error_receive_data).toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-
-                loadingLottie.hideDialog()
-
-                Toast.makeText(
-                    requireActivity(),
-                    resources.getText(R.string.error_send_data).toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-
-            }
-
-        })
-
-    }
-
-    private fun editProductWithoutImage() {
-
-        val loadingLottie = Loading(requireActivity())
-
-        apiClient = ApiClient()
-
-        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
-
-        val callLoading = apiInterface.editProductWithoutImage(
-            "",
-            1,
-            bookId!!,
-            bookName,
-            bookWriter,
-            bookPublisher,
-            0,
-            bookPrice,
-            bookPageCount.toInt(),
-            bookPublishYear.toInt(),
-            bookISBN,
-            bookAvailableCount.toInt(),
-            bookDiscount.toInt(),
-            bookDescription
-        )
 
         callLoading.enqueue(object : Callback<ResponseBody> {
 

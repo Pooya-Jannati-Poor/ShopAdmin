@@ -6,14 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.admin.adapter.AdapterRecShop
 import ir.arinateam.shopadmin.admin.interfaces.ChangeShopState
+import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase
 import ir.arinateam.shopadmin.databinding.ShopsFragmentBinding
 import ir.arinateam.shopadmin.admin.model.ModelRecShop
+import ir.arinateam.shopadmin.api.ApiClient
+import ir.arinateam.shopadmin.api.ApiInterface
+import ir.arinateam.shopadmin.shop.model.ModelSpCategory
+import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
+import ir.arinateam.shopadmin.utils.Loading
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class ShopsFragment : Fragment(), ChangeShopState {
@@ -39,6 +49,8 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
         initView()
 
+        getShopList()
+
         setRecShop()
 
     }
@@ -47,6 +59,76 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
         tvShopsCount = bindingFragment.tvShopsCount
         recShops = bindingFragment.recShops
+
+    }
+
+    private lateinit var apiClient: ApiClient
+
+    private fun getShopList() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.getShopsList("", 1)
+
+        callLoading.enqueue(object : Callback<ModelAdminShopsInfoBase> {
+
+            override fun onResponse(
+                call: Call<ModelAdminShopsInfoBase>,
+                response: Response<ModelAdminShopsInfoBase>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    var available = 0
+
+                    data.shops.forEach {
+                        if (it.isActivated) {
+                            available++
+                        }
+                    }
+
+                    tvShopsCount.text = available.toString().plus(" فروشگاه فعال")
+
+                    modelRecShop = ArrayList()
+
+                    modelRecShop.addAll(data.shops)
+
+                    setRecShop()
+
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelAdminShopsInfoBase>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
 
     }
 

@@ -2,6 +2,7 @@ package ir.arinateam.shopadmin.shop
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,6 +28,13 @@ import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+import ir.arinateam.persiandate.PersianDate
+
+
+
 
 class DashboardFragment : Fragment() {
 
@@ -34,6 +42,8 @@ class DashboardFragment : Fragment() {
 
     private lateinit var imgProfile: ShapeableImageView
     private lateinit var tvShopName: TextView
+    private lateinit var tvTodaySale: TextView
+    private lateinit var tvProductsCount: TextView
     private lateinit var barChartWeek: BarChart
     private lateinit var barMonthYear: BarChart
 
@@ -60,12 +70,26 @@ class DashboardFragment : Fragment() {
 
         setMonthBarChart()
 
+
+        val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z", Locale("en"))
+        val currentDateandTime: String = sdf.format(Date())
+
+        Log.d("dateTest", currentDateandTime.substring(8,10))
+
+        val date = Calendar.getInstance()
+        date.add(Calendar.DATE, -7)
+
+        val pDate = PersianDate()
+        pDate.grgDay = currentDateandTime.substring(8,10).toInt()
+
     }
 
     private fun initView() {
 
         imgProfile = bindingFragment.imgProfile
         tvShopName = bindingFragment.tvShopName
+        tvTodaySale = bindingFragment.tvTodaySale
+        tvProductsCount = bindingFragment.tvProductsCount
         barChartWeek = bindingFragment.barChartWeek
         barMonthYear = bindingFragment.barMonthYear
 
@@ -98,6 +122,9 @@ class DashboardFragment : Fragment() {
                     val data = response.body()!!
 
                     tvShopName.text = data.shopName
+                    tvTodaySale.text = data.todaySale.toString().plus(" کتاب")
+                    tvTodaySale.text = data.productCount.toString().plus(" کالا")
+
 
                     Glide.with(requireActivity()).load(data.shopImage).diskCacheStrategy(
                         DiskCacheStrategy.ALL
@@ -109,15 +136,15 @@ class DashboardFragment : Fragment() {
                     weekSell = ArrayList()
                     monthSell = ArrayList()
 
-                    data.lsLastWeekSale.forEach {
+                    data.lsLastWeekSale.forEachIndexed { index, modelBarChartSale ->
 
-                        weekSell.add(BarEntry(it.x, it.y))
+                        weekSell.add(BarEntry(index.toFloat(), modelBarChartSale))
 
                     }
 
-                    data.lsLastMonthSale.forEach {
+                    data.lsLastMonthSale.forEachIndexed { index, modelBarChartSale ->
 
-                        monthSell.add(BarEntry(it.x, it.y))
+                        monthSell.add(BarEntry(index.toFloat(), modelBarChartSale))
 
                     }
 

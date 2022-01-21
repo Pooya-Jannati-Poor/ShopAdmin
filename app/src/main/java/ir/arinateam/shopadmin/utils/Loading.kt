@@ -13,9 +13,9 @@ class Loading(context: Context) {
 
     init {
         dialogLoading.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogLoading.setCancelable(false)
-        dialogLoading.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogLoading.setContentView(R.layout.loading_lottie)
+        dialogLoading.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogLoading.setCancelable(false)
         dialogLoading.show()
     }
 

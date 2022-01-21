@@ -1,24 +1,30 @@
 package ir.arinateam.shopadmin.shop
 
+import android.app.Activity
 import android.os.Bundle
+import android.provider.MediaStore
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textfield.TextInputEditText
+import ir.arinateam.imagepicker.ImagePicker
 import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.ProfileFragmentBinding
 import ir.arinateam.shopadmin.shop.model.ModelGetShopInfo
-import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
 import ir.arinateam.shopadmin.utils.Loading
+import ir.arinateam.shopadmin.utils.PrepareImageForUpload
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -54,7 +60,11 @@ class ProfileFragment : Fragment() {
 
         initView()
 
+        getShopInfo()
+
         saveEdit()
+
+        getImage()
 
         backToDashboard()
 
@@ -178,6 +188,9 @@ class ProfileFragment : Fragment() {
     private lateinit var phoneNumber: String
     private lateinit var address: String
 
+
+    private lateinit var callLoading: Call<ResponseBody>
+
     private fun validateInputs() {
 
         username = edUsername.text.toString()
@@ -193,7 +206,30 @@ class ProfileFragment : Fragment() {
 
             val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-            val callLoading = apiInterface.editShopInfoWithImage("", 1)
+
+            if (imageMultiPartBody != null) {
+
+                callLoading = apiInterface.editShopInfoWithImage(
+                    "", 1,
+                    imageMultiPartBody,
+                    shopName,
+                    username,
+                    phoneNumber,
+                    address
+                )
+
+            } else {
+
+                callLoading = apiInterface.editShopInfoWithoutImage(
+                    "", 1,
+                    shopName,
+                    username,
+                    phoneNumber,
+                    address
+                )
+
+            }
+
 
             callLoading.enqueue(object : Callback<ResponseBody> {
 
@@ -206,7 +242,17 @@ class ProfileFragment : Fragment() {
 
                     if (response.code() == 200) {
 
-                        val data = response.body()!!
+                        Toast.makeText(
+                            requireActivity(),
+                            "اطلاعات شما با موفقیت ذخیره شد",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+
+                        edUsername.setText("")
+                        edShopName.setText("")
+                        edPhoneNumber.setText("")
+                        edAddress.setText("")
 
                     } else {
 
@@ -234,14 +280,6 @@ class ProfileFragment : Fragment() {
 
             })
 
-            Toast.makeText(requireActivity(), "اطلاعات شما با موفقیت ذخیره شد", Toast.LENGTH_SHORT)
-                .show()
-
-            edUsername.setText("")
-            edShopName.setText("")
-            edPhoneNumber.setText("")
-            edAddress.setText("")
-
         } else {
 
             Toast.makeText(requireActivity(), "تمامی اطلاعات را وارد نمایید!", Toast.LENGTH_SHORT)
@@ -250,6 +288,53 @@ class ProfileFragment : Fragment() {
         }
 
     }
+
+    private fun getImage() {
+
+        imgProfile.setOnClickListener {
+
+            ImagePicker.with(this)
+                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                .maxResultSize(
+                    700,
+                    800
+                )    //Final image resolution will be less than 1080 x 1080(Optional)
+                .createIntent { intent ->
+                    startForProfileImageResult.launch(intent)
+                }
+
+        }
+
+    }
+
+    private lateinit var imageMultiPartBody: MultipartBody.Part
+
+    private val startForProfileImageResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val resultCode = result.resultCode
+            val data = result.data
+
+            if (resultCode == Activity.RESULT_OK) {
+                //Image Uri will not be null for RESULT_OK
+                val fileUri = data?.data!!
+
+                val bitmap = MediaStore.Images.Media.getBitmap(
+                    requireActivity().contentResolver,
+                    fileUri
+                )
+
+                imgProfile.setImageURI(fileUri)
+
+                val prepare = PrepareImageForUpload()
+                imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "book", bitmap)
+
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                Toast.makeText(requireActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     private fun backToDashboard() {
 

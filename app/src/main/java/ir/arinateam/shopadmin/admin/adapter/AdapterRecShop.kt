@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +14,16 @@ import com.github.angads25.toggle.widget.LabeledSwitch
 import com.google.android.material.switchmaterial.SwitchMaterial
 import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.admin.interfaces.ChangeShopState
+import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase
 import ir.arinateam.shopadmin.databinding.LayoutRecShopBinding
 import ir.arinateam.shopadmin.admin.model.ModelRecShop
+import ir.arinateam.shopadmin.api.ApiClient
+import ir.arinateam.shopadmin.api.ApiInterface
+import ir.arinateam.shopadmin.utils.Loading
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class AdapterRecShop(
     private val context: Context,
@@ -44,11 +53,103 @@ class AdapterRecShop(
 
             if (isOn) {
 
-                changeShopState.enabled()
+                val loadingLottie = Loading(context)
+
+                val apiClient = ApiClient()
+
+                val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+                val callLoading = apiInterface.changeShopState("", 1, model.id)
+
+                callLoading.enqueue(object : Callback<ResponseBody> {
+
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+
+                        loadingLottie.hideDialog()
+
+                        if (response.code() == 200) {
+
+                            changeShopState.enabled()
+
+
+                        } else {
+
+                            Toast.makeText(
+                                context,
+                                context.getText(R.string.error_receive_data).toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                        loadingLottie.hideDialog()
+
+                        Toast.makeText(
+                            context,
+                            context.getText(R.string.error_send_data).toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
+                })
 
             } else {
 
-                changeShopState.disabled()
+                val loadingLottie = Loading(context)
+
+                val apiClient = ApiClient()
+
+                val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+                val callLoading = apiInterface.changeShopState("", 1, model.id)
+
+                callLoading.enqueue(object : Callback<ResponseBody> {
+
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+
+                        loadingLottie.hideDialog()
+
+                        if (response.code() == 200) {
+
+                            changeShopState.disabled()
+
+                        } else {
+
+                            Toast.makeText(
+                                context,
+                                context.getText(R.string.error_receive_data).toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                        loadingLottie.hideDialog()
+
+                        Toast.makeText(
+                            context,
+                            context.getText(R.string.error_send_data).toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                    }
+
+                })
+
 
             }
 

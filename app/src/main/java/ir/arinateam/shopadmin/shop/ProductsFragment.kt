@@ -133,7 +133,6 @@ class ProductsFragment : Fragment() {
             ModelRecProduct(
                 1,
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                1,
                 "ارباب حلقه ها",
                 "جی ار ار تاکین",
                 4,
@@ -151,7 +150,6 @@ class ProductsFragment : Fragment() {
             ModelRecProduct(
                 2,
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                2,
                 "دو برج",
                 "جی ار ار تاکین",
                 6,
@@ -169,7 +167,6 @@ class ProductsFragment : Fragment() {
             ModelRecProduct(
                 3,
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                3,
                 "هری پاتر و سنگ جادو",
                 "اصغر فرهادی",
                 1,
@@ -187,7 +184,6 @@ class ProductsFragment : Fragment() {
             ModelRecProduct(
                 4,
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                4,
                 "بابا لنگ دراز",
                 "جی ار ار تاکین",
                 2,
@@ -205,7 +201,6 @@ class ProductsFragment : Fragment() {
             ModelRecProduct(
                 5,
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                5,
                 "قم بهتر است یا نیویورک؟:/",
                 "یه نویسنده",
                 0,
@@ -223,7 +218,6 @@ class ProductsFragment : Fragment() {
             ModelRecProduct(
                 6,
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                6,
                 "اثر مرکب",
                 "دان هاردی",
                 4,

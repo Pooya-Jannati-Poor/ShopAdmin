@@ -6,7 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ir.arinateam.mpchart.charts.BarChart
 import ir.arinateam.mpchart.components.XAxis
 import ir.arinateam.mpchart.data.BarData
@@ -14,12 +18,24 @@ import ir.arinateam.mpchart.data.BarDataSet
 import ir.arinateam.mpchart.data.BarEntry
 import ir.arinateam.mpchart.utils.ColorTemplate
 import ir.arinateam.shopadmin.R
+import ir.arinateam.shopadmin.admin.model.ModelGetAdminSell
+import ir.arinateam.shopadmin.api.ApiClient
+import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.SellsFragmentBinding
+import ir.arinateam.shopadmin.shop.model.ModelGetShopDashboard
+import ir.arinateam.shopadmin.utils.Loading
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SellsFragment : Fragment() {
 
     private lateinit var bindingFragment: SellsFragmentBinding
 
+    private lateinit var tvShopsCount: TextView
     private lateinit var barChartWeek: BarChart
     private lateinit var barMonthYear: BarChart
 
@@ -48,8 +64,83 @@ class SellsFragment : Fragment() {
 
     private fun initView() {
 
+        tvShopsCount = bindingFragment.tvShopsCount
         barChartWeek = bindingFragment.barChartWeek
         barMonthYear = bindingFragment.barMonthYear
+
+    }
+
+    private lateinit var apiClient: ApiClient
+
+    private fun getAdminSells() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.adminSell("", 1)
+
+        callLoading.enqueue(object : Callback<ModelGetAdminSell> {
+
+            override fun onResponse(
+                call: Call<ModelGetAdminSell>,
+                response: Response<ModelGetAdminSell>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    tvShopsCount.text = data.deliveredOrder.toString().plus(" سفارش تحویل داده شده")
+
+                    weekSell = ArrayList()
+                    monthSell = ArrayList()
+
+                    data.lsLastWeekSale.forEachIndexed { index, modelBarChartSale ->
+
+                        weekSell.add(BarEntry(index.toFloat(), modelBarChartSale))
+
+                    }
+
+                    data.lsLastMonthSale.forEachIndexed { index, modelBarChartSale ->
+
+                        monthSell.add(BarEntry(index.toFloat(), modelBarChartSale))
+
+                    }
+
+
+                    setWeekBarChart()
+                    setMonthBarChart()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelGetAdminSell>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
 
     }
 
@@ -66,9 +157,11 @@ class SellsFragment : Fragment() {
         COLORFUL_COLORS.add(ColorTemplate.rgb("#DCC6EC"))
     }
 
+    private lateinit var weekSell: ArrayList<BarEntry>
+
     private fun setWeekBarChart() {
 
-        val weekSell = ArrayList<BarEntry>()
+        weekSell = ArrayList()
 
         weekSell.add(BarEntry(0f, 7f))
         weekSell.add(BarEntry(1f, 5f))
@@ -116,9 +209,11 @@ class SellsFragment : Fragment() {
 
     }
 
+    private lateinit var monthSell: ArrayList<BarEntry>
+
     private fun setMonthBarChart() {
 
-        val monthSell = ArrayList<BarEntry>()
+        monthSell = ArrayList()
 
         monthSell.add(BarEntry(0f, 70f))
         monthSell.add(BarEntry(1f, 50f))

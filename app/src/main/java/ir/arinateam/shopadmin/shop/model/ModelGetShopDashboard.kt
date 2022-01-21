@@ -6,9 +6,9 @@ data class ModelGetShopDashboard(
     val shopName: String,
     val todaySale: Int,
     val productCount: Int,
-    val lsLastWeekSale: List<ModelBarChartSale>,
+    val lsLastWeekSale: List<Float>,
     val lastWeekSaleDate: String,
-    val lsLastMonthSale: List<ModelBarChartSale>,
+    val lsLastMonthSale: List<Float>,
     val lastMonthSaleDate: String,
 
     )

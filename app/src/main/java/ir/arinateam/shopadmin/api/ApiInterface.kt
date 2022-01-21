@@ -1,5 +1,8 @@
 package ir.arinateam.shopadmin.api
 
+import ir.arinateam.shopadmin.admin.model.ModelAdminDashboardInfo
+import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase
+import ir.arinateam.shopadmin.admin.model.ModelGetAdminSell
 import ir.arinateam.shopadmin.shop.model.*
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -64,7 +67,6 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Query("userId") userId: Int,
         @Part image: MultipartBody.Part,
-        @Query("previewsImageId") previewsImageId: Int,
         @Query("productId") productId: Int,
         @Query("productName") productName: String,
         @Query("productWriter") productWriter: String,
@@ -151,5 +153,34 @@ interface ApiInterface {
         @Query("phoneNumber") phoneNumber: String,
         @Query("shopAddress") shopAddress: String
     ): Call<ResponseBody>
+
+
+    @GET("getShopsList/")
+    fun getShopsList(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int
+    ): Call<ModelAdminShopsInfoBase>
+
+
+    @GET("adminDashboardInfo/")
+    fun adminDashboardInfo(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int
+    ): Call<ModelAdminDashboardInfo>
+
+
+    @GET("changeShopState/")
+    fun changeShopState(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int,
+        @Query("shopId") shopId: Int
+    ): Call<ResponseBody>
+
+
+    @GET("adminSell/")
+    fun adminSell(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int
+    ): Call<ModelGetAdminSell>
 
 }

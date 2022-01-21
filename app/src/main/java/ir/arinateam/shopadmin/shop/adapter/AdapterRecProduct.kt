@@ -62,7 +62,6 @@ class AdapterRecProduct(
             val bundle = Bundle()
             bundle.putInt("productId", model.id)
             bundle.putString("productImage", model.img)
-            bundle.putString("productImageId", model.imgId.toString())
             bundle.putString("productName", model.bookName)
             bundle.putString("productWriter", model.bookWriter)
             bundle.putString("productAvailableCount", model.availableCount.toString())
