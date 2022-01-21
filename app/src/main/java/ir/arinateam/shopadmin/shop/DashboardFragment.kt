@@ -2,7 +2,6 @@ package ir.arinateam.shopadmin.shop
 
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -28,12 +27,9 @@ import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import ir.arinateam.persiandate.PersianDate
-
-
+import ir.arinateam.shopadmin.utils.jalaliCal
 
 
 class DashboardFragment : Fragment() {
@@ -45,7 +41,9 @@ class DashboardFragment : Fragment() {
     private lateinit var tvTodaySale: TextView
     private lateinit var tvProductsCount: TextView
     private lateinit var barChartWeek: BarChart
+    private lateinit var tvWeekSellDate: TextView
     private lateinit var barMonthYear: BarChart
+    private lateinit var tvMonthSellDate: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -71,17 +69,6 @@ class DashboardFragment : Fragment() {
         setMonthBarChart()
 
 
-        val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z", Locale("en"))
-        val currentDateandTime: String = sdf.format(Date())
-
-        Log.d("dateTest", currentDateandTime.substring(8,10))
-
-        val date = Calendar.getInstance()
-        date.add(Calendar.DATE, -7)
-
-        val pDate = PersianDate()
-        pDate.grgDay = currentDateandTime.substring(8,10).toInt()
-
     }
 
     private fun initView() {
@@ -91,7 +78,9 @@ class DashboardFragment : Fragment() {
         tvTodaySale = bindingFragment.tvTodaySale
         tvProductsCount = bindingFragment.tvProductsCount
         barChartWeek = bindingFragment.barChartWeek
+        tvWeekSellDate = bindingFragment.tvWeekSellDate
         barMonthYear = bindingFragment.barMonthYear
+        tvMonthSellDate = bindingFragment.tvMonthSellDate
 
     }
 
@@ -138,16 +127,15 @@ class DashboardFragment : Fragment() {
 
                     data.lsLastWeekSale.forEachIndexed { index, modelBarChartSale ->
 
-                        weekSell.add(BarEntry(index.toFloat(), modelBarChartSale))
+                        weekSell.add(BarEntry((index + 1).toFloat(), modelBarChartSale))
 
                     }
 
                     data.lsLastMonthSale.forEachIndexed { index, modelBarChartSale ->
 
-                        monthSell.add(BarEntry(index.toFloat(), modelBarChartSale))
+                        monthSell.add(BarEntry((index + 1).toFloat(), modelBarChartSale))
 
                     }
-
 
                     setWeekBarChart()
                     setMonthBarChart()
@@ -195,18 +183,40 @@ class DashboardFragment : Fragment() {
     }
 
     private lateinit var weekSell: ArrayList<BarEntry>
+    private lateinit var weekSellDate: String
 
     private fun setWeekBarChart() {
 
+        val dateLastWeek = Calendar.getInstance()
+        dateLastWeek.add(Calendar.DATE, -7)
+
+        val yearLastWeek = dateLastWeek.get(Calendar.YEAR)
+        val monthLastWeek = dateLastWeek.get(Calendar.MONTH)
+        val dayLastWeek = dateLastWeek.get(Calendar.DAY_OF_MONTH)
+
+
+        val newDateLastWeek = jalaliCal.gregorianToJalali(
+            jalaliCal.YearMonthDate(
+                yearLastWeek,
+                monthLastWeek,
+                dayLastWeek
+            )
+        )
+
+        weekSellDate =
+            newDateLastWeek.year.toString() + "/" + newDateLastWeek.month.toString() + "/" + newDateLastWeek.day
+
+        tvWeekSellDate.text = "از تاریخ $weekSellDate تا امروز"
+
         weekSell = ArrayList()
 
-        weekSell.add(BarEntry(0f, 7f))
-        weekSell.add(BarEntry(1f, 5f))
-        weekSell.add(BarEntry(2f, 12f))
-        weekSell.add(BarEntry(3f, 0f))
-        weekSell.add(BarEntry(4f, 4f))
-        weekSell.add(BarEntry(5f, 8f))
-        weekSell.add(BarEntry(6f, 2f))
+        weekSell.add(BarEntry(1f, 7f))
+        weekSell.add(BarEntry(2f, 5f))
+        weekSell.add(BarEntry(3f, 12f))
+        weekSell.add(BarEntry(4f, 0f))
+        weekSell.add(BarEntry(5f, 4f))
+        weekSell.add(BarEntry(6f, 8f))
+        weekSell.add(BarEntry(7f, 2f))
 
         val barDataSet = BarDataSet(weekSell, "")
 
@@ -225,7 +235,6 @@ class DashboardFragment : Fragment() {
         barChartWeek.setTouchEnabled(false)
         barChartWeek.isClickable = false
         barChartWeek.isDoubleTapToZoomEnabled = false
-        barChartWeek.isDoubleTapToZoomEnabled = false
 
         barChartWeek.setDrawGridBackground(false)
 
@@ -238,6 +247,7 @@ class DashboardFragment : Fragment() {
 
         barChartWeek.xAxis.enableGridDashedLine(10f, 8f, 0f)
         barChartWeek.xAxis.enableAxisLineDashedLine(10f, 8f, 0f)
+        barChartWeek.xAxis.labelCount = 7
 
         barChartWeek.axisRight.setDrawLabels(false)
         barChartWeek.axisRight.setDrawAxisLine(false)
@@ -247,16 +257,38 @@ class DashboardFragment : Fragment() {
     }
 
     private lateinit var monthSell: ArrayList<BarEntry>
+    private lateinit var monthSellDate: String
 
     private fun setMonthBarChart() {
 
+        val dateLastMonth = Calendar.getInstance()
+        dateLastMonth.add(Calendar.DATE, -30)
+
+        val yearLastMonth = dateLastMonth.get(Calendar.YEAR)
+        val monthLastMonth = dateLastMonth.get(Calendar.MONTH)
+        val dayLastMonth = dateLastMonth.get(Calendar.DAY_OF_MONTH)
+
+
+        val newDateLastMonth = jalaliCal.gregorianToJalali(
+            jalaliCal.YearMonthDate(
+                yearLastMonth,
+                monthLastMonth,
+                dayLastMonth
+            )
+        )
+
+        monthSellDate =
+            newDateLastMonth.year.toString() + "/" + newDateLastMonth.month.toString() + "/" + newDateLastMonth.day
+
+        tvMonthSellDate.text = "از تاریخ $monthSellDate تا امروز"
+
+
         monthSell = ArrayList()
 
-        monthSell.add(BarEntry(0f, 70f))
-        monthSell.add(BarEntry(1f, 50f))
-        monthSell.add(BarEntry(2f, 120f))
-        monthSell.add(BarEntry(3f, 10f))
-        monthSell.add(BarEntry(4f, 40f))
+        monthSell.add(BarEntry(1f, 70f))
+        monthSell.add(BarEntry(2f, 50f))
+        monthSell.add(BarEntry(3f, 120f))
+        monthSell.add(BarEntry(4f, 10f))
 
         val barDataSet = BarDataSet(monthSell, "")
 
@@ -274,7 +306,6 @@ class DashboardFragment : Fragment() {
 
         barMonthYear.setTouchEnabled(false)
         barMonthYear.isClickable = false
-        barMonthYear.isDoubleTapToZoomEnabled = false
         barMonthYear.isDoubleTapToZoomEnabled = false
 
         barMonthYear.setDrawGridBackground(false)

@@ -10,4 +10,3 @@ rootProject.name = "ShopAdmin"
 include ':app'
 include ':mpchart'
 include ':imagepicker'
-include ':persiandate'

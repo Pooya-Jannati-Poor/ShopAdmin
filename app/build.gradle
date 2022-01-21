@@ -51,7 +51,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation project(path: ':mpchart')
     implementation project(path: ':imagepicker')
-    implementation project(path: ':persiandate')
 
     // navigation
     def nav_version = "2.3.5"

@@ -24,6 +24,7 @@ import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.SellsFragmentBinding
 import ir.arinateam.shopadmin.shop.model.ModelGetShopDashboard
 import ir.arinateam.shopadmin.utils.Loading
+import ir.arinateam.shopadmin.utils.jalaliCal
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +38,9 @@ class SellsFragment : Fragment() {
 
     private lateinit var tvShopsCount: TextView
     private lateinit var barChartWeek: BarChart
+    private lateinit var tvWeekSellDate: TextView
     private lateinit var barMonthYear: BarChart
+    private lateinit var tvMonthSellDate: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +69,9 @@ class SellsFragment : Fragment() {
 
         tvShopsCount = bindingFragment.tvShopsCount
         barChartWeek = bindingFragment.barChartWeek
+        tvWeekSellDate = bindingFragment.tvWeekSellDate
         barMonthYear = bindingFragment.barMonthYear
+        tvMonthSellDate = bindingFragment.tvMonthSellDate
 
     }
 
@@ -158,8 +163,31 @@ class SellsFragment : Fragment() {
     }
 
     private lateinit var weekSell: ArrayList<BarEntry>
+    private lateinit var weekSellDate: String
 
     private fun setWeekBarChart() {
+
+        val dateLastWeek = Calendar.getInstance()
+        dateLastWeek.add(Calendar.DATE, -7)
+
+        val yearLastWeek = dateLastWeek.get(Calendar.YEAR)
+        val monthLastWeek = dateLastWeek.get(Calendar.MONTH)
+        val dayLastWeek = dateLastWeek.get(Calendar.DAY_OF_MONTH)
+
+
+        val newDateLastWeek = jalaliCal.gregorianToJalali(
+            jalaliCal.YearMonthDate(
+                yearLastWeek,
+                monthLastWeek,
+                dayLastWeek
+            )
+        )
+
+        weekSellDate =
+            newDateLastWeek.year.toString() + "/" + newDateLastWeek.month.toString() + "/" + newDateLastWeek.day
+
+        tvWeekSellDate.text = "از تاریخ $weekSellDate تا امروز"
+
 
         weekSell = ArrayList()
 
@@ -210,8 +238,30 @@ class SellsFragment : Fragment() {
     }
 
     private lateinit var monthSell: ArrayList<BarEntry>
+    private lateinit var monthSellDate: String
 
     private fun setMonthBarChart() {
+
+        val dateLastMonth = Calendar.getInstance()
+        dateLastMonth.add(Calendar.DATE, -30)
+
+        val yearLastMonth = dateLastMonth.get(Calendar.YEAR)
+        val monthLastMonth = dateLastMonth.get(Calendar.MONTH)
+        val dayLastMonth = dateLastMonth.get(Calendar.DAY_OF_MONTH)
+
+
+        val newDateLastMonth = jalaliCal.gregorianToJalali(
+            jalaliCal.YearMonthDate(
+                yearLastMonth,
+                monthLastMonth,
+                dayLastMonth
+            )
+        )
+
+        monthSellDate =
+            newDateLastMonth.year.toString() + "/" + newDateLastMonth.month.toString() + "/" + newDateLastMonth.day
+
+        tvMonthSellDate.text = "از تاریخ $monthSellDate تا امروز"
 
         monthSell = ArrayList()
 

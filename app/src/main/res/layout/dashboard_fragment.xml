@@ -155,6 +155,17 @@
                     android:layout_marginTop="@dimen/_8sdp" />
 
                 <TextView
+                    android:id="@+id/tvWeekSellDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    tools:text="تعداد کتاب های فروخته شده در هفته گذشته"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/_8ssp" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_30sdp"
@@ -169,6 +180,17 @@
                     android:layout_height="@dimen/_200sdp"
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:layout_marginTop="@dimen/_8sdp" />
+
+                <TextView
+                    android:id="@+id/tvMonthSellDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    tools:text="تعداد کتاب های فروخته شده در هفته گذشته"
+                    android:textColor="@color/light_black"
+                    android:textSize="@dimen/_8ssp" />
 
             </LinearLayout>
 
