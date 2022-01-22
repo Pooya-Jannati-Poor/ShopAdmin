@@ -38,5 +38,7 @@
     <string name="error_receive_data">خطا در دریافت اطلاعات! لطفا کمی دیرتر مجددا سعی نمایید</string>
     <string name="error_send_data">خطا در ارسال اطلاعات! لطفا کمی دیرتر مجددا سعی نمایید</string>
     <string name="zero">0</string>
+    <string name="login">ورود</string>
+    <string name="signup">ثبت نام</string>
 
 </resources>

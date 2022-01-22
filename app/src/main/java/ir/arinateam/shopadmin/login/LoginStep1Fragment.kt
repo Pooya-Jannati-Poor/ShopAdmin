@@ -17,6 +17,7 @@ class LoginStep1Fragment : Fragment() {
     private lateinit var bindingFragment: LoginStep1FragmentBinding
 
     private lateinit var btnLogin: Button
+    private lateinit var btnSignup: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +36,14 @@ class LoginStep1Fragment : Fragment() {
 
         goToLoginFragment()
 
+        goToSignupFragment()
+
     }
 
     private fun initView() {
 
         btnLogin = bindingFragment.btnLogin
+        btnSignup = bindingFragment.btnSignup
 
     }
 
@@ -49,6 +53,18 @@ class LoginStep1Fragment : Fragment() {
 
             Navigation.findNavController(it)
                 .navigate(R.id.action_loginStep1Fragment_to_loginStep2Fragment)
+
+        }
+
+    }
+
+
+    private fun goToSignupFragment() {
+
+        btnSignup.setOnClickListener {
+
+            Navigation.findNavController(it)
+                .navigate(R.id.action_loginStep1Fragment_to_signupFragment)
 
         }
 

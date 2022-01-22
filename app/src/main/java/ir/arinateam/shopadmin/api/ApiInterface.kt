@@ -25,6 +25,29 @@ interface ApiInterface {
     ): Call<ModelCafeList>*/
 
 
+    @GET("checkLogin/")
+    fun checkLogin(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int
+    ): Call<ResponseBody>
+
+
+    @GET("login/")
+    fun login(
+        @Header("Authorization") token: String,
+        @Query("phoneNumber") phoneNumber: String,
+        @Query("password") password: String
+    ): Call<ResponseBody>
+
+
+    @GET("signup/")
+    fun signup(
+        @Header("Authorization") token: String,
+        @Query("phoneNumber") phoneNumber: String,
+        @Query("password") password: String
+    ): Call<ResponseBody>
+
+
     @GET("orderList/")
     fun orderList(
         @Header("Authorization") token: String,

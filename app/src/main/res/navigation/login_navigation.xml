@@ -9,14 +9,22 @@
         android:id="@+id/loginStep1Fragment"
         android:name="ir.arinateam.shopadmin.login.LoginStep1Fragment"
         android:label="login_step1_fragment"
-        tools:layout="@layout/login_step1_fragment" >
+        tools:layout="@layout/login_step1_fragment">
         <action
             android:id="@+id/action_loginStep1Fragment_to_loginStep2Fragment"
             app:destination="@id/loginStep2Fragment" />
+        <action
+            android:id="@+id/action_loginStep1Fragment_to_signupFragment"
+            app:destination="@id/signupFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginStep2Fragment"
         android:name="ir.arinateam.shopadmin.login.LoginStep2Fragment"
         android:label="LoginStep2Fragment"
-        tools:layout="@layout/login_step2_fragment"/>
+        tools:layout="@layout/login_step2_fragment" />
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="ir.arinateam.shopadmin.login.SignupFragment"
+        android:label="SignupFragment"
+        tools:layout="@layout/signup_fragment" />
 </navigation>

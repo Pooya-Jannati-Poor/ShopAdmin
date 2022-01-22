@@ -80,13 +80,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_25sdp"
             android:layout_marginTop="@dimen/_18sdp"
             android:background="@drawable/bg_btn_login"
-            android:text="@string/login"
+            android:text="@string/signup"
             android:textColor="@color/white"
             android:textSize="@dimen/_11ssp" />
 
