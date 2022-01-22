@@ -54,7 +54,7 @@
                         android:layout_weight="1" />
 
                     <TextView
-                        android:id="@+id/tvBookSeller"
+                        android:id="@+id/tvUsername"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="کتابفروشی مسعودی"
@@ -84,6 +84,19 @@
                         android:layout_marginStart="@dimen/_4sdp"
                         android:text="عدد"
                         android:textColor="#9E9E9E"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tvOrderDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="1400/09/22"
+                        android:textColor="@color/light_black"
                         android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>

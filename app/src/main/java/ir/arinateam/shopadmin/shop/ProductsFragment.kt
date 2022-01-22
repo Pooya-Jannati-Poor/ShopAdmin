@@ -17,7 +17,6 @@ import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.ProductsFragmentBinding
 import ir.arinateam.shopadmin.shop.adapter.AdapterRecProduct
-import ir.arinateam.shopadmin.shop.model.ModelRecOrderBase
 import ir.arinateam.shopadmin.shop.model.ModelRecProduct
 import ir.arinateam.shopadmin.shop.model.ModelRecProductBase
 import ir.arinateam.shopadmin.utils.Loading
@@ -90,7 +89,7 @@ class ProductsFragment : Fragment() {
 
                     val data = response.body()!!
 
-                    lsModelRecProduct.addAll(data.products)
+                    lsModelRecProductInfo.addAll(data.productInfo)
 
                     setRecProducts()
 
@@ -123,116 +122,68 @@ class ProductsFragment : Fragment() {
     }
 
     private lateinit var adapterRecProduct: AdapterRecProduct
-    private lateinit var lsModelRecProduct: ArrayList<ModelRecProduct>
+    private lateinit var lsModelRecProductInfo: ArrayList<ModelRecProduct>
 
     private fun setRecProducts() {
 
-        lsModelRecProduct = ArrayList()
+        lsModelRecProductInfo = ArrayList()
 
-        lsModelRecProduct.add(
+        lsModelRecProductInfo.add(
             ModelRecProduct(
                 1,
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
                 "ارباب حلقه ها",
                 "جی ار ار تاکین",
-                4,
-                "جنگل",
-                1,
-                25000,
-                152,
-                1998,
-                "9865-545644-56151-564",
-                0,
-                "کتاب بسیار خوب و جالبی است."
+                4
             )
         )
-        lsModelRecProduct.add(
+        lsModelRecProductInfo.add(
             ModelRecProduct(
                 2,
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
                 "دو برج",
                 "جی ار ار تاکین",
-                6,
-                "کویر",
-                2,
-                40000,
-                320,
-                2012,
-                "9865-545644-56151-564",
-                10,
-                "کتاب بسیار خوب و جالبی است."
+                6
             )
         )
-        lsModelRecProduct.add(
+        lsModelRecProductInfo.add(
             ModelRecProduct(
                 3,
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
                 "هری پاتر و سنگ جادو",
                 "اصغر فرهادی",
-                1,
-                "جنگل",
-                4,
-                25000,
-                152,
-                1998,
-                "9865-545644-56151-564",
-                0,
-                "کتاب بسیار خوب و جالبی است."
+                1
             )
         )
-        lsModelRecProduct.add(
+        lsModelRecProductInfo.add(
             ModelRecProduct(
                 4,
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
                 "بابا لنگ دراز",
                 "جی ار ار تاکین",
-                2,
-                "جنگل",
-                3,
-                25000,
-                152,
-                1998,
-                "9865-545644-56151-564",
-                0,
-                "کتاب بسیار خوب و جالبی است."
+                2
             )
         )
-        lsModelRecProduct.add(
+        lsModelRecProductInfo.add(
             ModelRecProduct(
                 5,
                 "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
                 "قم بهتر است یا نیویورک؟:/",
                 "یه نویسنده",
-                0,
-                "جنگل",
-                1,
-                25000,
-                152,
-                1998,
-                "9865-545644-56151-564",
-                5,
-                "کتاب بسیار خوب و جالبی است."
+                0
             )
         )
-        lsModelRecProduct.add(
+        lsModelRecProductInfo.add(
             ModelRecProduct(
                 6,
                 "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
                 "اثر مرکب",
                 "دان هاردی",
-                4,
-                "جنگل",
-                1,
-                25000,
-                152,
-                1998,
-                "9865-545644-56151-564",
-                0,
-                "کتاب بسیار خوب و جالبی است."
+                4
             )
         )
 
-        adapterRecProduct = AdapterRecProduct(requireActivity(), lsModelRecProduct)
+        adapterRecProduct = AdapterRecProduct(requireActivity(), lsModelRecProductInfo)
 
         val linearLayoutManager =
             LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)

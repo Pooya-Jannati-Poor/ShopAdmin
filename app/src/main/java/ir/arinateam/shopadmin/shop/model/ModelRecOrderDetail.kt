@@ -6,7 +6,7 @@ data class ModelRecOrderDetail(
     val bookName: String,
     val bookCount: Int,
     val bookPrice: Int,
-    val bookSeller: String,
+    val username: String,
     val orderState: Boolean
 
 )

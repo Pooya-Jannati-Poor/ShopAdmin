@@ -20,6 +20,7 @@ import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.AddBookFragmentBinding
+import ir.arinateam.shopadmin.shop.model.ModelRecProductInfo
 import ir.arinateam.shopadmin.shop.model.ModelSpCategory
 import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
 import ir.arinateam.shopadmin.utils.Loading
@@ -107,38 +108,91 @@ class AddBookFragment : Fragment() {
             tvPageTitle.text = "ویرایش کتاب"
             btnAddEdit.text = "ویرایش"
 
-
             bookId = requireArguments().getInt("productId")
             bookImage = requireArguments().getString("productImage")!!
-            bookName = requireArguments().getString("productName")!!
-            bookWriter = requireArguments().getString("productWriter")!!
-            bookPublisher = requireArguments().getString("productPublisher")!!
-            bookCategory = requireArguments().getString("productCategoryId")!!
-            bookPrice = requireArguments().getString("productPrice")!!
-            bookPageCount = requireArguments().getString("productPageCount")!!
-            bookPublishYear = requireArguments().getString("productPublishYear")!!
-            bookISBN = requireArguments().getString("productIsbn")!!
-            bookAvailableCount = requireArguments().getString("productAvailableCount")!!
-            bookDiscount = requireArguments().getString("productDiscountPercent")!!
-            bookDescription = requireArguments().getString("productDescription")!!
 
             Glide.with(requireActivity()).load(bookImage).diskCacheStrategy(DiskCacheStrategy.ALL)
                 .fitCenter().placeholder(
                     R.drawable.ic_admin_image_test
                 ).into(imgBook)
 
-            edBookName.setText(bookName)
-            edBookWriter.setText(bookWriter)
-            edBookPublisher.setText(bookPublisher)
-            edBookPrice.setText(bookPrice)
-            edBookPageCount.setText(bookPageCount)
-            edBookPublishYear.setText(bookPublishYear)
-            edBookISBN.setText(bookISBN)
-            edBookAvailableCount.setText(bookAvailableCount)
-            edBookDiscount.setText(bookDiscount)
-            edBookDescription.setText(bookDescription)
+            getProductInfo()
 
         }
+
+    }
+
+    private fun getProductInfo() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.productInfo("", 1)
+
+        callLoading.enqueue(object : Callback<ModelRecProductInfo> {
+
+            override fun onResponse(
+                call: Call<ModelRecProductInfo>,
+                response: Response<ModelRecProductInfo>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    bookName = data.bookName
+                    bookWriter = data.bookWriter
+                    bookPublisher = data.publisher
+                    bookCategory = data.categoryId.toString()
+                    bookPrice = data.price.toString()
+                    bookPageCount = data.pageCount.toString()
+                    bookPublishYear = data.publishYear.toString()
+                    bookISBN = data.isbn
+                    bookAvailableCount = data.availableCount.toString()
+                    bookDiscount = data.discountPercent.toString()
+                    bookDescription = data.description
+
+                    edBookName.setText(bookName)
+                    edBookWriter.setText(bookWriter)
+                    edBookPublisher.setText(bookPublisher)
+                    edBookPrice.setText(bookPrice)
+                    edBookPageCount.setText(bookPageCount)
+                    edBookPublishYear.setText(bookPublishYear)
+                    edBookISBN.setText(bookISBN)
+                    edBookAvailableCount.setText(bookAvailableCount)
+                    edBookDiscount.setText(bookDiscount)
+                    edBookDescription.setText(bookDescription)
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelRecProductInfo>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
 
     }
 

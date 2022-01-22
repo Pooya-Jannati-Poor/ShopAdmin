@@ -47,6 +47,13 @@ interface ApiInterface {
     ): Call<ModelRecProductBase>
 
 
+    @GET("productInfo/")
+    fun productInfo(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: Int
+    ): Call<ModelRecProductInfo>
+
+
     @GET("removeProduct/")
     fun removeProduct(
         @Header("Authorization") token: String,

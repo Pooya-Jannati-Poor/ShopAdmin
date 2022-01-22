@@ -24,7 +24,8 @@ class AdapterRecOrderDetail(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapter {
         val inflater = LayoutInflater.from(context)
-        bindingAdapter = DataBindingUtil.inflate(inflater, R.layout.layout_rec_order_detail, parent, false)
+        bindingAdapter =
+            DataBindingUtil.inflate(inflater, R.layout.layout_rec_order_detail, parent, false)
         return ItemAdapter(bindingAdapter)
     }
 
@@ -39,7 +40,7 @@ class AdapterRecOrderDetail(
             ).into(holder.imgBook)
         holder.tvBookName.text = model.bookName
         holder.tvBookCount.text = model.bookCount.toString()
-        holder.tvBookSeller.text = model.bookSeller
+        holder.tvUsername.text = model.username
 
         val numbersSeparator = NumbersSeparator()
 
@@ -67,8 +68,9 @@ class AdapterRecOrderDetail(
         val imgBook: ShapeableImageView = binding.imgBook
         val tvBookName: TextView = binding.tvBookName
         val tvBookCount: TextView = binding.tvBookCount
-        val tvBookSeller: TextView = binding.tvBookSeller
+        val tvUsername: TextView = binding.tvUsername
         val tvBookPrice: TextView = binding.tvBookPrice
+        val tvOrderDate: TextView = binding.tvOrderDate
         val tvOrderState: TextView = binding.tvOrderState
 
     }

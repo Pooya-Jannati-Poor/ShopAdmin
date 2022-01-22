@@ -19,6 +19,7 @@ import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.LayoutRecProductBinding
 import ir.arinateam.shopadmin.shop.model.ModelRecProduct
+import ir.arinateam.shopadmin.shop.model.ModelRecProductInfo
 import ir.arinateam.shopadmin.utils.Loading
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -27,7 +28,7 @@ import retrofit2.Response
 
 class AdapterRecProduct(
     private val context: Context,
-    private val lsModelRecProduct: ArrayList<ModelRecProduct>
+    private val lsModelRecProductInfo: ArrayList<ModelRecProduct>
 ) : RecyclerView.Adapter<AdapterRecProduct.ItemAdapter>() {
 
     private lateinit var bindingAdapter: LayoutRecProductBinding
@@ -42,7 +43,7 @@ class AdapterRecProduct(
 
     override fun onBindViewHolder(holder: ItemAdapter, position: Int) {
 
-        val model = lsModelRecProduct[position]
+        val model = lsModelRecProductInfo[position]
 
         Glide.with(context).load(model.img).diskCacheStrategy(DiskCacheStrategy.ALL)
             .fitCenter().placeholder(
@@ -56,23 +57,11 @@ class AdapterRecProduct(
                 .plus(" " + model.availableCount + " عدد")
 
 
-
         holder.llhEdit.setOnClickListener {
 
             val bundle = Bundle()
             bundle.putInt("productId", model.id)
             bundle.putString("productImage", model.img)
-            bundle.putString("productName", model.bookName)
-            bundle.putString("productWriter", model.bookWriter)
-            bundle.putString("productAvailableCount", model.availableCount.toString())
-            bundle.putString("productPublisher", model.publisher)
-            bundle.putString("productPageCount", model.pageCount.toString())
-            bundle.putString("productCategoryId", model.categoryId.toString())
-            bundle.putString("productPrice", model.price.toString())
-            bundle.putString("productPublishYear", model.publishYear.toString())
-            bundle.putString("productIsbn", model.isbn)
-            bundle.putString("productDiscountPercent", model.discountPercent.toString())
-            bundle.putString("productDescription", model.description)
 
             Navigation.findNavController(it)
                 .navigate(R.id.action_productsFragment_to_addBookFragment, bundle)
@@ -113,7 +102,7 @@ class AdapterRecProduct(
 
                     val data = response.body()!!
 
-                    lsModelRecProduct.removeAt(adapterPosition)
+                    lsModelRecProductInfo.removeAt(adapterPosition)
                     notifyItemRemoved(adapterPosition)
 
                 } else {
@@ -144,7 +133,7 @@ class AdapterRecProduct(
 
     }
 
-    override fun getItemCount(): Int = lsModelRecProduct.size
+    override fun getItemCount(): Int = lsModelRecProductInfo.size
 
     inner class ItemAdapter(binding: LayoutRecProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
