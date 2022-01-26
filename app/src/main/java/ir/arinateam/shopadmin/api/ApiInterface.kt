@@ -85,11 +85,8 @@ interface ApiInterface {
     ): Call<ResponseBody>
 
 
-    @GET("categoryList/")
-    fun categoryList(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
-    ): Call<ModelSpCategoryBase>
+    @GET("category/")
+    fun categoryList(): Call<ModelSpCategoryBase>
 
 
     @GET("editProduct/")

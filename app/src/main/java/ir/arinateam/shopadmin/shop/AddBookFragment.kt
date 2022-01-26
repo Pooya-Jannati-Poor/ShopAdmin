@@ -20,9 +20,11 @@ import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.AddBookFragmentBinding
+import ir.arinateam.shopadmin.shop.adapter.AdapterSpCategory
 import ir.arinateam.shopadmin.shop.model.ModelRecProductInfo
 import ir.arinateam.shopadmin.shop.model.ModelSpCategory
 import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
+import ir.arinateam.shopadmin.utils.CategorySelected
 import ir.arinateam.shopadmin.utils.Loading
 import ir.arinateam.shopadmin.utils.PrepareImageForUpload
 import okhttp3.MultipartBody
@@ -31,7 +33,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AddBookFragment : Fragment() {
+class AddBookFragment : Fragment(), CategorySelected {
 
     private lateinit var bindingFragment: AddBookFragmentBinding
 
@@ -207,7 +209,7 @@ class AddBookFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.categoryList("", 1)
+        val callLoading = apiInterface.categoryList()
 
         callLoading.enqueue(object : Callback<ModelSpCategoryBase> {
 
@@ -256,8 +258,23 @@ class AddBookFragment : Fragment() {
 
     }
 
+    private lateinit var categoryAdapter: AdapterSpCategory
+
     private fun setSpCategory() {
 
+        categoryAdapter = AdapterSpCategory(requireActivity(), lsModelSpCategory, this)
+        spBookCategory.adapter = categoryAdapter
+
+        getSpCategoryId()
+
+    }
+
+    private fun getSpCategoryId() {
+
+        spBookCategory.setOnItemClickListener { parent, view, position, id ->
+
+
+        }
 
     }
 
@@ -358,7 +375,7 @@ class AddBookFragment : Fragment() {
                 bookName,
                 bookWriter,
                 bookPublisher,
-                0,
+                bookCategoryId,
                 bookPrice,
                 bookPageCount.toInt(),
                 bookPublishYear.toInt(),
@@ -377,7 +394,7 @@ class AddBookFragment : Fragment() {
                 bookName,
                 bookWriter,
                 bookPublisher,
-                0,
+                bookCategoryId,
                 bookPrice,
                 bookPageCount.toInt(),
                 bookPublishYear.toInt(),
@@ -451,7 +468,7 @@ class AddBookFragment : Fragment() {
             bookName,
             bookWriter,
             bookPublisher,
-            0,
+            bookCategoryId,
             bookPrice,
             bookPageCount.toInt(),
             bookPublishYear.toInt(),
@@ -560,6 +577,15 @@ class AddBookFragment : Fragment() {
             Navigation.findNavController(it).popBackStack()
 
         }
+
+    }
+
+    private var bookCategoryId = 0
+
+    override fun onItemSelected(id: Int) {
+
+        bookCategoryId = id
+
 
     }
 
