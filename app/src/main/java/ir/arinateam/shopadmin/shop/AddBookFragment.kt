@@ -132,7 +132,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.productInfo("", 1)
+        val callLoading = apiInterface.productInfo("", bookId!!)
 
         callLoading.enqueue(object : Callback<ModelRecProductInfo> {
 
@@ -147,15 +147,15 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                     val data = response.body()!!
 
-                    bookName = data.bookName
-                    bookWriter = data.bookWriter
+                    bookName = data.name
+                    bookWriter = data.writer
                     bookPublisher = data.publisher
                     bookCategory = data.categoryId.toString()
                     bookPrice = data.price.toString()
-                    bookPageCount = data.pageCount.toString()
-                    bookPublishYear = data.publishYear.toString()
+                    bookPageCount = data.pages.toString()
+                    bookPublishYear = data.publish_year.toString()
                     bookISBN = data.isbn
-                    bookAvailableCount = data.availableCount.toString()
+                    bookAvailableCount = data.amount.toString()
                     bookDiscount = data.discountPercent.toString()
                     bookDescription = data.description
 
@@ -200,6 +200,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     private lateinit var apiClient: ApiClient
     private lateinit var lsModelSpCategory: ArrayList<ModelSpCategory>
+    private var spinnerPosition = 0
 
     private fun getCategoryList() {
 
@@ -209,7 +210,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.categoryList()
+        val callLoading = apiInterface.categoryList("")
 
         callLoading.enqueue(object : Callback<ModelSpCategoryBase> {
 
@@ -225,10 +226,28 @@ class AddBookFragment : Fragment(), CategorySelected {
                     val data = response.body()!!
 
                     lsModelSpCategory = ArrayList()
-
                     lsModelSpCategory.addAll(data.categories)
 
-                    setSpCategory()
+                    if (arguments == null) {
+
+                        bookCategory = lsModelSpCategory[0].id.toString()
+
+
+                    } else {
+
+                        lsModelSpCategory.forEachIndexed { index, modelTemp ->
+
+                            if (bookCategory == modelTemp.id.toString()) {
+
+                                spinnerPosition = index
+
+                            }
+
+                        }
+
+                    }
+
+                    setSpCategory(spinnerPosition)
 
                 } else {
 
@@ -260,23 +279,15 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     private lateinit var categoryAdapter: AdapterSpCategory
 
-    private fun setSpCategory() {
+    private fun setSpCategory(selectedPosition: Int) {
 
         categoryAdapter = AdapterSpCategory(requireActivity(), lsModelSpCategory, this)
         spBookCategory.adapter = categoryAdapter
 
-        getSpCategoryId()
+        spBookCategory.setSelection(selectedPosition)
 
     }
 
-    private fun getSpCategoryId() {
-
-        spBookCategory.setOnItemClickListener { parent, view, position, id ->
-
-
-        }
-
-    }
 
     private fun addOrEditProduct() {
 
@@ -327,20 +338,39 @@ class AddBookFragment : Fragment(), CategorySelected {
         bookDescription = edBookDescription.text.toString().plus("")
 
 
-        if (bookName != "" && bookWriter != "" && bookPublisher != "" && bookCategory != "" && bookPrice != "" && bookPageCount != "" && bookPublishYear != "" && bookISBN != "" && bookAvailableCount != "" && bookDescription != "") {
+        if (bookName != "" &&
+            bookWriter != "" &&
+            bookPublisher != "" &&
+            bookCategory != "" &&
+            bookPrice != "" &&
+            bookPageCount != "" &&
+            bookPublishYear != "" &&
+            bookISBN != "" &&
+            bookAvailableCount != "" &&
+            bookDescription != ""
+        ) {
 
-            edBookName.setText("")
-            edBookWriter.setText("")
-            edBookPublisher.setText("")
-            edBookPrice.setText("")
-            edBookPageCount.setText("")
-            edBookPublishYear.setText("")
-            edBookISBN.setText("")
-            edBookAvailableCount.setText("")
-            edBookDiscount.setText("")
-            edBookDescription.setText("")
+            if (arguments != null) {
 
-            Toast.makeText(requireActivity(), "با موفقیت ثبت شد", Toast.LENGTH_SHORT).show()
+                editProduct()
+
+            } else {
+
+                if (imageMultiPartBody != null) {
+
+                    addProduct()
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        "لطفا عکس را وارد نمایید!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
 
         } else {
 
@@ -369,13 +399,12 @@ class AddBookFragment : Fragment(), CategorySelected {
 
             callLoading = apiInterface.editProductWithImage(
                 "",
-                1,
                 imageMultiPartBody,
                 bookId!!,
                 bookName,
                 bookWriter,
                 bookPublisher,
-                bookCategoryId,
+                bookCategory.toInt(),
                 bookPrice,
                 bookPageCount.toInt(),
                 bookPublishYear.toInt(),
@@ -389,12 +418,11 @@ class AddBookFragment : Fragment(), CategorySelected {
 
             callLoading = apiInterface.editProductWithoutImage(
                 "",
-                1,
                 bookId!!,
                 bookName,
                 bookWriter,
                 bookPublisher,
-                bookCategoryId,
+                bookCategory.toInt(),
                 bookPrice,
                 bookPageCount.toInt(),
                 bookPublishYear.toInt(),
@@ -424,6 +452,17 @@ class AddBookFragment : Fragment(), CategorySelected {
                         "محصول شما با موفقیت تغییر کرد",
                         Toast.LENGTH_SHORT
                     ).show()
+
+                    edBookName.setText("")
+                    edBookWriter.setText("")
+                    edBookPublisher.setText("")
+                    edBookPrice.setText("")
+                    edBookPageCount.setText("")
+                    edBookPublishYear.setText("")
+                    edBookISBN.setText("")
+                    edBookAvailableCount.setText("")
+                    edBookDiscount.setText("")
+                    edBookDescription.setText("")
 
                 } else {
 
@@ -463,12 +502,11 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         val callLoading = apiInterface.addProduct(
             "",
-            1,
             imageMultiPartBody,
             bookName,
             bookWriter,
             bookPublisher,
-            bookCategoryId,
+            bookCategory.toInt(),
             bookPrice,
             bookPageCount.toInt(),
             bookPublishYear.toInt(),
@@ -494,6 +532,18 @@ class AddBookFragment : Fragment(), CategorySelected {
                         "محصول شما با موفقیت اضافه شد",
                         Toast.LENGTH_SHORT
                     ).show()
+
+
+                    edBookName.setText("")
+                    edBookWriter.setText("")
+                    edBookPublisher.setText("")
+                    edBookPrice.setText("")
+                    edBookPageCount.setText("")
+                    edBookPublishYear.setText("")
+                    edBookISBN.setText("")
+                    edBookAvailableCount.setText("")
+                    edBookDiscount.setText("")
+                    edBookDescription.setText("")
 
                 } else {
 
@@ -560,7 +610,7 @@ class AddBookFragment : Fragment(), CategorySelected {
                 imgBook.setImageURI(fileUri)
 
                 val prepare = PrepareImageForUpload()
-                imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "book", bitmap)
+                imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "image", bitmap)
 
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT)
@@ -580,11 +630,9 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     }
 
-    private var bookCategoryId = 0
-
     override fun onItemSelected(id: Int) {
 
-        bookCategoryId = id
+        bookCategory = id.toString()
 
 
     }

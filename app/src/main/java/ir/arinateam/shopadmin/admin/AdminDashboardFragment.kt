@@ -82,7 +82,7 @@ class AdminDashboardFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.adminDashboardInfo("", 1)
+        val callLoading = apiInterface.adminDashboardInfo("")
 
         callLoading.enqueue(object : Callback<ModelAdminDashboardInfo> {
 

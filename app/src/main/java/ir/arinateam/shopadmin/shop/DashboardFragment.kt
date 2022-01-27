@@ -95,7 +95,7 @@ class DashboardFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.shopDashboard("", 1)
+        val callLoading = apiInterface.shopDashboard("")
 
         callLoading.enqueue(object : Callback<ModelGetShopDashboard> {
 

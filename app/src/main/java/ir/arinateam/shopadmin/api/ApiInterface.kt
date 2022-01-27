@@ -27,8 +27,7 @@ interface ApiInterface {
 
     @GET("checkLogin/")
     fun checkLogin(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Header("Authorization") token: String
     ): Call<ResponseBody>
 
 
@@ -51,118 +50,114 @@ interface ApiInterface {
     @GET("orderList/")
     fun orderList(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int
     ): Call<ModelRecOrderBase>
 
 
     @GET("orderDetail/")
     fun orderDetail(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
         @Query("orderId") orderId: Int,
     ): Call<ModelRecOrderDetailBase>
 
 
-    @GET("productList/")
+    @GET("products/")
     fun productList(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Header("Authorization") token: String
     ): Call<ModelRecProductBase>
 
 
-    @GET("productInfo/")
+    @GET("products/")
     fun productInfo(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Query("id") productId: Int
     ): Call<ModelRecProductInfo>
 
 
-    @GET("removeProduct/")
+    @DELETE("removeProduct/")
     fun removeProduct(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
-        @Query("productId") productId: Int,
+        @Path("id") productId: Int,
     ): Call<ResponseBody>
 
 
     @GET("category/")
-    fun categoryList(): Call<ModelSpCategoryBase>
+    fun categoryList(
+        @Header("Authorization") token: String
+    ): Call<ModelSpCategoryBase>
 
 
-    @GET("editProduct/")
+    @FormUrlEncoded
+    @POST("products/")
     fun editProductWithImage(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
         @Part image: MultipartBody.Part,
-        @Query("productId") productId: Int,
-        @Query("productName") productName: String,
-        @Query("productWriter") productWriter: String,
-        @Query("productPublisher") productPublisher: String,
-        @Query("productCategory") productCategory: Int,
-        @Query("productPrice") productPrice: String,
-        @Query("productPageCount") productPageCount: Int,
-        @Query("productPublishYear") productPublishYear: Int,
-        @Query("productISBN") productISBN: String,
-        @Query("productAvailableCount") productAvailableCount: Int,
-        @Query("productDiscount") productDiscount: Int,
-        @Query("productDescription") productDescription: String
+        @Field("id") productId: Int,
+        @Field("name") productName: String,
+        @Field("writer") productWriter: String,
+        @Field("publisher") productPublisher: String,
+        @Field("category") productCategory: Int,
+        @Field("price") productPrice: String,
+        @Field("pages") productPageCount: Int,
+        @Field("publishYear") productPublishYear: Int,
+        @Field("isbn") productISBN: String,
+        @Field("amount") productAvailableCount: Int,
+        @Field("discount") productDiscount: Int,
+        @Field("description") productDescription: String
     ): Call<ResponseBody>
 
-    @GET("editProduct/")
+
+    @FormUrlEncoded
+    @POST("products/")
     fun editProductWithoutImage(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
-        @Query("productId") productId: Int,
-        @Query("productName") productName: String,
-        @Query("productWriter") productWriter: String,
-        @Query("productPublisher") productPublisher: String,
-        @Query("productCategory") productCategory: Int,
-        @Query("productPrice") productPrice: String,
-        @Query("productPageCount") productPageCount: Int,
-        @Query("productPublishYear") productPublishYear: Int,
-        @Query("productISBN") productISBN: String,
-        @Query("productAvailableCount") productAvailableCount: Int,
-        @Query("productDiscount") productDiscount: Int,
-        @Query("productDescription") productDescription: String
+        @Field("id") productId: Int,
+        @Field("name") productName: String,
+        @Field("writer") productWriter: String,
+        @Field("publisher") productPublisher: String,
+        @Field("category") productCategory: Int,
+        @Field("price") productPrice: String,
+        @Field("pages") productPageCount: Int,
+        @Field("publishYear") productPublishYear: Int,
+        @Field("isbn") productISBN: String,
+        @Field("amount") productAvailableCount: Int,
+        @Field("discount") productDiscount: Int,
+        @Field("description") productDescription: String
     ): Call<ResponseBody>
 
-    @GET("addProduct/")
+    @FormUrlEncoded
+    @POST("products/")
     fun addProduct(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
         @Part image: MultipartBody.Part,
-        @Query("productName") productName: String,
-        @Query("productWriter") productWriter: String,
-        @Query("productPublisher") productPublisher: String,
-        @Query("productCategory") productCategory: Int,
-        @Query("productPrice") productPrice: String,
-        @Query("productPageCount") productPageCount: Int,
-        @Query("productPublishYear") productPublishYear: Int,
-        @Query("productISBN") productISBN: String,
-        @Query("productAvailableCount") productAvailableCount: Int,
-        @Query("productDiscount") productDiscount: Int,
-        @Query("productDescription") productDescription: String
+        @Field("name ") productName: String,
+        @Field("writer ") productWriter: String,
+        @Field("publisher ") productPublisher: String,
+        @Field("category ") productCategory: Int,
+        @Field("price ") productPrice: String,
+        @Field("pages") productPageCount: Int,
+        @Field("publishYear") productPublishYear: Int,
+        @Field("isbn ") productISBN: String,
+        @Field("amount ") productAvailableCount: Int,
+        @Field("discount") productDiscount: Int,
+        @Field("description ") productDescription: String
     ): Call<ResponseBody>
 
 
     @GET("shopDashboard/")
     fun shopDashboard(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Header("Authorization") token: String
     ): Call<ModelGetShopDashboard>
 
 
     @GET("shopInfo/")
     fun shopInfo(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Header("Authorization") token: String
     ): Call<ModelGetShopInfo>
 
 
     @GET("editShopInfo/")
     fun editShopInfoWithImage(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
         @Part image: MultipartBody.Part,
         @Query("shopName") shopName: String,
         @Query("username") username: String,
@@ -174,7 +169,6 @@ interface ApiInterface {
     @GET("editShopInfo/")
     fun editShopInfoWithoutImage(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
         @Query("shopName") shopName: String,
         @Query("username") username: String,
         @Query("phoneNumber") phoneNumber: String,
@@ -184,30 +178,26 @@ interface ApiInterface {
 
     @GET("getShopsList/")
     fun getShopsList(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Header("Authorization") token: String
     ): Call<ModelAdminShopsInfoBase>
 
 
     @GET("adminDashboardInfo/")
     fun adminDashboardInfo(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Header("Authorization") token: String
     ): Call<ModelAdminDashboardInfo>
 
 
     @GET("changeShopState/")
     fun changeShopState(
         @Header("Authorization") token: String,
-        @Query("userId") userId: Int,
         @Query("shopId") shopId: Int
     ): Call<ResponseBody>
 
 
     @GET("adminSell/")
     fun adminSell(
-        @Header("Authorization") token: String,
-        @Query("userId") userId: Int
+        @Header("Authorization") token: String
     ): Call<ModelGetAdminSell>
 
 }

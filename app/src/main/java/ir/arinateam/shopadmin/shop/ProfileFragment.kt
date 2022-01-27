@@ -94,7 +94,7 @@ class ProfileFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.shopInfo("", 1)
+        val callLoading = apiInterface.shopInfo("")
 
         callLoading.enqueue(object : Callback<ModelGetShopInfo> {
 
@@ -210,7 +210,7 @@ class ProfileFragment : Fragment() {
             if (imageMultiPartBody != null) {
 
                 callLoading = apiInterface.editShopInfoWithImage(
-                    "", 1,
+                    "",
                     imageMultiPartBody,
                     shopName,
                     username,
@@ -221,7 +221,7 @@ class ProfileFragment : Fragment() {
             } else {
 
                 callLoading = apiInterface.editShopInfoWithoutImage(
-                    "", 1,
+                    "",
                     shopName,
                     username,
                     phoneNumber,

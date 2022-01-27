@@ -59,7 +59,7 @@ class AdapterRecShop(
 
                 val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-                val callLoading = apiInterface.changeShopState("", 1, model.id)
+                val callLoading = apiInterface.changeShopState("", model.id)
 
                 callLoading.enqueue(object : Callback<ResponseBody> {
 
@@ -109,7 +109,7 @@ class AdapterRecShop(
 
                 val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-                val callLoading = apiInterface.changeShopState("", 1, model.id)
+                val callLoading = apiInterface.changeShopState("", model.id)
 
                 callLoading.enqueue(object : Callback<ResponseBody> {
 

@@ -85,7 +85,7 @@ class SellsFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.adminSell("", 1)
+        val callLoading = apiInterface.adminSell("")
 
         callLoading.enqueue(object : Callback<ModelGetAdminSell> {
 

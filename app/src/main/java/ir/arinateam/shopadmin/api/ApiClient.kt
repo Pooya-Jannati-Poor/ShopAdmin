@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiClient {
 
-    private val baseUrl = "https://applicationfortest.ir/api/"
+    private val baseUrl = "https://applicationfortests.ir/api/"
 
     private var request: ApiInterface
 

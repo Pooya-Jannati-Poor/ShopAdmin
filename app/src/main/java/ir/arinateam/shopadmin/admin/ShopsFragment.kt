@@ -72,7 +72,7 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.getShopsList("", 1)
+        val callLoading = apiInterface.getShopsList("")
 
         callLoading.enqueue(object : Callback<ModelAdminShopsInfoBase> {
 

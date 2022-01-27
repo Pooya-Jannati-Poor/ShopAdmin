@@ -87,7 +87,7 @@ class AdapterRecProduct(
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.removeProduct("", 1, productId)
+        val callLoading = apiInterface.removeProduct("", productId)
 
         callLoading.enqueue(object : Callback<ResponseBody> {
 

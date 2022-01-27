@@ -3,15 +3,15 @@ package ir.arinateam.shopadmin.shop.model
 data class ModelRecProductInfo(
 
     val id: Int,
-    val img: String,
-    val bookName: String,
-    val bookWriter: String,
-    val availableCount: Int,
+    val image: String,
+    val name: String,
+    val writer: String,
+    val amount: Int,
     val publisher: String,
     val categoryId: Int,
     val price: Int,
-    val pageCount: Int,
-    val publishYear: Int,
+    val pages: Int,
+    val publish_year: Int,
     val isbn: String,
     val discountPercent: Int,
     val description: String
