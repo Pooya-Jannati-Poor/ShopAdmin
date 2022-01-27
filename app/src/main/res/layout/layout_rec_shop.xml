@@ -9,7 +9,6 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/bg_rec_shop"
         android:layoutDirection="rtl"
-
         android:orientation="horizontal"
         android:padding="@dimen/_12sdp"
         android:textDirection="rtl">
