@@ -3,6 +3,7 @@ package ir.arinateam.shopadmin.api
 import ir.arinateam.shopadmin.admin.model.ModelAdminDashboardInfo
 import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase
 import ir.arinateam.shopadmin.admin.model.ModelGetAdminSell
+import ir.arinateam.shopadmin.login.model.ModelSignup
 import ir.arinateam.shopadmin.shop.model.*
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -39,12 +40,14 @@ interface ApiInterface {
     ): Call<ResponseBody>
 
 
-    @GET("signup/")
+    @FormUrlEncoded
+    @POST("user/register")
     fun signup(
-        @Header("Authorization") token: String,
-        @Query("phoneNumber") phoneNumber: String,
-        @Query("password") password: String
-    ): Call<ResponseBody>
+        @Query("phone") phone: String,
+        @Query("password") password: String,
+        @Query("type") type: String,
+        @Query("model") model: String
+    ): Call<ModelSignup>
 
 
     @GET("orderList/")
@@ -73,7 +76,7 @@ interface ApiInterface {
     ): Call<ModelRecProductInfo>
 
 
-    @DELETE("removeProduct/")
+    @DELETE("products/{id}")
     fun removeProduct(
         @Header("Authorization") token: String,
         @Path("id") productId: Int,
