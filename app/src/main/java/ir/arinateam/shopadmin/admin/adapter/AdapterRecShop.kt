@@ -1,6 +1,7 @@
 package ir.arinateam.shopadmin.admin.adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,11 +35,15 @@ class AdapterRecShop(
 
     private lateinit var bindingAdapter: LayoutRecShopBinding
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemAdapter {
         val inflater = LayoutInflater.from(parent.context)
         bindingAdapter = DataBindingUtil.inflate(inflater, R.layout.layout_rec_shop, parent, false)
         return ItemAdapter(bindingAdapter)
     }
+
 
     override fun onBindViewHolder(holder: ItemAdapter, position: Int) {
 
@@ -47,7 +52,15 @@ class AdapterRecShop(
 
         holder.tvShopName.text = model.shopName
 
-        holder.sbShopAvailable.isOn = model.isActivated
+        if (model.isActivated == 1) {
+
+            holder.sbShopAvailable.isOn = true
+
+        } else {
+
+            holder.sbShopAvailable.isOn = false
+
+        }
 
         holder.sbShopAvailable.setOnToggledListener { _, isOn ->
 
@@ -57,9 +70,16 @@ class AdapterRecShop(
 
                 val apiClient = ApiClient()
 
+                sharedPreferences = context.getSharedPreferences(
+                    "data",
+                    Context.MODE_PRIVATE
+                )
+
+                token = sharedPreferences.getString("token", "")!!
+
                 val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-                val callLoading = apiInterface.changeShopState("", model.id)
+                val callLoading = apiInterface.changeShopState("Bearer $token", model.id)
 
                 callLoading.enqueue(object : Callback<ResponseBody> {
 
@@ -70,7 +90,7 @@ class AdapterRecShop(
 
                         loadingLottie.hideDialog()
 
-                        if (response.code() == 200) {
+                        if (response.code() == 204) {
 
                             changeShopState.enabled()
 
@@ -105,11 +125,18 @@ class AdapterRecShop(
 
                 val loadingLottie = Loading(context)
 
+                sharedPreferences = context.getSharedPreferences(
+                    "data",
+                    Context.MODE_PRIVATE
+                )
+
+                token = sharedPreferences.getString("token", "")!!
+
                 val apiClient = ApiClient()
 
                 val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-                val callLoading = apiInterface.changeShopState("", model.id)
+                val callLoading = apiInterface.changeShopState("Bearer $token", model.id)
 
                 callLoading.enqueue(object : Callback<ResponseBody> {
 
@@ -120,7 +147,7 @@ class AdapterRecShop(
 
                         loadingLottie.hideDialog()
 
-                        if (response.code() == 200) {
+                        if (response.code() == 204) {
 
                             changeShopState.disabled()
 

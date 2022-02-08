@@ -1,8 +1,12 @@
 package ir.arinateam.shopadmin.shop
 
 import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +25,7 @@ import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.ProfileFragmentBinding
+import ir.arinateam.shopadmin.login.LoginActivity
 import ir.arinateam.shopadmin.shop.model.ModelGetShopInfo
 import ir.arinateam.shopadmin.utils.Loading
 import ir.arinateam.shopadmin.utils.PrepareImageForUpload
@@ -66,6 +71,12 @@ class ProfileFragment : Fragment() {
 
         getImage()
 
+        flLogout.setOnClickListener {
+
+            logoutApi()
+
+        }
+
         backToDashboard()
 
     }
@@ -90,11 +101,18 @@ class ProfileFragment : Fragment() {
 
         val loadingLottie = Loading(requireActivity())
 
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
         apiClient = ApiClient()
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.shopInfo("")
+        val callLoading = apiInterface.shopInfo("Bearer $token")
 
         callLoading.enqueue(object : Callback<ModelGetShopInfo> {
 
@@ -104,6 +122,8 @@ class ProfileFragment : Fragment() {
             ) {
 
                 loadingLottie.hideDialog()
+
+                Log.d("dataTest", response.body().toString())
 
                 if (response.code() == 200) {
 
@@ -127,17 +147,22 @@ class ProfileFragment : Fragment() {
 
                     }
 
-                    if (data.username != null) {
+                    if (data.shop != null) {
 
-                        edUsername.setText(data.username)
+                        if (data.shop.username != null) {
+
+                            edUsername.setText(data.shop.username)
+
+                        }
+
+                        if (data.shop.address != null) {
+
+                            edAddress.setText(data.shop.address)
+
+                        }
 
                     }
 
-                    if (data.address != null) {
-
-                        edAddress.setText(data.address)
-
-                    }
 
                     if (data.phoneNumber != null) {
 
@@ -189,7 +214,7 @@ class ProfileFragment : Fragment() {
     private lateinit var address: String
 
 
-    private lateinit var callLoading: Call<ResponseBody>
+    private lateinit var callEdit: Call<ResponseBody>
 
     private fun validateInputs() {
 
@@ -202,6 +227,15 @@ class ProfileFragment : Fragment() {
 
             val loadingLottie = Loading(requireActivity())
 
+            sharedPreferences = requireActivity().getSharedPreferences(
+                "data",
+                Context.MODE_PRIVATE
+            )
+
+            token = sharedPreferences.getString("token", "")!!
+
+            apiClient = ApiClient()
+
             apiClient = ApiClient()
 
             val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
@@ -209,9 +243,9 @@ class ProfileFragment : Fragment() {
 
             if (imageMultiPartBody != null) {
 
-                callLoading = apiInterface.editShopInfoWithImage(
-                    "",
-                    imageMultiPartBody,
+                callEdit = apiInterface.editShopInfoWithImage(
+                    "Bearer $token",
+                    imageMultiPartBody!!,
                     shopName,
                     username,
                     phoneNumber,
@@ -220,8 +254,8 @@ class ProfileFragment : Fragment() {
 
             } else {
 
-                callLoading = apiInterface.editShopInfoWithoutImage(
-                    "",
+                callEdit = apiInterface.editShopInfoWithoutImage(
+                    "Bearer $token",
                     shopName,
                     username,
                     phoneNumber,
@@ -231,7 +265,7 @@ class ProfileFragment : Fragment() {
             }
 
 
-            callLoading.enqueue(object : Callback<ResponseBody> {
+            callEdit.enqueue(object : Callback<ResponseBody> {
 
                 override fun onResponse(
                     call: Call<ResponseBody>,
@@ -248,11 +282,6 @@ class ProfileFragment : Fragment() {
                             Toast.LENGTH_SHORT
                         )
                             .show()
-
-                        edUsername.setText("")
-                        edShopName.setText("")
-                        edPhoneNumber.setText("")
-                        edAddress.setText("")
 
                     } else {
 
@@ -307,7 +336,7 @@ class ProfileFragment : Fragment() {
 
     }
 
-    private lateinit var imageMultiPartBody: MultipartBody.Part
+    private var imageMultiPartBody: MultipartBody.Part? = null
 
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -335,6 +364,83 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(requireActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
+
+    private lateinit var loading: Loading
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
+
+    private fun logoutApi() {
+
+        loading = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.logout("Bearer $token")
+
+        callLoading.enqueue(object : Callback<ResponseBody> {
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                loading.hideDialog()
+
+                Log.d("dataTest", response.message())
+                Log.d("dataTest", response.code().toString())
+                Log.d("dataTest", token)
+
+                if (response.code() == 204) {
+
+                    val edSharedPreferences = sharedPreferences.edit()
+                    edSharedPreferences.clear()
+                    edSharedPreferences.apply()
+
+                    token = ""
+
+                    Toast.makeText(requireActivity(), "با موفقیت خارج شدید", Toast.LENGTH_SHORT)
+                        .show()
+
+
+                    val intent = Intent(requireActivity(), LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    requireActivity().startActivity(intent)
+
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        "مشکلی به وجود امده است. لطفا مجددا سعی نمایید",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+
+                loading.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
+
+    }
 
     private fun backToDashboard() {
 

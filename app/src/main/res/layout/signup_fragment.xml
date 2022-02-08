@@ -80,13 +80,25 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnSignup"
+            android:id="@+id/btnSignupShop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_25sdp"
             android:layout_marginTop="@dimen/_18sdp"
             android:background="@drawable/bg_btn_login"
-            android:text="@string/signup"
+            android:text="@string/signupShop"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11ssp" />
+
+
+        <Button
+            android:id="@+id/btnSignupAdmin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_18sdp"
+            android:background="@drawable/bg_btn_login"
+            android:text="@string/signupAdmin"
             android:textColor="@color/white"
             android:textSize="@dimen/_11ssp" />
 

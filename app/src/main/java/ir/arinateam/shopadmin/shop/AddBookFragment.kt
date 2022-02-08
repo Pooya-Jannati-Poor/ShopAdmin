@@ -1,8 +1,12 @@
 package ir.arinateam.shopadmin.shop
 
 import android.app.Activity
+import android.content.Context.MODE_PRIVATE
+import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +36,8 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 class AddBookFragment : Fragment(), CategorySelected {
 
@@ -68,6 +74,13 @@ class AddBookFragment : Fragment(), CategorySelected {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
+
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
 
         checkBundle()
 
@@ -132,7 +145,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.productInfo("", bookId!!)
+        val callLoading = apiInterface.productInfo("Bearer $token", bookId!!)
 
         callLoading.enqueue(object : Callback<ModelRecProductInfo> {
 
@@ -150,7 +163,8 @@ class AddBookFragment : Fragment(), CategorySelected {
                     bookName = data.name
                     bookWriter = data.writer
                     bookPublisher = data.publisher
-                    bookCategory = data.categoryId.toString()
+                    bookCategoryId = data.category.id.toString()
+                    bookCategoryName = data.category.name
                     bookPrice = data.price.toString()
                     bookPageCount = data.pages.toString()
                     bookPublishYear = data.publish_year.toString()
@@ -210,7 +224,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.categoryList("")
+        val callLoading = apiInterface.categoryList("Bearer $token")
 
         callLoading.enqueue(object : Callback<ModelSpCategoryBase> {
 
@@ -221,6 +235,9 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                 loadingLottie.hideDialog()
 
+                Log.d("dataTest", response.code().toString())
+                Log.d("dataTest", response.message())
+
                 if (response.code() == 200) {
 
                     val data = response.body()!!
@@ -230,14 +247,14 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                     if (arguments == null) {
 
-                        bookCategory = lsModelSpCategory[0].id.toString()
+                        bookCategoryId = lsModelSpCategory[0].id.toString()
 
 
                     } else {
 
                         lsModelSpCategory.forEachIndexed { index, modelTemp ->
 
-                            if (bookCategory == modelTemp.id.toString()) {
+                            if (bookCategoryId == modelTemp.id.toString()) {
 
                                 spinnerPosition = index
 
@@ -246,6 +263,8 @@ class AddBookFragment : Fragment(), CategorySelected {
                         }
 
                     }
+
+                    Log.d("dataTest", bookCategoryId)
 
                     setSpCategory(spinnerPosition)
 
@@ -314,7 +333,8 @@ class AddBookFragment : Fragment(), CategorySelected {
     private lateinit var bookName: String
     private lateinit var bookWriter: String
     private lateinit var bookPublisher: String
-    private lateinit var bookCategory: String
+    private lateinit var bookCategoryId: String
+    private lateinit var bookCategoryName: String
     private lateinit var bookPrice: String
     private lateinit var bookPageCount: String
     private lateinit var bookPublishYear: String
@@ -328,7 +348,6 @@ class AddBookFragment : Fragment(), CategorySelected {
         bookName = edBookName.text.toString().plus("")
         bookWriter = edBookWriter.text.toString().plus("")
         bookPublisher = edBookPublisher.text.toString().plus("")
-        bookCategory = edBookName.text.toString().plus("") //TODO("گرفتن ای دی دسته بندی")
         bookPrice = edBookPrice.text.toString().plus("")
         bookPageCount = edBookPageCount.text.toString().plus("")
         bookPublishYear = edBookPublishYear.text.toString().plus("")
@@ -341,7 +360,7 @@ class AddBookFragment : Fragment(), CategorySelected {
         if (bookName != "" &&
             bookWriter != "" &&
             bookPublisher != "" &&
-            bookCategory != "" &&
+            bookCategoryId != "" &&
             bookPrice != "" &&
             bookPageCount != "" &&
             bookPublishYear != "" &&
@@ -398,13 +417,13 @@ class AddBookFragment : Fragment(), CategorySelected {
         if (imageMultiPartBody != null) {
 
             callLoading = apiInterface.editProductWithImage(
-                "",
-                imageMultiPartBody,
+                "Bearer $token",
+                imageMultiPartBody!!,
                 bookId!!,
                 bookName,
                 bookWriter,
                 bookPublisher,
-                bookCategory.toInt(),
+                bookCategoryId.toInt(),
                 bookPrice,
                 bookPageCount.toInt(),
                 bookPublishYear.toInt(),
@@ -417,12 +436,12 @@ class AddBookFragment : Fragment(), CategorySelected {
         } else {
 
             callLoading = apiInterface.editProductWithoutImage(
-                "",
+                "Bearer $token",
                 bookId!!,
                 bookName,
                 bookWriter,
                 bookPublisher,
-                bookCategory.toInt(),
+                bookCategoryId.toInt(),
                 bookPrice,
                 bookPageCount.toInt(),
                 bookPublishYear.toInt(),
@@ -445,7 +464,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                 loadingLottie.hideDialog()
 
-                if (response.code() == 200) {
+                if (response.code() == 204) {
 
                     Toast.makeText(
                         requireActivity(),
@@ -492,7 +511,12 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     }
 
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
+
     private fun addProduct() {
+
+        Log.d("dataTest", bookCategoryId)
 
         val loadingLottie = Loading(requireActivity())
 
@@ -501,12 +525,12 @@ class AddBookFragment : Fragment(), CategorySelected {
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
         val callLoading = apiInterface.addProduct(
-            "",
-            imageMultiPartBody,
+            "Bearer $token",
+            imageMultiPartBody!!,
             bookName,
             bookWriter,
             bookPublisher,
-            bookCategory.toInt(),
+            bookCategoryId.toInt(),
             bookPrice,
             bookPageCount.toInt(),
             bookPublishYear.toInt(),
@@ -523,9 +547,12 @@ class AddBookFragment : Fragment(), CategorySelected {
                 response: Response<ResponseBody>
             ) {
 
+                Log.d("dataTest", response.code().toString())
+                Log.d("dataTest", response.message())
+
                 loadingLottie.hideDialog()
 
-                if (response.code() == 200) {
+                if (response.code() == 204) {
 
                     Toast.makeText(
                         requireActivity(),
@@ -591,7 +618,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     }
 
-    private lateinit var imageMultiPartBody: MultipartBody.Part
+    private var imageMultiPartBody: MultipartBody.Part? = null
 
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -602,12 +629,18 @@ class AddBookFragment : Fragment(), CategorySelected {
                 //Image Uri will not be null for RESULT_OK
                 val fileUri = data?.data!!
 
-                val bitmap = MediaStore.Images.Media.getBitmap(
+                var bitmap = MediaStore.Images.Media.getBitmap(
                     requireActivity().contentResolver,
                     fileUri
                 )
 
                 imgBook.setImageURI(fileUri)
+
+                Log.d("dataTest2", bitmap.allocationByteCount.toString())
+
+                bitmap = reduceBitmapSize(bitmap, 1000)
+
+                Log.d("dataTest2", bitmap.allocationByteCount.toString())
 
                 val prepare = PrepareImageForUpload()
                 imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "image", bitmap)
@@ -619,6 +652,27 @@ class AddBookFragment : Fragment(), CategorySelected {
                 Toast.makeText(requireActivity(), "Task Cancelled", Toast.LENGTH_SHORT).show()
             }
         }
+
+    private fun reduceBitmapSize(bitmap: Bitmap, maxSize: Int): Bitmap {
+
+        val ratioSquare: Double
+
+        val bitmapHeight: Int = bitmap.height
+        val bitmapWidth: Int = bitmap.width
+
+        ratioSquare = ((bitmapHeight * bitmapWidth) / maxSize).toDouble()
+        if (ratioSquare <= 1) {
+            return bitmap
+        }
+
+        val ratio = sqrt(ratioSquare)
+
+        val requireHeight = (bitmapHeight / ratio).roundToInt()
+        val requireWidth = (bitmapWidth / ratio).roundToInt()
+
+        return Bitmap.createScaledBitmap(bitmap, requireWidth, requireHeight, true)
+
+    }
 
     private fun backToProducts() {
 
@@ -632,7 +686,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     override fun onItemSelected(id: Int) {
 
-        bookCategory = id.toString()
+        bookCategoryId = id.toString()
 
 
     }

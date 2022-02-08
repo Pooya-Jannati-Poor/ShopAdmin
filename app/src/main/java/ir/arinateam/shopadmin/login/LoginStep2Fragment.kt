@@ -1,25 +1,27 @@
 package ir.arinateam.shopadmin.login
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.Context.MODE_PRIVATE
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.textfield.TextInputEditText
 import ir.arinateam.shopadmin.R
+import ir.arinateam.shopadmin.admin.AdminActivity
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiClient.Companion.retrofit
 import ir.arinateam.shopadmin.databinding.LoginStep2FragmentBinding
 import ir.arinateam.shopadmin.api.ApiInterface
+import ir.arinateam.shopadmin.login.model.ModelLogin
+import ir.arinateam.shopadmin.shop.ShopActivity
 import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
 import retrofit2.Callback
@@ -74,14 +76,17 @@ class LoginStep2Fragment : Fragment() {
 
     }
 
+    private lateinit var phoneNumber: String
+    private lateinit var password: String
+
     private fun checkInputs() {
 
-        val phoneNumber = edPhoneNumber.text.toString().trim()
-        val password = edPassword.text.toString().trim()
+        phoneNumber = edPhoneNumber.text.toString().trim()
+        password = edPassword.text.toString().trim()
 
-        if (phoneNumber.length == 11 && password.length > 4) {
+        if (phoneNumber.length == 11 && password.isNotEmpty()) {
 
-            Toast.makeText(requireActivity(), "با موفقیت وارد شدید", Toast.LENGTH_SHORT).show()
+            loginApi()
 
         } else {
 
@@ -97,10 +102,12 @@ class LoginStep2Fragment : Fragment() {
 
     private lateinit var apiClient: ApiClient
     private lateinit var loading: Loading
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
 
-    /*private fun loadingWithUUID() {
+    private fun loginApi() {
 
-        val loading_lottie = Loading(this)
+        loading = Loading(requireActivity())
 
         apiClient = ApiClient()
 
@@ -108,57 +115,46 @@ class LoginStep2Fragment : Fragment() {
 
         val apiInterface: ApiInterface = retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.loadingWithUUID(mobileModel, uuid)
+        val callLoading = apiInterface.login(phoneNumber, password, mobileModel)
 
-        callLoading.enqueue(object : Callback<ModelLoading> {
+        callLoading.enqueue(object : Callback<ModelLogin> {
 
-            override fun onResponse(call: Call<ModelLoading>, response: Response<ModelLoading>) {
+            override fun onResponse(call: Call<ModelLogin>, response: Response<ModelLogin>) {
 
-                loading_lottie.hideDialog()
+                loading.hideDialog()
 
                 if (response.code() == 200) {
 
                     val data = response.body()!!
 
-                    val edSharedPreferences = sharedPrefreces.edit()
+                    Log.d("dataTest", data.type)
+                    Log.d("dataTest", data.typeName)
+
+                    sharedPreferences = requireActivity().getSharedPreferences("data", MODE_PRIVATE)
+
+                    val edSharedPreferences = sharedPreferences.edit()
                     edSharedPreferences.putString("token", data.token)
+                    edSharedPreferences.putString("type", data.type.lowercase())
                     edSharedPreferences.apply()
 
                     token = data.token
 
-                    if (data.isAdmin) {
-                        changeActivityToDashboardActivity()
-                    } else {
+                    Toast.makeText(requireActivity(), "با موفقیت وارد شدید", Toast.LENGTH_SHORT)
+                        .show()
 
-                        if (data.cafeForMe) {
 
-                            changeActivityToMainActivity(
-                                1,
-                                data.cafeId,
-                                data.cafeName,
-                                data.cafeAdmin,
-                                data.cafeScore,
-                                data.cafeAddress,
-                                data.cafeState,
-                                data.cafeDistance,
-                                data.cafeIcon
-                            )
+                    if (data.type == "SHOP") {
 
-                        } else {
+                        val intent = Intent(requireActivity(), ShopActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        requireActivity().startActivity(intent)
 
-                            changeActivityToMainActivity(
-                                0,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null
-                            )
+                    } else if (data.type == "ADMIN") {
 
-                        }
+                        val intent = Intent(requireActivity(), AdminActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        requireActivity().startActivity(intent)
+
                     }
 
 
@@ -166,40 +162,29 @@ class LoginStep2Fragment : Fragment() {
 
                     Toast.makeText(
                         requireActivity(),
-                        resources.getText(R.string.error_receive_data).toString(),
+                        "رمز عبور یا نام کاربری خود را اشتباه وارد کرده اید",
                         Toast.LENGTH_SHORT
-                    ).show()
+                    )
+                        .show()
 
                 }
 
             }
 
-            override fun onFailure(call: Call<ModelLoading>, t: Throwable) {
+            override fun onFailure(call: Call<ModelLogin>, t: Throwable) {
 
-                loading_lottie.hideDialog()
+                loading.hideDialog()
 
-                val customToast = CustomToast()
-
-                customToast.creatToast(
-                    "خطا",
+                Toast.makeText(
+                    requireActivity(),
                     resources.getText(R.string.error_send_data).toString(),
-                    2,
-                    this@SplashActivity
-                )
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                Thread {
-                    runOnUiThread {
-
-                        Thread.sleep(1000)
-                        finish()
-
-                    }
-
-                }
             }
 
         })
 
-    }*/
+    }
 
 }

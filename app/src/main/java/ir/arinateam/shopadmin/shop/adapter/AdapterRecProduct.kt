@@ -98,9 +98,7 @@ class AdapterRecProduct(
 
                 loadingLottie.hideDialog()
 
-                if (response.code() == 200) {
-
-                    val data = response.body()!!
+                if (response.code() == 204) {
 
                     lsModelRecProductInfo.removeAt(adapterPosition)
                     notifyItemRemoved(adapterPosition)

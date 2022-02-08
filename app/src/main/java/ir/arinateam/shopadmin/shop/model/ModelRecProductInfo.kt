@@ -1,5 +1,7 @@
 package ir.arinateam.shopadmin.shop.model
 
+import com.google.gson.annotations.SerializedName
+
 data class ModelRecProductInfo(
 
     val id: Int,
@@ -8,7 +10,9 @@ data class ModelRecProductInfo(
     val writer: String,
     val amount: Int,
     val publisher: String,
-    val categoryId: Int,
+
+    @SerializedName("category")
+    val category: ModelSpCategory,
     val price: Int,
     val pages: Int,
     val publish_year: Int,

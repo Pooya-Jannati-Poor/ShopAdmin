@@ -1,5 +1,7 @@
 package ir.arinateam.shopadmin.shop
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -86,16 +88,26 @@ class DashboardFragment : Fragment() {
 
 
     private lateinit var apiClient: ApiClient
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
+
 
     private fun getDashboardInfo() {
 
         val loadingLottie = Loading(requireActivity())
 
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
         apiClient = ApiClient()
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.shopDashboard("")
+        val callLoading = apiInterface.shopDashboard("Bearer $token")
 
         callLoading.enqueue(object : Callback<ModelGetShopDashboard> {
 

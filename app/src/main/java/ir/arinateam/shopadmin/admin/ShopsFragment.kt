@@ -1,6 +1,9 @@
 package ir.arinateam.shopadmin.admin
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,8 +54,6 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
         getShopList()
 
-        setRecShop()
-
     }
 
     private fun initView() {
@@ -63,6 +64,8 @@ class ShopsFragment : Fragment(), ChangeShopState {
     }
 
     private lateinit var apiClient: ApiClient
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
 
     private fun getShopList() {
 
@@ -70,9 +73,16 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
         apiClient = ApiClient()
 
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.getShopsList("")
+        val callLoading = apiInterface.getShopsList("Bearer $token")
 
         callLoading.enqueue(object : Callback<ModelAdminShopsInfoBase> {
 
@@ -89,19 +99,23 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
                     var available = 0
 
-                    data.shops.forEach {
-                        if (it.isActivated) {
-                            available++
+                    if (data.shops != null) {
+
+                        data.shops.forEach {
+                            if (it.isActivated == 1) {
+                                available++
+                            }
                         }
+
+                        tvShopsCount.text = available.toString().plus(" فروشگاه فعال")
+
+                        modelRecShop = ArrayList()
+
+                        modelRecShop.addAll(data.shops)
+
+                        setRecShop()
+
                     }
-
-                    tvShopsCount.text = available.toString().plus(" فروشگاه فعال")
-
-                    modelRecShop = ArrayList()
-
-                    modelRecShop.addAll(data.shops)
-
-                    setRecShop()
 
 
                 } else {
@@ -138,21 +152,21 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
     private fun setRecShop() {
 
-        modelRecShop = ArrayList()
-
-        modelRecShop.add(ModelRecShop(1, "فروشگاه 1", true))
-        modelRecShop.add(ModelRecShop(2, "فروشگاه 2", true))
-        modelRecShop.add(ModelRecShop(3, "فروشگاه 3", true))
-        modelRecShop.add(ModelRecShop(4, "فروشگاه 4", true))
-        modelRecShop.add(ModelRecShop(5, "فروشگاه 5", false))
-        modelRecShop.add(ModelRecShop(6, "فروشگاه 6", true))
-        modelRecShop.add(ModelRecShop(7, "فروشگاه 7", false))
-        modelRecShop.add(ModelRecShop(8, "فروشگاه 8", true))
-        modelRecShop.add(ModelRecShop(8, "فروشگاه 9", true))
-        modelRecShop.add(ModelRecShop(8, "فروشگاه 10", true))
-        modelRecShop.add(ModelRecShop(8, "فروشگاه 11", true))
-        modelRecShop.add(ModelRecShop(8, "فروشگاه 12", true))
-        modelRecShop.add(ModelRecShop(8, "فروشگاه 13", true))
+//        modelRecShop = ArrayList()
+//
+//        modelRecShop.add(ModelRecShop(1, "فروشگاه 1", true))
+//        modelRecShop.add(ModelRecShop(2, "فروشگاه 2", true))
+//        modelRecShop.add(ModelRecShop(3, "فروشگاه 3", true))
+//        modelRecShop.add(ModelRecShop(4, "فروشگاه 4", true))
+//        modelRecShop.add(ModelRecShop(5, "فروشگاه 5", false))
+//        modelRecShop.add(ModelRecShop(6, "فروشگاه 6", true))
+//        modelRecShop.add(ModelRecShop(7, "فروشگاه 7", false))
+//        modelRecShop.add(ModelRecShop(8, "فروشگاه 8", true))
+//        modelRecShop.add(ModelRecShop(8, "فروشگاه 9", true))
+//        modelRecShop.add(ModelRecShop(8, "فروشگاه 10", true))
+//        modelRecShop.add(ModelRecShop(8, "فروشگاه 11", true))
+//        modelRecShop.add(ModelRecShop(8, "فروشگاه 12", true))
+//        modelRecShop.add(ModelRecShop(8, "فروشگاه 13", true))
 
         adapter = AdapterRecShop(requireActivity(), modelRecShop, this)
 
@@ -165,7 +179,7 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
         modelRecShop.forEach {
 
-            if (it.isActivated) {
+            if (it.isActivated == 1) {
                 enabledCounts++
             }
 

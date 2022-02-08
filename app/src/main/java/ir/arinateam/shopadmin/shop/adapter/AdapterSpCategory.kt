@@ -52,7 +52,7 @@ class AdapterSpCategory(
 
     private class ItemHolder(row: View) {
 
-        val tvCategoryName: TextView = row.findViewById(R.id.text) as TextView
+        val tvCategoryName: TextView = row.findViewById(R.id.tvCategoryName) as TextView
 
     }
 

@@ -1,6 +1,9 @@
 package ir.arinateam.shopadmin.shop
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,7 +51,7 @@ class ProductsFragment : Fragment() {
 
         initView()
 
-        setRecProducts()
+        getProductList()
 
         addNewBook()
 
@@ -65,6 +68,8 @@ class ProductsFragment : Fragment() {
     }
 
     private lateinit var apiClient: ApiClient
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
 
     private fun getProductList() {
 
@@ -72,9 +77,16 @@ class ProductsFragment : Fragment() {
 
         apiClient = ApiClient()
 
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.productList("", 1)
+        val callLoading = apiInterface.productList("Bearer $token")
 
         callLoading.enqueue(object : Callback<ModelRecProductBase> {
 
@@ -82,6 +94,12 @@ class ProductsFragment : Fragment() {
                 call: Call<ModelRecProductBase>,
                 response: Response<ModelRecProductBase>
             ) {
+
+                Log.d("dataTest", response.message())
+                Log.d("dataTest", response.code().toString())
+                Log.d("dataTest", response.errorBody().toString())
+                Log.d("dataTest", response.headers().toString())
+                Log.d("dataTest", response.raw().message())
 
                 loadingLottie.hideDialog()
 
@@ -106,6 +124,10 @@ class ProductsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<ModelRecProductBase>, t: Throwable) {
+
+                Log.d("dataTest", t.localizedMessage)
+                Log.d("dataTest", t.message.toString())
+                Log.d("dataTest", t.cause.toString())
 
                 loadingLottie.hideDialog()
 

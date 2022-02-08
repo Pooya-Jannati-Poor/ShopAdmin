@@ -81,7 +81,7 @@
                     android:id="@+id/tvShopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="کتابفروشی سامان"
+                    tools:text="کتابفروشی سامان"
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/_14ssp" />
 

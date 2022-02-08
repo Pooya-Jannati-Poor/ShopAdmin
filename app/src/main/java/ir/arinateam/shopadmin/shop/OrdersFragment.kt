@@ -71,7 +71,7 @@ class OrdersFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.orderList("", 1)
+        val callLoading = apiInterface.orderList("")
 
         callLoading.enqueue(object : Callback<ModelRecOrderBase> {
 
@@ -132,7 +132,7 @@ class OrdersFragment : Fragment() {
                 "رضا جمشیدی",
                 "1400/12/20",
                 4,
-                "41000"
+                41000
             )
         )
         lsModelRecOrder.add(
@@ -142,7 +142,7 @@ class OrdersFragment : Fragment() {
                 "اصغر فرهادی",
                 "1400/04/12",
                 1,
-                "4000"
+                4000
             )
         )
         lsModelRecOrder.add(
@@ -152,7 +152,7 @@ class OrdersFragment : Fragment() {
                 "ناشناس",
                 "1399/08/1",
                 2,
-                "31000"
+                31000
             )
         )
         lsModelRecOrder.add(
@@ -162,7 +162,7 @@ class OrdersFragment : Fragment() {
                 "مصطفی کاظمی",
                 "1399/07/28",
                 5,
-                "300000"
+                300000
             )
         )
         lsModelRecOrder.add(
@@ -172,7 +172,7 @@ class OrdersFragment : Fragment() {
                 "مرتضی فراهانی",
                 "1400/12/20",
                 4,
-                "41000"
+                41000
             )
         )
         lsModelRecOrder.add(
@@ -182,7 +182,7 @@ class OrdersFragment : Fragment() {
                 "کاظم سبزواری",
                 "1400/12/20",
                 2,
-                "12000"
+                12000
             )
         )
 

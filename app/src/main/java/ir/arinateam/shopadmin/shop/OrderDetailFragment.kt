@@ -71,7 +71,7 @@ class OrderDetailFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.orderDetail("", 1, requireArguments().getInt("orderId"))
+        val callLoading = apiInterface.orderDetail("", requireArguments().getInt("orderId"))
 
         callLoading.enqueue(object : Callback<ModelRecOrderDetailBase> {
 
