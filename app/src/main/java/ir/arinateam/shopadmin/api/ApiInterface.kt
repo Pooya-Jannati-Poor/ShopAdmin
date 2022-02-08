@@ -169,6 +169,7 @@ interface ApiInterface {
     ): Call<ModelGetShopInfo>
 
 
+    @Multipart
     @POST("users/")
     fun editShopInfoWithImage(
         @Header("Authorization") token: String,
