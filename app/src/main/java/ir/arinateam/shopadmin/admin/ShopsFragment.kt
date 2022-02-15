@@ -17,6 +17,7 @@ import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.admin.adapter.AdapterRecShop
 import ir.arinateam.shopadmin.admin.interfaces.ChangeShopState
 import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase
+import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase2
 import ir.arinateam.shopadmin.databinding.ShopsFragmentBinding
 import ir.arinateam.shopadmin.admin.model.ModelRecShop
 import ir.arinateam.shopadmin.api.ApiClient
@@ -84,11 +85,11 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
         val callLoading = apiInterface.getShopsList("Bearer $token")
 
-        callLoading.enqueue(object : Callback<ModelAdminShopsInfoBase> {
+        callLoading.enqueue(object : Callback<ModelAdminShopsInfoBase2> {
 
             override fun onResponse(
-                call: Call<ModelAdminShopsInfoBase>,
-                response: Response<ModelAdminShopsInfoBase>
+                call: Call<ModelAdminShopsInfoBase2>,
+                response: Response<ModelAdminShopsInfoBase2>
             ) {
 
                 loadingLottie.hideDialog()
@@ -101,7 +102,7 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
                     if (data.shops != null) {
 
-                        data.shops.forEach {
+                        data.shops.shops.forEach {
                             if (it.isActivated == 1) {
                                 available++
                             }
@@ -111,7 +112,7 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
                         modelRecShop = ArrayList()
 
-                        modelRecShop.addAll(data.shops)
+                        modelRecShop.addAll(data.shops.shops)
 
                         setRecShop()
 
@@ -130,7 +131,7 @@ class ShopsFragment : Fragment(), ChangeShopState {
 
             }
 
-            override fun onFailure(call: Call<ModelAdminShopsInfoBase>, t: Throwable) {
+            override fun onFailure(call: Call<ModelAdminShopsInfoBase2>, t: Throwable) {
 
                 loadingLottie.hideDialog()
 

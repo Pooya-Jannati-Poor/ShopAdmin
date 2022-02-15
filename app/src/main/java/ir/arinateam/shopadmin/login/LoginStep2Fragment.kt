@@ -130,26 +130,38 @@ class LoginStep2Fragment : Fragment() {
                     Log.d("dataTest", data.type)
                     Log.d("dataTest", data.typeName)
 
-                    sharedPreferences = requireActivity().getSharedPreferences("data", MODE_PRIVATE)
-
-                    val edSharedPreferences = sharedPreferences.edit()
-                    edSharedPreferences.putString("token", data.token)
-                    edSharedPreferences.putString("type", data.type.lowercase())
-                    edSharedPreferences.apply()
-
-                    token = data.token
-
-                    Toast.makeText(requireActivity(), "با موفقیت وارد شدید", Toast.LENGTH_SHORT)
-                        .show()
-
 
                     if (data.type == "SHOP") {
+
+                        sharedPreferences = requireActivity().getSharedPreferences("data", MODE_PRIVATE)
+
+                        val edSharedPreferences = sharedPreferences.edit()
+                        edSharedPreferences.putString("token", data.token)
+                        edSharedPreferences.putString("type", data.type.lowercase())
+                        edSharedPreferences.apply()
+
+                        token = data.token
+
+                        Toast.makeText(requireActivity(), "با موفقیت وارد شدید", Toast.LENGTH_SHORT)
+                            .show()
 
                         val intent = Intent(requireActivity(), ShopActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         requireActivity().startActivity(intent)
 
                     } else if (data.type == "ADMIN") {
+
+                        sharedPreferences = requireActivity().getSharedPreferences("data", MODE_PRIVATE)
+
+                        val edSharedPreferences = sharedPreferences.edit()
+                        edSharedPreferences.putString("token", data.token)
+                        edSharedPreferences.putString("type", data.type.lowercase())
+                        edSharedPreferences.apply()
+
+                        token = data.token
+
+                        Toast.makeText(requireActivity(), "با موفقیت وارد شدید", Toast.LENGTH_SHORT)
+                            .show()
 
                         val intent = Intent(requireActivity(), AdminActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP

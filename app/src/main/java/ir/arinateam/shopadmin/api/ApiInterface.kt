@@ -2,6 +2,7 @@ package ir.arinateam.shopadmin.api
 
 import ir.arinateam.shopadmin.admin.model.ModelAdminDashboardInfo
 import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase
+import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase2
 import ir.arinateam.shopadmin.admin.model.ModelGetAdminSell
 import ir.arinateam.shopadmin.login.model.ModelLogin
 import ir.arinateam.shopadmin.login.model.ModelSignup
@@ -185,7 +186,7 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Query("withProducts") withProducts: Boolean = false,
         @Query("withUser") withUser: Boolean = false,
-    ): Call<ModelAdminShopsInfoBase>
+    ): Call<ModelAdminShopsInfoBase2>
 
 
     @Headers("Accept: application/json")
