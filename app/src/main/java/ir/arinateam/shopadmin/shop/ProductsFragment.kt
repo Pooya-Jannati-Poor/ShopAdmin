@@ -95,17 +95,13 @@ class ProductsFragment : Fragment() {
                 response: Response<ModelRecProductBase>
             ) {
 
-                Log.d("dataTest", response.message())
-                Log.d("dataTest", response.code().toString())
-                Log.d("dataTest", response.errorBody().toString())
-                Log.d("dataTest", response.headers().toString())
-                Log.d("dataTest", response.raw().message())
-
                 loadingLottie.hideDialog()
 
                 if (response.code() == 200) {
 
                     val data = response.body()!!
+
+                    lsModelRecProductInfo = ArrayList()
 
                     lsModelRecProductInfo.addAll(data.productInfo)
 
@@ -125,10 +121,6 @@ class ProductsFragment : Fragment() {
 
             override fun onFailure(call: Call<ModelRecProductBase>, t: Throwable) {
 
-                Log.d("dataTest", t.localizedMessage)
-                Log.d("dataTest", t.message.toString())
-                Log.d("dataTest", t.cause.toString())
-
                 loadingLottie.hideDialog()
 
                 Toast.makeText(
@@ -147,63 +139,6 @@ class ProductsFragment : Fragment() {
     private lateinit var lsModelRecProductInfo: ArrayList<ModelRecProduct>
 
     private fun setRecProducts() {
-
-        lsModelRecProductInfo = ArrayList()
-
-        lsModelRecProductInfo.add(
-            ModelRecProduct(
-                1,
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "ارباب حلقه ها",
-                "جی ار ار تاکین",
-                4
-            )
-        )
-        lsModelRecProductInfo.add(
-            ModelRecProduct(
-                2,
-                "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                "دو برج",
-                "جی ار ار تاکین",
-                6
-            )
-        )
-        lsModelRecProductInfo.add(
-            ModelRecProduct(
-                3,
-                "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                "هری پاتر و سنگ جادو",
-                "اصغر فرهادی",
-                1
-            )
-        )
-        lsModelRecProductInfo.add(
-            ModelRecProduct(
-                4,
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "بابا لنگ دراز",
-                "جی ار ار تاکین",
-                2
-            )
-        )
-        lsModelRecProductInfo.add(
-            ModelRecProduct(
-                5,
-                "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                "قم بهتر است یا نیویورک؟:/",
-                "یه نویسنده",
-                0
-            )
-        )
-        lsModelRecProductInfo.add(
-            ModelRecProduct(
-                6,
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "اثر مرکب",
-                "دان هاردی",
-                4
-            )
-        )
 
         adapterRecProduct = AdapterRecProduct(requireActivity(), lsModelRecProductInfo)
 

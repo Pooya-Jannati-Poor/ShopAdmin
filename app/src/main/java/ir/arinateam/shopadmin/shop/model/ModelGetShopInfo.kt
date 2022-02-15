@@ -10,7 +10,7 @@ data class ModelGetShopInfo(
     val shopImage: String,
 
     @SerializedName("name")
-    val shopName: String,
+    val username: String,
 
     @SerializedName("phone")
     val phoneNumber: String,

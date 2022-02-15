@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,8 @@ import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.DashboardFragmentBinding
 import ir.arinateam.shopadmin.shop.model.ModelGetShopDashboard
+import ir.arinateam.shopadmin.shop.model.ModelGetShopInfo
+import ir.arinateam.shopadmin.shop.model.ModelGetShopInfoBase
 import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
 import retrofit2.Callback
@@ -64,12 +67,7 @@ class DashboardFragment : Fragment() {
 
         setColorList()
 
-//        getDashboardInfo()
-
-        setWeekBarChart()
-
-        setMonthBarChart()
-
+        getDashboardInfo()
 
     }
 
@@ -122,35 +120,38 @@ class DashboardFragment : Fragment() {
 
                     val data = response.body()!!
 
-                    tvShopName.text = data.shopName
-                    tvTodaySale.text = data.todaySale.toString().plus(" کتاب")
-                    tvTodaySale.text = data.productCount.toString().plus(" کالا")
-
-
-                    Glide.with(requireActivity()).load(data.shopImage).diskCacheStrategy(
-                        DiskCacheStrategy.ALL
-                    )
-                        .fitCenter().placeholder(
-                            R.drawable.ic_admin_image_test
-                        ).into(imgProfile)
+                    tvTodaySale.text = data.todayOrdersCount.toString().plus(" کتاب")
+                    tvProductsCount.text = data.productsCount.toString().plus(" کالا")
 
                     weekSell = ArrayList()
                     monthSell = ArrayList()
 
-                    data.lsLastWeekSale.forEachIndexed { index, modelBarChartSale ->
+                    data.lastSevenDaysChartData.forEachIndexed { index, modelBarChartSale ->
 
-                        weekSell.add(BarEntry((index + 1).toFloat(), modelBarChartSale))
+                        weekSell.add(
+                            BarEntry(
+                                (index + 1).toFloat(),
+                                modelBarChartSale.totalAmount.toFloat()
+                            )
+                        )
 
                     }
 
-                    data.lsLastMonthSale.forEachIndexed { index, modelBarChartSale ->
+                    data.lastFourWeeksChartData.forEachIndexed { index, modelBarChartSale ->
 
-                        monthSell.add(BarEntry((index + 1).toFloat(), modelBarChartSale))
+                        monthSell.add(
+                            BarEntry(
+                                (index + 1).toFloat(),
+                                modelBarChartSale.totalAmount.toFloat()
+                            )
+                        )
 
                     }
 
                     setWeekBarChart()
                     setMonthBarChart()
+
+                    getUserInfoApi()
 
                 } else {
 
@@ -165,6 +166,70 @@ class DashboardFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<ModelGetShopDashboard>, t: Throwable) {
+
+                loadingLottie.hideDialog()
+
+                Toast.makeText(
+                    requireActivity(),
+                    resources.getText(R.string.error_send_data).toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+
+            }
+
+        })
+
+    }
+
+    private fun getUserInfoApi() {
+
+        val loadingLottie = Loading(requireActivity())
+
+        apiClient = ApiClient()
+
+        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
+
+        val callLoading = apiInterface.shopInfo("Bearer $token")
+
+        callLoading.enqueue(object : Callback<ModelGetShopInfoBase> {
+
+            override fun onResponse(
+                call: Call<ModelGetShopInfoBase>,
+                response: Response<ModelGetShopInfoBase>
+            ) {
+
+                loadingLottie.hideDialog()
+
+                Log.d("dataTest", response.body().toString())
+
+                if (response.code() == 200) {
+
+                    val data = response.body()!!
+
+                    tvShopName.text = data.user.shop.username
+
+                    Glide.with(requireActivity())
+                        .load("http://applicationfortests.ir/" + data.user.shop.image)
+                        .diskCacheStrategy(
+                            DiskCacheStrategy.ALL
+                        )
+                        .fitCenter().placeholder(
+                            R.drawable.ic_admin_image_test
+                        ).into(imgProfile)
+
+                } else {
+
+                    Toast.makeText(
+                        requireActivity(),
+                        resources.getText(R.string.error_receive_data).toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                }
+
+            }
+
+            override fun onFailure(call: Call<ModelGetShopInfoBase>, t: Throwable) {
 
                 loadingLottie.hideDialog()
 
@@ -219,16 +284,6 @@ class DashboardFragment : Fragment() {
             newDateLastWeek.year.toString() + "/" + newDateLastWeek.month.toString() + "/" + newDateLastWeek.day
 
         tvWeekSellDate.text = "از تاریخ $weekSellDate تا امروز"
-
-        weekSell = ArrayList()
-
-        weekSell.add(BarEntry(1f, 7f))
-        weekSell.add(BarEntry(2f, 5f))
-        weekSell.add(BarEntry(3f, 12f))
-        weekSell.add(BarEntry(4f, 0f))
-        weekSell.add(BarEntry(5f, 4f))
-        weekSell.add(BarEntry(6f, 8f))
-        weekSell.add(BarEntry(7f, 2f))
 
         val barDataSet = BarDataSet(weekSell, "")
 
@@ -293,14 +348,6 @@ class DashboardFragment : Fragment() {
             newDateLastMonth.year.toString() + "/" + newDateLastMonth.month.toString() + "/" + newDateLastMonth.day
 
         tvMonthSellDate.text = "از تاریخ $monthSellDate تا امروز"
-
-
-        monthSell = ArrayList()
-
-        monthSell.add(BarEntry(1f, 70f))
-        monthSell.add(BarEntry(2f, 50f))
-        monthSell.add(BarEntry(3f, 120f))
-        monthSell.add(BarEntry(4f, 10f))
 
         val barDataSet = BarDataSet(monthSell, "")
 

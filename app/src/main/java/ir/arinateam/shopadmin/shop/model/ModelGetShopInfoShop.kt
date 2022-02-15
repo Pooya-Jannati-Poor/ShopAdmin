@@ -7,6 +7,8 @@ data class ModelGetShopInfoShop(
     @SerializedName("name")
     val username: String,
 
-    val address: String
+    val address: String,
+
+    val image: String
 
 )

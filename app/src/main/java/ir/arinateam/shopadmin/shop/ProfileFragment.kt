@@ -26,7 +26,7 @@ import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.ProfileFragmentBinding
 import ir.arinateam.shopadmin.login.LoginActivity
-import ir.arinateam.shopadmin.shop.model.ModelGetShopInfo
+import ir.arinateam.shopadmin.shop.model.ModelGetShopInfoBase
 import ir.arinateam.shopadmin.utils.Loading
 import ir.arinateam.shopadmin.utils.PrepareImageForUpload
 import okhttp3.MultipartBody
@@ -114,11 +114,11 @@ class ProfileFragment : Fragment() {
 
         val callLoading = apiInterface.shopInfo("Bearer $token")
 
-        callLoading.enqueue(object : Callback<ModelGetShopInfo> {
+        callLoading.enqueue(object : Callback<ModelGetShopInfoBase> {
 
             override fun onResponse(
-                call: Call<ModelGetShopInfo>,
-                response: Response<ModelGetShopInfo>
+                call: Call<ModelGetShopInfoBase>,
+                response: Response<ModelGetShopInfoBase>
             ) {
 
                 loadingLottie.hideDialog()
@@ -129,44 +129,48 @@ class ProfileFragment : Fragment() {
 
                     val data = response.body()!!
 
-                    if (data.shopImage != null) {
+                    if (data.user.username != null) {
 
-                        Glide.with(requireActivity()).load(data.shopImage).diskCacheStrategy(
-                            DiskCacheStrategy.ALL
-                        )
-                            .fitCenter().placeholder(
-                                R.drawable.ic_admin_image_test
-                            ).into(imgProfile)
+                        edUsername.setText(data.user.username)
 
                     }
 
-                    if (data.shopName != null) {
+                    if (data.user.shop != null) {
 
-                        edShopName.setText(data.shopName)
-                        tvShopName.text = data.shopName
+                        if (data.user.shop.username != null) {
 
-                    }
-
-                    if (data.shop != null) {
-
-                        if (data.shop.username != null) {
-
-                            edUsername.setText(data.shop.username)
+                            edShopName.setText(data.user.shop.username)
+                            tvShopName.text = data.user.shop.username
 
                         }
 
-                        if (data.shop.address != null) {
+                        if (data.user.shop.address != null) {
 
-                            edAddress.setText(data.shop.address)
+                            edAddress.setText(data.user.shop.address)
 
                         }
+
+
+                        if (data.user.shop.image != null) {
+
+                            Glide.with(requireActivity())
+                                .load("http://applicationfortests.ir/" + data.user.shop.image)
+                                .diskCacheStrategy(
+                                    DiskCacheStrategy.ALL
+                                )
+                                .fitCenter().placeholder(
+                                    R.drawable.ic_admin_image_test
+                                ).into(imgProfile)
+
+                        }
+
 
                     }
 
 
-                    if (data.phoneNumber != null) {
+                    if (data.user.phoneNumber != null) {
 
-                        edPhoneNumber.setText(data.phoneNumber)
+                        edPhoneNumber.setText(data.user.phoneNumber)
 
                     }
 
@@ -182,7 +186,7 @@ class ProfileFragment : Fragment() {
 
             }
 
-            override fun onFailure(call: Call<ModelGetShopInfo>, t: Throwable) {
+            override fun onFailure(call: Call<ModelGetShopInfoBase>, t: Throwable) {
 
                 loadingLottie.hideDialog()
 

@@ -26,6 +26,7 @@ import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.AddBookFragmentBinding
 import ir.arinateam.shopadmin.shop.adapter.AdapterSpCategory
 import ir.arinateam.shopadmin.shop.model.ModelRecProductInfo
+import ir.arinateam.shopadmin.shop.model.ModelRecProductInfoBase
 import ir.arinateam.shopadmin.shop.model.ModelSpCategory
 import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
 import ir.arinateam.shopadmin.utils.CategorySelected
@@ -84,8 +85,6 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         checkBundle()
 
-        getCategoryList()
-
         addOrEditProduct()
 
         getImage()
@@ -119,7 +118,6 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         if (arguments != null) {
 
-            requireArguments().getInt("", 0)
             tvPageTitle.text = "ویرایش کتاب"
             btnAddEdit.text = "ویرایش"
 
@@ -132,6 +130,10 @@ class AddBookFragment : Fragment(), CategorySelected {
                 ).into(imgBook)
 
             getProductInfo()
+
+        } else {
+
+            getCategoryList()
 
         }
 
@@ -147,11 +149,11 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         val callLoading = apiInterface.productInfo("Bearer $token", bookId!!)
 
-        callLoading.enqueue(object : Callback<ModelRecProductInfo> {
+        callLoading.enqueue(object : Callback<ModelRecProductInfoBase> {
 
             override fun onResponse(
-                call: Call<ModelRecProductInfo>,
-                response: Response<ModelRecProductInfo>
+                call: Call<ModelRecProductInfoBase>,
+                response: Response<ModelRecProductInfoBase>
             ) {
 
                 loadingLottie.hideDialog()
@@ -160,18 +162,18 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                     val data = response.body()!!
 
-                    bookName = data.name
-                    bookWriter = data.writer
-                    bookPublisher = data.publisher
-                    bookCategoryId = data.category.id.toString()
-                    bookCategoryName = data.category.name
-                    bookPrice = data.price.toString()
-                    bookPageCount = data.pages.toString()
-                    bookPublishYear = data.publish_year.toString()
-                    bookISBN = data.isbn
-                    bookAvailableCount = data.amount.toString()
-                    bookDiscount = data.discountPercent.toString()
-                    bookDescription = data.description
+                    bookName = data.product.name
+                    bookWriter = data.product.writer
+                    bookPublisher = data.product.publisher
+                    bookCategoryId = data.product.category.id.toString()
+                    bookCategoryName = data.product.category.name
+                    bookPrice = data.product.price.toString()
+                    bookPageCount = data.product.pages.toString()
+                    bookPublishYear = data.product.publish_year.toString()
+                    bookISBN = data.product.isbn
+                    bookAvailableCount = data.product.amount.toString()
+                    bookDiscount = data.product.discountPercent.toString()
+                    bookDescription = data.product.description
 
                     edBookName.setText(bookName)
                     edBookWriter.setText(bookWriter)
@@ -183,6 +185,17 @@ class AddBookFragment : Fragment(), CategorySelected {
                     edBookAvailableCount.setText(bookAvailableCount)
                     edBookDiscount.setText(bookDiscount)
                     edBookDescription.setText(bookDescription)
+
+                    Glide.with(requireActivity())
+                        .load("http://applicationfortests.ir/" + data.product.image)
+                        .diskCacheStrategy(
+                            DiskCacheStrategy.ALL
+                        )
+                        .fitCenter().placeholder(
+                            R.drawable.ic_admin_image_test
+                        ).into(imgBook)
+
+                    getCategoryList()
 
                 } else {
 
@@ -196,7 +209,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
             }
 
-            override fun onFailure(call: Call<ModelRecProductInfo>, t: Throwable) {
+            override fun onFailure(call: Call<ModelRecProductInfoBase>, t: Throwable) {
 
                 loadingLottie.hideDialog()
 
@@ -235,9 +248,6 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                 loadingLottie.hideDialog()
 
-                Log.d("dataTest", response.code().toString())
-                Log.d("dataTest", response.message())
-
                 if (response.code() == 200) {
 
                     val data = response.body()!!
@@ -264,7 +274,6 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                     }
 
-                    Log.d("dataTest", bookCategoryId)
 
                     setSpCategory(spinnerPosition)
 
@@ -360,7 +369,6 @@ class AddBookFragment : Fragment(), CategorySelected {
         if (bookName != "" &&
             bookWriter != "" &&
             bookPublisher != "" &&
-            bookCategoryId != "" &&
             bookPrice != "" &&
             bookPageCount != "" &&
             bookPublishYear != "" &&
@@ -409,6 +417,8 @@ class AddBookFragment : Fragment(), CategorySelected {
     private fun editProduct() {
 
         val loadingLottie = Loading(requireActivity())
+
+        Log.d("dataTest", bookPrice)
 
         apiClient = ApiClient()
 
@@ -516,7 +526,6 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     private fun addProduct() {
 
-        Log.d("dataTest", bookCategoryId)
 
         val loadingLottie = Loading(requireActivity())
 
@@ -546,9 +555,6 @@ class AddBookFragment : Fragment(), CategorySelected {
                 call: Call<ResponseBody>,
                 response: Response<ResponseBody>
             ) {
-
-                Log.d("dataTest", response.code().toString())
-                Log.d("dataTest", response.message())
 
                 loadingLottie.hideDialog()
 
@@ -636,11 +642,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                 imgBook.setImageURI(fileUri)
 
-                Log.d("dataTest2", bitmap.allocationByteCount.toString())
-
-                bitmap = reduceBitmapSize(bitmap, 1000)
-
-                Log.d("dataTest2", bitmap.allocationByteCount.toString())
+                bitmap = reduceBitmapSize(bitmap, 20000)
 
                 val prepare = PrepareImageForUpload()
                 imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "image", bitmap)

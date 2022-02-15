@@ -67,8 +67,6 @@ class LoginStep1Fragment : Fragment() {
 
         token = sharedPreferences.getString("token", "")!!
 
-        Log.d("dataTest", token)
-
         if (token.isNotEmpty()) {
 
             if (sharedPreferences.getString("type", "") == "shop") {

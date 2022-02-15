@@ -33,7 +33,7 @@
                     android:id="@+id/tvShopName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="کتابفروشی سامان"
+                    android:text=""
                     android:textColor="@color/light_black"
                     android:textSize="@dimen/_12ssp" />
 
@@ -94,7 +94,7 @@
                                 android:id="@+id/tvTodaySale"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="4 کتاب"
+                                android:text="0 کتاب"
                                 android:textColor="#828282"
                                 android:textSize="@dimen/_9ssp" />
 
@@ -128,7 +128,7 @@
                                 android:id="@+id/tvProductsCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="26 کالا"
+                                android:text="0 کالا"
                                 android:textColor="#828282"
                                 android:textSize="@dimen/_9ssp" />
 
@@ -161,9 +161,9 @@
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    tools:text="تعداد کتاب های فروخته شده در هفته گذشته"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/_8ssp" />
+                    android:textSize="@dimen/_8ssp"
+                    tools:text="تعداد کتاب های فروخته شده در هفته گذشته" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -188,9 +188,9 @@
                     android:layout_marginStart="@dimen/_30sdp"
                     android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    tools:text="تعداد کتاب های فروخته شده در هفته گذشته"
                     android:textColor="@color/light_black"
-                    android:textSize="@dimen/_8ssp" />
+                    android:textSize="@dimen/_8ssp"
+                    tools:text="تعداد کتاب های فروخته شده در هفته گذشته" />
 
             </LinearLayout>
 

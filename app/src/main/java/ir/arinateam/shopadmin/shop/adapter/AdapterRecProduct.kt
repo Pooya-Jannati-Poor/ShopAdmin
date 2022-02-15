@@ -45,7 +45,7 @@ class AdapterRecProduct(
 
         val model = lsModelRecProductInfo[position]
 
-        Glide.with(context).load(model.img).diskCacheStrategy(DiskCacheStrategy.ALL)
+        Glide.with(context).load("http://applicationfortests.ir/" + model.img).diskCacheStrategy(DiskCacheStrategy.ALL)
             .fitCenter().placeholder(
                 R.drawable.ic_admin_image_test
             ).into(holder.imgBook)
