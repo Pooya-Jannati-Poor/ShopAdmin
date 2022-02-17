@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:text="10 سفارش تحویل داده شد"
+                android:text="0 سفارش تحویل داده شد"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_12ssp" />
 

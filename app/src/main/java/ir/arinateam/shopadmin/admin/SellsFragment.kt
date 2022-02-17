@@ -1,5 +1,7 @@
 package ir.arinateam.shopadmin.admin
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -55,13 +57,18 @@ class SellsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
         initView()
 
         setColorList()
 
-        setWeekBarChart()
-
-        setMonthBarChart()
+        getAdminSells()
 
     }
 
@@ -76,6 +83,8 @@ class SellsFragment : Fragment() {
     }
 
     private lateinit var apiClient: ApiClient
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
 
     private fun getAdminSells() {
 
@@ -85,7 +94,7 @@ class SellsFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.adminSell("")
+        val callLoading = apiInterface.adminSell("Bearer $token")
 
         callLoading.enqueue(object : Callback<ModelGetAdminSell> {
 
@@ -100,20 +109,31 @@ class SellsFragment : Fragment() {
 
                     val data = response.body()!!
 
-                    tvShopsCount.text = data.deliveredOrder.toString().plus(" سفارش تحویل داده شده")
+                    tvShopsCount.text =
+                        data.deliveredOrderCount.toString().plus(" سفارش تحویل داده شده")
 
                     weekSell = ArrayList()
                     monthSell = ArrayList()
 
-                    data.lsLastWeekSale.forEachIndexed { index, modelBarChartSale ->
+                    data.lastSevenDaysChartData.forEachIndexed { index, modelBarChartSale ->
 
-                        weekSell.add(BarEntry(index.toFloat(), modelBarChartSale))
+                        weekSell.add(
+                            BarEntry(
+                                index.toFloat(),
+                                modelBarChartSale.totalAmount.toFloat()
+                            )
+                        )
 
                     }
 
-                    data.lsLastMonthSale.forEachIndexed { index, modelBarChartSale ->
+                    data.lastFourWeeksChartData.forEachIndexed { index, modelBarChartSale ->
 
-                        monthSell.add(BarEntry(index.toFloat(), modelBarChartSale))
+                        monthSell.add(
+                            BarEntry(
+                                index.toFloat(),
+                                modelBarChartSale.totalAmount.toFloat()
+                            )
+                        )
 
                     }
 
@@ -188,17 +208,6 @@ class SellsFragment : Fragment() {
 
         tvWeekSellDate.text = "از تاریخ $weekSellDate تا امروز"
 
-
-        weekSell = ArrayList()
-
-        weekSell.add(BarEntry(0f, 7f))
-        weekSell.add(BarEntry(1f, 5f))
-        weekSell.add(BarEntry(2f, 12f))
-        weekSell.add(BarEntry(3f, 0f))
-        weekSell.add(BarEntry(4f, 4f))
-        weekSell.add(BarEntry(5f, 8f))
-        weekSell.add(BarEntry(6f, 2f))
-
         val barDataSet = BarDataSet(weekSell, "")
 
         barDataSet.colors = COLORFUL_COLORS
@@ -262,14 +271,6 @@ class SellsFragment : Fragment() {
             newDateLastMonth.year.toString() + "/" + newDateLastMonth.month.toString() + "/" + newDateLastMonth.day
 
         tvMonthSellDate.text = "از تاریخ $monthSellDate تا امروز"
-
-        monthSell = ArrayList()
-
-        monthSell.add(BarEntry(0f, 70f))
-        monthSell.add(BarEntry(1f, 50f))
-        monthSell.add(BarEntry(2f, 120f))
-        monthSell.add(BarEntry(3f, 10f))
-        monthSell.add(BarEntry(4f, 40f))
 
         val barDataSet = BarDataSet(monthSell, "")
 

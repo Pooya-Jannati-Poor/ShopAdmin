@@ -71,6 +71,7 @@ interface ApiInterface {
     ): Call<ModelRecProductInfoBase>
 
 
+    @Headers("Accept: application/json")
     @DELETE("products/{id}")
     fun removeProduct(
         @Header("Authorization") token: String,
@@ -84,6 +85,7 @@ interface ApiInterface {
         @Header("Authorization") token: String
     ): Call<ModelSpCategoryBase>
 
+    @Multipart
     @Headers("Accept: application/json")
     @POST("products/{id}")
     fun editProductWithImage(
@@ -205,7 +207,7 @@ interface ApiInterface {
 
 
     @Headers("Accept: application/json")
-    @GET("adminSell")
+    @GET("sales")
     fun adminSell(
         @Header("Authorization") token: String
     ): Call<ModelGetAdminSell>

@@ -526,7 +526,6 @@ class AddBookFragment : Fragment(), CategorySelected {
 
     private fun addProduct() {
 
-
         val loadingLottie = Loading(requireActivity())
 
         apiClient = ApiClient()
@@ -611,10 +610,10 @@ class AddBookFragment : Fragment(), CategorySelected {
         imgBook.setOnClickListener {
 
             ImagePicker.with(this)
-                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                .compress(2048)            //Final image size will be less than 1 MB(Optional)
                 .maxResultSize(
-                    700,
-                    800
+                    1000,
+                    1100
                 )    //Final image resolution will be less than 1080 x 1080(Optional)
                 .createIntent { intent ->
                     startForProfileImageResult.launch(intent)
@@ -642,7 +641,7 @@ class AddBookFragment : Fragment(), CategorySelected {
 
                 imgBook.setImageURI(fileUri)
 
-                bitmap = reduceBitmapSize(bitmap, 20000)
+//                bitmap = reduceBitmapSize(bitmap, 20000)
 
                 val prepare = PrepareImageForUpload()
                 imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "image", bitmap)

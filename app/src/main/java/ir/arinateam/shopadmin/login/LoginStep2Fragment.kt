@@ -167,6 +167,15 @@ class LoginStep2Fragment : Fragment() {
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                         requireActivity().startActivity(intent)
 
+                    } else {
+
+                        Toast.makeText(
+                            requireActivity(),
+                            "رمز عبور یا نام کاربری خود را اشتباه وارد کرده اید",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+
                     }
 
 

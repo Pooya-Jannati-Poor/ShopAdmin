@@ -1,11 +1,13 @@
 package ir.arinateam.shopadmin.admin.model
 
+import ir.arinateam.shopadmin.shop.model.ModelBarChart
+
 data class ModelGetAdminSell(
 
-    val deliveredOrder: Int,
-    val lsLastWeekSale: List<Float>,
+    val deliveredOrderCount: Int,
+    val lastSevenDaysChartData: List<ModelBarChart>,
     val lastWeekSaleDate: String,
-    val lsLastMonthSale: List<Float>,
+    val lastFourWeeksChartData: List<ModelBarChart>,
     val lastMonthSaleDate: String,
 
     )

@@ -1,7 +1,9 @@
 package ir.arinateam.shopadmin.shop.adapter
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -78,6 +80,8 @@ class AdapterRecProduct(
     }
 
     private lateinit var apiClient: ApiClient
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
 
     private fun removeProduct(productId: Int, adapterPosition: Int) {
 
@@ -85,9 +89,16 @@ class AdapterRecProduct(
 
         apiClient = ApiClient()
 
+        sharedPreferences = context.getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.removeProduct("", productId)
+        val callLoading = apiInterface.removeProduct("Bearer $token", productId)
 
         callLoading.enqueue(object : Callback<ResponseBody> {
 
@@ -97,6 +108,9 @@ class AdapterRecProduct(
             ) {
 
                 loadingLottie.hideDialog()
+
+                Log.d("dataTest", response.code().toString())
+                Log.d("dataTest", productId.toString())
 
                 if (response.code() == 204) {
 

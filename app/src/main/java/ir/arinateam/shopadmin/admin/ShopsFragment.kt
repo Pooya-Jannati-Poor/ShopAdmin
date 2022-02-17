@@ -3,7 +3,6 @@ package ir.arinateam.shopadmin.admin
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +15,11 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.admin.adapter.AdapterRecShop
 import ir.arinateam.shopadmin.admin.interfaces.ChangeShopState
-import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase
 import ir.arinateam.shopadmin.admin.model.ModelAdminShopsInfoBase2
 import ir.arinateam.shopadmin.databinding.ShopsFragmentBinding
 import ir.arinateam.shopadmin.admin.model.ModelRecShop
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
-import ir.arinateam.shopadmin.shop.model.ModelSpCategory
-import ir.arinateam.shopadmin.shop.model.ModelSpCategoryBase
 import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +29,6 @@ import retrofit2.Response
 class ShopsFragment : Fragment(), ChangeShopState {
 
     private lateinit var bindingFragment: ShopsFragmentBinding
-
 
     private lateinit var tvShopsCount: TextView
     private lateinit var recShops: RecyclerView
@@ -152,22 +147,6 @@ class ShopsFragment : Fragment(), ChangeShopState {
     private var enabledCounts = 0
 
     private fun setRecShop() {
-
-//        modelRecShop = ArrayList()
-//
-//        modelRecShop.add(ModelRecShop(1, "فروشگاه 1", true))
-//        modelRecShop.add(ModelRecShop(2, "فروشگاه 2", true))
-//        modelRecShop.add(ModelRecShop(3, "فروشگاه 3", true))
-//        modelRecShop.add(ModelRecShop(4, "فروشگاه 4", true))
-//        modelRecShop.add(ModelRecShop(5, "فروشگاه 5", false))
-//        modelRecShop.add(ModelRecShop(6, "فروشگاه 6", true))
-//        modelRecShop.add(ModelRecShop(7, "فروشگاه 7", false))
-//        modelRecShop.add(ModelRecShop(8, "فروشگاه 8", true))
-//        modelRecShop.add(ModelRecShop(8, "فروشگاه 9", true))
-//        modelRecShop.add(ModelRecShop(8, "فروشگاه 10", true))
-//        modelRecShop.add(ModelRecShop(8, "فروشگاه 11", true))
-//        modelRecShop.add(ModelRecShop(8, "فروشگاه 12", true))
-//        modelRecShop.add(ModelRecShop(8, "فروشگاه 13", true))
 
         adapter = AdapterRecShop(requireActivity(), modelRecShop, this)
 

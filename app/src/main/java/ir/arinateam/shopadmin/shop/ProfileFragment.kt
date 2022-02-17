@@ -327,10 +327,10 @@ class ProfileFragment : Fragment() {
         imgProfile.setOnClickListener {
 
             ImagePicker.with(this)
-                .compress(1024)            //Final image size will be less than 1 MB(Optional)
+                .compress(2058)            //Final image size will be less than 2 MB
                 .maxResultSize(
-                    700,
-                    800
+                    1000,
+                    1100
                 )    //Final image resolution will be less than 1080 x 1080(Optional)
                 .createIntent { intent ->
                     startForProfileImageResult.launch(intent)
@@ -395,10 +395,6 @@ class ProfileFragment : Fragment() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 
                 loading.hideDialog()
-
-                Log.d("dataTest", response.message())
-                Log.d("dataTest", response.code().toString())
-                Log.d("dataTest", token)
 
                 if (response.code() == 204) {
 
