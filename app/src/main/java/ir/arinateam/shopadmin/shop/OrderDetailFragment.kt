@@ -93,8 +93,6 @@ class OrderDetailFragment : Fragment() {
 
                 loadingLottie.hideDialog()
 
-                Log.d("dataTest", response.body().toString())
-
                 if (response.code() == 200) {
 
                     val data = response.body()!!

@@ -41,7 +41,7 @@ interface ApiInterface {
     @GET("orders")
     fun orderList(
         @Header("Authorization") token: String,
-        @Header("withDetails") withDetails: Boolean = true,
+        @Header("withDetails") withDetails: Boolean = false,
         @Header("withProduct") withProduct: Boolean = true
     ): Call<ModelGetOrdersBase>
 

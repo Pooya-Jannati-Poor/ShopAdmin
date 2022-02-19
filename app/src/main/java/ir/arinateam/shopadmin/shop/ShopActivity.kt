@@ -1,11 +1,13 @@
 package ir.arinateam.shopadmin.shop
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.databinding.ActivityShopBinding
 
@@ -27,7 +29,11 @@ class ShopActivity : AppCompatActivity() {
 
     }
 
-    private fun initView(){
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(newBase!!))
+    }
+
+    private fun initView() {
 
         bottomNav = bindingActivity.bottomNav
 
