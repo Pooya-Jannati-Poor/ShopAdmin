@@ -4,7 +4,7 @@ import kotlin.jvm.JvmOverloads
 import java.lang.IllegalArgumentException
 import java.util.*
 
-class jalaliCal : Calendar {
+class JalaliCal : Calendar {
     private var cal: GregorianCalendar? = null
 
     constructor(aLocale: Locale?) : this(TimeZone.getDefault(), aLocale) {}

@@ -109,9 +109,6 @@ class AdapterRecProduct(
 
                 loadingLottie.hideDialog()
 
-                Log.d("dataTest", response.code().toString())
-                Log.d("dataTest", productId.toString())
-
                 if (response.code() == 204) {
 
                     lsModelRecProductInfo.removeAt(adapterPosition)

@@ -11,8 +11,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import ir.arinateam.mpchart.charts.BarChart
 import ir.arinateam.mpchart.components.XAxis
 import ir.arinateam.mpchart.data.BarData
@@ -24,13 +22,11 @@ import ir.arinateam.shopadmin.admin.model.ModelGetAdminSell
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.SellsFragmentBinding
-import ir.arinateam.shopadmin.shop.model.ModelGetShopDashboard
 import ir.arinateam.shopadmin.utils.Loading
-import ir.arinateam.shopadmin.utils.jalaliCal
+import ir.arinateam.shopadmin.utils.JalaliCal
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -195,8 +191,8 @@ class SellsFragment : Fragment() {
         val dayLastWeek = dateLastWeek.get(Calendar.DAY_OF_MONTH)
 
 
-        val newDateLastWeek = jalaliCal.gregorianToJalali(
-            jalaliCal.YearMonthDate(
+        val newDateLastWeek = JalaliCal.gregorianToJalali(
+            JalaliCal.YearMonthDate(
                 yearLastWeek,
                 monthLastWeek,
                 dayLastWeek
@@ -259,8 +255,8 @@ class SellsFragment : Fragment() {
         val dayLastMonth = dateLastMonth.get(Calendar.DAY_OF_MONTH)
 
 
-        val newDateLastMonth = jalaliCal.gregorianToJalali(
-            jalaliCal.YearMonthDate(
+        val newDateLastMonth = JalaliCal.gregorianToJalali(
+            JalaliCal.YearMonthDate(
                 yearLastMonth,
                 monthLastMonth,
                 dayLastMonth

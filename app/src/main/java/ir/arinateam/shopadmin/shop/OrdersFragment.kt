@@ -1,7 +1,9 @@
 package ir.arinateam.shopadmin.shop
 
-import android.os.Build
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,8 +19,8 @@ import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.OrdersFragmentBinding
 import ir.arinateam.shopadmin.shop.adapter.AdapterRecOrder
+import ir.arinateam.shopadmin.shop.model.ModelGetOrdersBase
 import ir.arinateam.shopadmin.shop.model.ModelRecOrder
-import ir.arinateam.shopadmin.shop.model.ModelRecOrderBase
 import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,7 +49,14 @@ class OrdersFragment : Fragment() {
 
         initView()
 
-        setRecOrders()
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
+        getOrderList()
 
         backToDashboard()
 
@@ -62,6 +71,8 @@ class OrdersFragment : Fragment() {
     }
 
     private lateinit var apiClient: ApiClient
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
 
     private fun getOrderList() {
 
@@ -71,22 +82,41 @@ class OrdersFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.orderList("")
+        val callLoading = apiInterface.orderList("Bearer $token", true, true)
 
-        callLoading.enqueue(object : Callback<ModelRecOrderBase> {
+        callLoading.enqueue(object : Callback<ModelGetOrdersBase> {
 
             override fun onResponse(
-                call: Call<ModelRecOrderBase>,
-                response: Response<ModelRecOrderBase>
+                call: Call<ModelGetOrdersBase>,
+                response: Response<ModelGetOrdersBase>
             ) {
 
                 loadingLottie.hideDialog()
+
+                Log.d("dataTest", response.code().toString())
+                Log.d("dataTest", response.body().toString())
 
                 if (response.code() == 200) {
 
                     val data = response.body()!!
 
-                    lsModelRecOrder.addAll(data.orders)
+                    lsModelRecOrder = ArrayList()
+
+                    data.ordersBase.data.forEach {
+
+                        lsModelRecOrder.add(
+                            ModelRecOrder(
+                                it.id,
+                                "it.details[0].product.Image",
+                                "username",
+                                it.createdJal,
+                                it.total_amount,
+                                it.total_price,
+                                it.stateName
+                            )
+                        )
+
+                    }
 
                     setRecOrders()
 
@@ -102,7 +132,7 @@ class OrdersFragment : Fragment() {
 
             }
 
-            override fun onFailure(call: Call<ModelRecOrderBase>, t: Throwable) {
+            override fun onFailure(call: Call<ModelGetOrdersBase>, t: Throwable) {
 
                 loadingLottie.hideDialog()
 
@@ -122,69 +152,6 @@ class OrdersFragment : Fragment() {
     private lateinit var lsModelRecOrder: ArrayList<ModelRecOrder>
 
     private fun setRecOrders() {
-
-        lsModelRecOrder = ArrayList()
-
-        lsModelRecOrder.add(
-            ModelRecOrder(
-                1,
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "رضا جمشیدی",
-                "1400/12/20",
-                4,
-                41000
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrder(
-                2,
-                "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                "اصغر فرهادی",
-                "1400/04/12",
-                1,
-                4000
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrder(
-                3,
-                "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                "ناشناس",
-                "1399/08/1",
-                2,
-                31000
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrder(
-                4,
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "مصطفی کاظمی",
-                "1399/07/28",
-                5,
-                300000
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrder(
-                5,
-                "https://www.incimages.com/uploaded_files/image/1920x1080/getty_655998316_2000149920009280219_363765.jpg",
-                "مرتضی فراهانی",
-                "1400/12/20",
-                4,
-                41000
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrder(
-                6,
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "کاظم سبزواری",
-                "1400/12/20",
-                2,
-                12000
-            )
-        )
 
         adapterRecOrder = AdapterRecOrder(requireActivity(), lsModelRecOrder)
 

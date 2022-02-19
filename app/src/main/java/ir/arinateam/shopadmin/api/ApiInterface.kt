@@ -40,14 +40,18 @@ interface ApiInterface {
     @Headers("Accept: application/json")
     @GET("orders")
     fun orderList(
-        @Header("Authorization") token: String
-    ): Call<ModelRecOrderBase>
+        @Header("Authorization") token: String,
+        @Header("withDetails") withDetails: Boolean = true,
+        @Header("withProduct") withProduct: Boolean = true
+    ): Call<ModelGetOrdersBase>
 
     @Headers("Accept: application/json")
     @GET("orders/{id}")
     fun orderDetail(
         @Header("Authorization") token: String,
         @Path("id") orderId: Int,
+        @Query("withOrder") withOrder: Boolean = true,
+        @Query("withProduct") withProduct: Boolean = true
     ): Call<ModelRecOrderDetailBase>
 
 
@@ -172,7 +176,7 @@ interface ApiInterface {
 
 
     @Headers("Accept: application/json")
-    @GET("users")
+    @POST("users")
     fun editShopInfoWithoutImage(
         @Header("Authorization") token: String,
         @Query("shopName") shopName: String,
@@ -189,13 +193,6 @@ interface ApiInterface {
         @Query("withProducts") withProducts: Boolean = false,
         @Query("withUser") withUser: Boolean = false,
     ): Call<ModelAdminShopsInfoBase2>
-
-
-    @Headers("Accept: application/json")
-    @GET("adminDashboardInfo")
-    fun adminDashboardInfo(
-        @Header("Authorization") token: String
-    ): Call<ModelAdminDashboardInfo>
 
 
     @Headers("Accept: application/json")

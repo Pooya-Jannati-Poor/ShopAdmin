@@ -72,67 +72,6 @@ class AdminDashboardFragment : Fragment() {
 
     }
 
-    private lateinit var apiClient: ApiClient
-
-    private fun getDashboardInfo() {
-
-        val loadingLottie = Loading(requireActivity())
-
-        apiClient = ApiClient()
-
-        val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
-
-        val callLoading = apiInterface.adminDashboardInfo("")
-
-        callLoading.enqueue(object : Callback<ModelAdminDashboardInfo> {
-
-            override fun onResponse(
-                call: Call<ModelAdminDashboardInfo>,
-                response: Response<ModelAdminDashboardInfo>
-            ) {
-
-                loadingLottie.hideDialog()
-
-                if (response.code() == 200) {
-
-                    val data = response.body()!!
-
-                    Glide.with(requireActivity()).load(data.img)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .fitCenter().placeholder(
-                            R.drawable.ic_admin_image_test
-                        ).into(imgAdmin)
-
-                    tvAdminName.text = "Hi ${data.name}"
-
-                } else {
-
-                    Toast.makeText(
-                        requireActivity(),
-                        resources.getText(R.string.error_receive_data).toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<ModelAdminDashboardInfo>, t: Throwable) {
-
-                loadingLottie.hideDialog()
-
-                Toast.makeText(
-                    requireActivity(),
-                    resources.getText(R.string.error_send_data).toString(),
-                    Toast.LENGTH_SHORT
-                ).show()
-
-            }
-
-        })
-
-    }
-
     private fun openShopsFragment() {
 
         llvShops.setOnClickListener {

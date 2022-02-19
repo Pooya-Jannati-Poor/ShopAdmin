@@ -67,8 +67,6 @@ class ProfileFragment : Fragment() {
 
         getShopInfo()
 
-        saveEdit()
-
         getImage()
 
         flLogout.setOnClickListener {
@@ -126,6 +124,8 @@ class ProfileFragment : Fragment() {
                 Log.d("dataTest", response.body().toString())
 
                 if (response.code() == 200) {
+
+                    saveEdit()
 
                     val data = response.body()!!
 
@@ -231,13 +231,6 @@ class ProfileFragment : Fragment() {
 
             val loadingLottie = Loading(requireActivity())
 
-            sharedPreferences = requireActivity().getSharedPreferences(
-                "data",
-                Context.MODE_PRIVATE
-            )
-
-            token = sharedPreferences.getString("token", "")!!
-
             apiClient = ApiClient()
 
             apiClient = ApiClient()
@@ -278,7 +271,7 @@ class ProfileFragment : Fragment() {
 
                     loadingLottie.hideDialog()
 
-                    if (response.code() == 200) {
+                    if (response.code() == 204) {
 
                         Toast.makeText(
                             requireActivity(),
@@ -327,7 +320,7 @@ class ProfileFragment : Fragment() {
         imgProfile.setOnClickListener {
 
             ImagePicker.with(this)
-                .compress(2058)            //Final image size will be less than 2 MB
+                .compress(2048)            //Final image size will be less than 2 MB
                 .maxResultSize(
                     1000,
                     1100
@@ -359,7 +352,8 @@ class ProfileFragment : Fragment() {
                 imgProfile.setImageURI(fileUri)
 
                 val prepare = PrepareImageForUpload()
-                imageMultiPartBody = prepare.buildImageBodyPart(requireActivity(), "book", bitmap)
+                imageMultiPartBody =
+                    prepare.buildImageBodyPart(requireActivity(), "shopImage", bitmap)
 
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(requireActivity(), ImagePicker.getError(data), Toast.LENGTH_SHORT)

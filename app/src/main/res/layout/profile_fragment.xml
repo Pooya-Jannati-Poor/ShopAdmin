@@ -74,8 +74,7 @@
                     android:layout_marginBottom="@dimen/_8sdp"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_admin_image_test"
-                    android:transitionName="coffeeShopImage"
-                    app:shapeAppearanceOverlay="@style/img_admin_circle" />
+                    app:shapeAppearanceOverlay="@style/img_admin_curve" />
 
                 <TextView
                     android:id="@+id/tvShopName"

@@ -418,8 +418,6 @@ class AddBookFragment : Fragment(), CategorySelected {
 
         val loadingLottie = Loading(requireActivity())
 
-        Log.d("dataTest", bookPrice)
-
         apiClient = ApiClient()
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)

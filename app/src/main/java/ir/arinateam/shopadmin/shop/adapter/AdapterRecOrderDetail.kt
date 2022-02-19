@@ -1,6 +1,5 @@
 package ir.arinateam.shopadmin.shop.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -12,12 +11,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.imageview.ShapeableImageView
 import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.databinding.LayoutRecOrderDetailBinding
-import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetail
+import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetail2
 import ir.arinateam.shopadmin.utils.NumbersSeparator
 
 class AdapterRecOrderDetail(
     private val context: Context,
-    private val lsModelRecOrder: List<ModelRecOrderDetail>
+    private val lsModelRecOrder: List<ModelRecOrderDetail2>
 ) : RecyclerView.Adapter<AdapterRecOrderDetail.ItemAdapter>() {
 
     private lateinit var bindingAdapter: LayoutRecOrderDetailBinding
@@ -29,34 +28,26 @@ class AdapterRecOrderDetail(
         return ItemAdapter(bindingAdapter)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ItemAdapter, position: Int) {
 
         val model = lsModelRecOrder[position]
 
-        Glide.with(context).load(model.img).diskCacheStrategy(DiskCacheStrategy.ALL)
+        Glide.with(context).load("http://applicationfortests.ir/" + model.image)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
             .fitCenter().placeholder(
                 R.drawable.ic_admin_image_test
             ).into(holder.imgBook)
         holder.tvBookName.text = model.bookName
-        holder.tvBookCount.text = model.bookCount.toString()
+        holder.tvBookCount.text = model.amount.toString()
         holder.tvUsername.text = model.username
+        holder.tvOrderDate.text = model.date
 
         val numbersSeparator = NumbersSeparator()
 
         holder.tvBookPrice.text =
-            numbersSeparator.doubleToStringNoDecimal(model.bookPrice.toDouble())
+            numbersSeparator.doubleToStringNoDecimal(model.price.toDouble())
 
-        if (model.orderState) {
-
-            holder.tvOrderState.text = context.getText(R.string.payment_successful)
-
-        } else {
-
-            holder.tvOrderState.text = context.getText(R.string.payment_failed)
-            holder.tvOrderState.setTextColor(context.resources.getColor(R.color.red))
-
-        }
+        holder.tvOrderState.text = model.delivered
 
     }
 

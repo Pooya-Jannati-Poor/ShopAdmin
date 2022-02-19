@@ -1,6 +1,9 @@
 package ir.arinateam.shopadmin.shop
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,11 +18,9 @@ import ir.arinateam.shopadmin.R
 import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.OrderDetailFragmentBinding
-import ir.arinateam.shopadmin.shop.adapter.AdapterRecOrder
 import ir.arinateam.shopadmin.shop.adapter.AdapterRecOrderDetail
-import ir.arinateam.shopadmin.shop.model.ModelRecOrder
-import ir.arinateam.shopadmin.shop.model.ModelRecOrderBase
 import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetail
+import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetail2
 import ir.arinateam.shopadmin.shop.model.ModelRecOrderDetailBase
 import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
@@ -48,7 +49,14 @@ class OrderDetailFragment : Fragment() {
 
         initView()
 
-        setRecOrderDetail()
+        sharedPreferences = requireActivity().getSharedPreferences(
+            "data",
+            Context.MODE_PRIVATE
+        )
+
+        token = sharedPreferences.getString("token", "")!!
+
+        getOrderDetail()
 
         backToDashboard()
 
@@ -62,6 +70,8 @@ class OrderDetailFragment : Fragment() {
     }
 
     private lateinit var apiClient: ApiClient
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var token: String
 
     private fun getOrderDetail() {
 
@@ -71,7 +81,8 @@ class OrderDetailFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.orderDetail("", requireArguments().getInt("orderId"))
+        val callLoading =
+            apiInterface.orderDetail("Bearer $token", requireArguments().getInt("orderId"))
 
         callLoading.enqueue(object : Callback<ModelRecOrderDetailBase> {
 
@@ -82,11 +93,38 @@ class OrderDetailFragment : Fragment() {
 
                 loadingLottie.hideDialog()
 
+                Log.d("dataTest", response.body().toString())
+
                 if (response.code() == 200) {
 
                     val data = response.body()!!
 
-                    lsModelRecOrder.addAll(data.orderDetails)
+                    lsModelRecOrder = ArrayList()
+
+                    data.orderDetails.data.forEach {
+
+                        val bookName = it.product.name
+                        val amount = it.amount
+                        val price = it.bookPrice
+                        val username = requireArguments().getString("username")!!
+                        val image = it.product.image
+                        val state = data.order.stateName
+                        val date = data.order.createdJal.substring(0, 10)
+
+                        lsModelRecOrder.add(
+                            ModelRecOrderDetail2(
+                                username,
+                                bookName,
+                                date,
+                                amount,
+                                price,
+                                state,
+                                image
+                            )
+                        )
+
+                    }
+
 
                     setRecOrderDetail()
 
@@ -120,72 +158,9 @@ class OrderDetailFragment : Fragment() {
 
 
     private lateinit var adapterRecOrder: AdapterRecOrderDetail
-    private lateinit var lsModelRecOrder: ArrayList<ModelRecOrderDetail>
+    private lateinit var lsModelRecOrder: ArrayList<ModelRecOrderDetail2>
 
     private fun setRecOrderDetail() {
-
-        lsModelRecOrder = ArrayList()
-
-        lsModelRecOrder.add(
-            ModelRecOrderDetail(
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "دو برج",
-                2,
-                140000,
-                "مسعودی",
-                true
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrderDetail(
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "سه برج",
-                2,
-                140000,
-                "مسعودی",
-                true
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrderDetail(
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "چهار برج",
-                2,
-                140000,
-                "مسعودی",
-                true
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrderDetail(
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "دو برج",
-                2,
-                140000,
-                "رضایی",
-                true
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrderDetail(
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "دو برج",
-                2,
-                140000,
-                "ادینه",
-                false
-            )
-        )
-        lsModelRecOrder.add(
-            ModelRecOrderDetail(
-                "https://en.tehran.ir/Portals/0/newsfile/books/b.jpg",
-                "دو برج",
-                2,
-                140000,
-                "ادینه",
-                false
-            )
-        )
 
         adapterRecOrder = AdapterRecOrderDetail(requireActivity(), lsModelRecOrder)
 

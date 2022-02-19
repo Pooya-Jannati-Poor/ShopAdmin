@@ -26,7 +26,6 @@ import ir.arinateam.shopadmin.api.ApiClient
 import ir.arinateam.shopadmin.api.ApiInterface
 import ir.arinateam.shopadmin.databinding.DashboardFragmentBinding
 import ir.arinateam.shopadmin.shop.model.ModelGetShopDashboard
-import ir.arinateam.shopadmin.shop.model.ModelGetShopInfo
 import ir.arinateam.shopadmin.shop.model.ModelGetShopInfoBase
 import ir.arinateam.shopadmin.utils.Loading
 import retrofit2.Call
@@ -34,7 +33,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
-import ir.arinateam.shopadmin.utils.jalaliCal
+import ir.arinateam.shopadmin.utils.JalaliCal
 
 
 class DashboardFragment : Fragment() {
@@ -272,8 +271,8 @@ class DashboardFragment : Fragment() {
         val dayLastWeek = dateLastWeek.get(Calendar.DAY_OF_MONTH)
 
 
-        val newDateLastWeek = jalaliCal.gregorianToJalali(
-            jalaliCal.YearMonthDate(
+        val newDateLastWeek = JalaliCal.gregorianToJalali(
+            JalaliCal.YearMonthDate(
                 yearLastWeek,
                 monthLastWeek,
                 dayLastWeek
@@ -336,8 +335,8 @@ class DashboardFragment : Fragment() {
         val dayLastMonth = dateLastMonth.get(Calendar.DAY_OF_MONTH)
 
 
-        val newDateLastMonth = jalaliCal.gregorianToJalali(
-            jalaliCal.YearMonthDate(
+        val newDateLastMonth = JalaliCal.gregorianToJalali(
+            JalaliCal.YearMonthDate(
                 yearLastMonth,
                 monthLastMonth,
                 dayLastMonth
