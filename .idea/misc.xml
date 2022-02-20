@@ -49,6 +49,7 @@
         <entry key="..\:/Projects/ShopAdmin/imagepicker/src/main/res/layout/dialog_choose_app.xml" value="0.18020833333333333" />
         <entry key="app/src/main/res/layout/add_book_fragment.xml" value="0.29333333333333333" />
         <entry key="app/src/main/res/layout/dashboard_fragment.xml" value="0.14322916666666666" />
+        <entry key="app/src/main/res/layout/layout_rec_order.xml" value="0.14322916666666666" />
         <entry key="app/src/main/res/layout/layout_rec_order_detail.xml" value="0.29791666666666666" />
         <entry key="app/src/main/res/layout/layout_rec_product.xml" value="0.29791666666666666" />
         <entry key="app/src/main/res/layout/layout_sp_category.xml" value="0.29791666666666666" />

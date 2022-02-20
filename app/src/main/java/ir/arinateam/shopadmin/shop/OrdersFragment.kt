@@ -104,17 +104,23 @@ class OrdersFragment : Fragment() {
 
                     data.ordersBase.data.forEach {
 
+                        var username = ""
+
+                        username = it.user.name ?: "کاربر ${it.user.id}"
+
                         lsModelRecOrder.add(
                             ModelRecOrder(
                                 it.id,
-                                "it.details[0].product.Image",
-                                "username",
+                                it.details[0].product.image,
+                                username,
                                 it.createdJal.substring(0, 10),
                                 it.total_amount,
                                 it.total_price,
                                 it.stateName
                             )
                         )
+
+                        Log.d("dataTest", it.details[0].product.image)
 
                     }
 

@@ -15,6 +15,8 @@ data class ModelGetOrdersData(
     val stateName: String,
 
     @SerializedName("details")
-    val details: ArrayList<ModelGetOrdersDataDetail>
+    val details: ArrayList<ModelGetOrdersDataDetail>,
+
+    val user: ModelUser
 
 )

@@ -35,7 +35,7 @@ class AdapterRecOrder(
 
         val model = lsModelRecOrder[position]
 
-        Glide.with(context).load("http://applicationfortest.ir/" + model.image)
+        Glide.with(context).load("http://applicationfortests.ir/" + model.image)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .fitCenter().placeholder(
                 R.drawable.ic_admin_image_test
@@ -52,9 +52,6 @@ class AdapterRecOrder(
 
             val bundle = Bundle()
             bundle.putInt("orderId", model.id)
-            bundle.putString("username", model.username)
-            bundle.putString("date", model.date)
-            bundle.putString("state", model.state)
             Navigation.findNavController(it)
                 .navigate(R.id.action_ordersFragment_to_orderDetailFragment, bundle)
 
