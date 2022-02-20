@@ -41,8 +41,9 @@ interface ApiInterface {
     @GET("orders")
     fun orderList(
         @Header("Authorization") token: String,
-        @Header("withDetails") withDetails: Boolean = false,
-        @Header("withProduct") withProduct: Boolean = true
+        @Header("withDetails") withDetails: Boolean = true,
+        @Header("withProduct") withProduct: Boolean = true,
+        @Header("withUser") withUser: Boolean = true
     ): Call<ModelGetOrdersBase>
 
     @Headers("Accept: application/json")
@@ -51,7 +52,8 @@ interface ApiInterface {
         @Header("Authorization") token: String,
         @Path("id") orderId: Int,
         @Query("withOrder") withOrder: Boolean = true,
-        @Query("withProduct") withProduct: Boolean = true
+        @Query("withProduct") withProduct: Boolean = true,
+        @Query("withUser") withUser: Boolean = true
     ): Call<ModelRecOrderDetailBase>
 
 

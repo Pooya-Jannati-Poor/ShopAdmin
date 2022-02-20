@@ -4,6 +4,8 @@ data class ModelOrder(
 
     val stateName: String,
 
-    val createdJal: String
+    val createdJal: String,
+
+    val user: ModelUser
 
 )

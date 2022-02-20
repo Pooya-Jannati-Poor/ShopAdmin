@@ -82,9 +82,9 @@ class OrdersFragment : Fragment() {
 
         val apiInterface: ApiInterface = ApiClient.retrofit.create(ApiInterface::class.java)
 
-        val callLoading = apiInterface.orderList("Bearer $token", true, true)
+        val callOrderList = apiInterface.orderList("Bearer $token", true, true, true)
 
-        callLoading.enqueue(object : Callback<ModelGetOrdersBase> {
+        callOrderList.enqueue(object : Callback<ModelGetOrdersBase> {
 
             override fun onResponse(
                 call: Call<ModelGetOrdersBase>,
@@ -109,7 +109,7 @@ class OrdersFragment : Fragment() {
                                 it.id,
                                 "it.details[0].product.Image",
                                 "username",
-                                it.createdJal,
+                                it.createdJal.substring(0, 10),
                                 it.total_amount,
                                 it.total_price,
                                 it.stateName

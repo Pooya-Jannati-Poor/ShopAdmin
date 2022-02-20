@@ -99,12 +99,15 @@ class OrderDetailFragment : Fragment() {
 
                     lsModelRecOrder = ArrayList()
 
+                    var username = ""
+
+                    username = data.order.user.name ?: "کاربر ${data.order.user.id}"
+
                     data.orderDetails.data.forEach {
 
                         val bookName = it.product.name
                         val amount = it.amount
                         val price = it.bookPrice
-                        val username = requireArguments().getString("username")!!
                         val image = it.product.image
                         val state = data.order.stateName
                         val date = data.order.createdJal.substring(0, 10)
@@ -122,7 +125,6 @@ class OrderDetailFragment : Fragment() {
                         )
 
                     }
-
 
                     setRecOrderDetail()
 

@@ -26,7 +26,7 @@ class ApiClient {
         retrofit = Retrofit
             .Builder()
             .baseUrl(baseUrl)
-            .addConverterFactory(GsonConverterFactory.create(gosn))
+            .addConverterFactory(GsonConverterFactory.create(/*gosn*/))
             .build()
         request = retrofit.create(ApiInterface::class.java)
     }
